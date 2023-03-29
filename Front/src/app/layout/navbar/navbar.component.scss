@@ -1,0 +1,24 @@
+.bottom-navbar{
+  background-color:#02ACAF;
+  height: 40px;
+}
+
+.topNavbar{
+  display: flex;
+  justify-content: right;
+  background-color: #EEEFF6;
+  border-radius: 5px 5px 5px 40px;
+  margin-top: -7px;
+  margin-left: 120px;
+  padding: 5px;
+}
+
+.btn-submit{
+background-color: #02ACAF;
+color: white;
+}
+
+.fa-user{
+  position: relative;
+  top: -4px;
+}

@@ -1,0 +1,22 @@
+.footer-section{
+  margin-top: 122px;
+  background-color: #202020;
+  left: 0;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.footercolum{
+  background-color: black;
+  text-align: center;
+  height: 25px;
+  display: flex;
+  justify-content:space-around;
+}
+
+.col-md-6{
+  padding-right: 0px !important;
+}
+

@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="card mt-3">
+    <div class="row p-4 pb-0">
+      <div class="col-md-12 text-end">
+        <button class="btn btn-filter">Filter</button>
+      </div>
+    </div>
+    <form>
+      <div class="row p-4 pt-0">
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Deed Category">Deed Category</label>
+          <select
+            class="form-control"
+            ngModel
+            name="deedCategory"
+            id="deedCategory"
+          >
+            <option value="" disabled>---Select Deed Category--</option>
+            <option value="Deed Category">Deed Category</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Deed Type">Deed Type</label>
+          <select class="form-control" ngModel name="deedType" id="deedType">
+            <option value="" disabled>---Select Deed Type--</option>
+            <option value="Deed Type">Deed Type</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Instrument">Instrument</label>
+          <select
+            class="form-control"
+            ngModel
+            name="Instrument"
+            id="Instrument"
+          >
+            <option value="" disabled>---Select Instrument--</option>
+            <option value="Instrument">Instrument 1</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Party Role">Party Role</label>
+          <select class="form-control" ngModel name="partRole" id="partRole">
+            <option value="" disabled>---Select Party Role--</option>
+            <option value="Buyer">Buyer</option>
+            <option value="Seller">Seller</option>
+            <option value="Concentor">Concentor</option>
+            <option value="Witness">Witness</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <div class="form-group">
+            <label for="Question in English">Question in English</label>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              ngModel
+              name="English"
+              placeholder="Enter Question in English"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <div class="form-group">
+            <label for="Question in Hindi">Question in Hindi</label>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              ngModel
+              name="Hindi"
+              placeholder="Enter Question in Hindi"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="card my-3">
+    <table class="table table-bordered">
+      <thead class="tableheader">
+        <tr>
+          <th scope="col" style="width: 25px">S.No.</th>
+          <th scope="col">Instrument Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">VKYC Type</th>
+          <th scope="col">Questions</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" rowspan="2">1</th>
+          <td rowspan="2" style="width: 550px;">
+            Acknowledgement of a debt, written or signed by or on behalf of
+            debtor.
+          </td>
+          <td>Executant</td>
+          <td>Assisted</td>
+          <td>w</td>
+        </tr>
+        <tr>
+          <td>Claimant</td>
+          <td>Non-Assisted</td>
+          <td>dd</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
