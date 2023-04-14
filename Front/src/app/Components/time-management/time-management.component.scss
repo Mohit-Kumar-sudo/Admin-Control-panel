@@ -1,0 +1,48 @@
+.container{
+  min-height: 60vh;
+}
+
+.btn-submit{
+  background-color: #02ACAF;
+  color: white;
+  font-weight: bold;
+  width: 80px;
+}
+
+.btn-reset{
+  background-color: #5A6268;
+  color: white;
+  margin-left: 50px;
+  font-weight: bold;
+  width: 80px;
+}
+
+.card{
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-filter{
+  background-color: #02ACAF;
+  color: white;
+  font-weight: bold;
+  width: 80px;
+  margin-left: 40px;
+}
+
+label{
+  margin-bottom: 5px;
+  color: #02ACAF;
+  font-weight: bold;
+}
+
+thead{
+  background-color: #02ACAF;
+  color: white;
+  font-weight: bold;
+  width: 80px;
+}

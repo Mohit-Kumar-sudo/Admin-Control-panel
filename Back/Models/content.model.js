@@ -1,8 +1,11 @@
-const mongoose = require('mongoose')
+ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    module:{
+    contentType:{
+        type:String
+    },
+    vkycType:{
         type:String
     },
     content_english:{
@@ -21,6 +24,6 @@ const TableSchema = new Schema({
     updated_by: String,
 })
 
-const Table = mongoose.model("prerequisits", TableSchema)
+const Table = mongoose.model("content", TableSchema)
 
 module.exports = Table

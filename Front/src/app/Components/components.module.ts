@@ -7,20 +7,23 @@ import { QuestionsComponent } from './questions/questions.component';
 import { TimeManagementComponent } from './time-management/time-management.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule } from '@angular/forms';
-
+import { EditContentComponent } from './edit-content/edit-content.component';
+import { MatPaginatorModule} from '@angular/material/paginator'
 
 @NgModule({
   declarations: [
     DashboardComponent,
     ContentsComponent,
     QuestionsComponent,
-    TimeManagementComponent
+    TimeManagementComponent,
+    EditContentComponent
   ],
   imports: [
     CommonModule,
     ComponentsRoutingModule,
     CKEditorModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule
   ]
 })
 export class ComponentsModule { }

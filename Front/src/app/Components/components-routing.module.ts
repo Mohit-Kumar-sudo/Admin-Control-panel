@@ -4,6 +4,7 @@ import { ContentsComponent } from './contents/contents.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { TimeManagementComponent } from './time-management/time-management.component';
+import { EditContentComponent } from './edit-content/edit-content.component';
 
 const routes: Routes = [
   {
@@ -11,16 +12,12 @@ const routes: Routes = [
     component:DashboardComponent
   },
   {
-    path:'Content/prerequisits',
+    path:'Content/:content',
     component:ContentsComponent
   },
   {
-    path:'Content/dos&donts',
-    component:ContentsComponent
-  },
-  {
-    path:'Content/terms&condition',
-    component:ContentsComponent
+    path:'EditContent/:id',
+    component:EditContentComponent
   },
   {
     path:'Question',

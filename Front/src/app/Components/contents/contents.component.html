@@ -40,20 +40,30 @@
         <form #preform="ngForm" (ngSubmit)="Prerequisits(preform)">
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Select Video KYC Type </label>
-            <select class="form-control" ngModel name="vkycType" id="vkycType">
-              <option value="" disabled selected>---Select Video KYC Type--</option>
+            <select class="form-control" ngModel name="vkycType" id="vkycType" required>
+              <option value="" disabled selected>
+                ---Select Video KYC Type--
+              </option>
               <option value="Assisted">Assisted</option>
               <option value="Non Assisted">Non Assisted</option>
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Prerequisites in English</label>
-            <ckeditor [editor]="Editor" name="englishEditor" [(ngModel)]="Editor">
+            <ckeditor
+              [editor]="Editor"
+              name="content_english"
+              [(ngModel)]="Editor"
+            >
             </ckeditor>
           </div>
-          <div class="col-md-12 px-5 my-3" style="height: 100px;">
+          <div class="col-md-12 px-5 my-3">
             <label type="label"> Prerequisites in Hindi</label>
-            <ckeditor [editor]="CKEditor" name="hindiEditor" [(ngModel)]="CKEditor">
+            <ckeditor
+              [editor]="CKEditor"
+              name="content_hindi"
+              [(ngModel)]="CKEditor"
+            >
             </ckeditor>
           </div>
           <div class="col-md-12 my-3">
@@ -68,26 +78,38 @@
     <div
       class=" {{
         view == views[1] ? 'd-block' : 'd-none'
-      }} col-md-12 Prerequisites"
+      }} col-md-12 Do's & Don'ts"
     >
       <div class="row mb-2">
-        <form #preform="ngForm" (ngSubmit)="dosanddonts(preform)">
+        <form #dosForm="ngForm" (ngSubmit)="dosanddonts(dosForm)">
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Select Video KYC Type </label>
-            <select class="form-control" ngModel name="vkycType" id="vkycType">
-              <option value="" disabled selected>---Select Video KYC Type--</option>
+            <select class="form-control" ngModel name="vkycType" id="vkycType" required>
+              <option value="" disabled selected>
+                ---Select Video KYC Type--
+              </option>
               <option value="Assisted">Assisted</option>
               <option value="Non Assisted">Non Assisted</option>
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Do's & Don'ts in English</label>
-            <ckeditor [editor]="Editor" name="englishEditor" [(ngModel)]="Editor">
+            <ckeditor
+              [editor]="Editor"
+              name="content_english"
+              required
+              [(ngModel)]="Editor"
+            >
             </ckeditor>
           </div>
-          <div class="col-md-12 px-5 my-3" style="height: 100px;">
+          <div class="col-md-12 px-5 my-3">
             <label type="label"> Do's & Don'ts in Hindi</label>
-            <ckeditor [editor]="CKEditor" name="hindiEditor" [(ngModel)]="CKEditor">
+            <ckeditor
+              [editor]="CKEditor"
+              name="content_hindi"
+              required
+              [(ngModel)]="CKEditor"
+            >
             </ckeditor>
           </div>
           <div class="col-md-12 my-3">
@@ -102,26 +124,38 @@
     <div
       class=" {{
         view == views[2] ? 'd-block' : 'd-none'
-      }} col-md-12 Prerequisites"
+      }} col-md-12 Terms & Conditions"
     >
       <div class="row mb-2">
-        <form #preform="ngForm" (ngSubmit)="termsandcondition(preform)">
+        <form #termsForm="ngForm" (ngSubmit)="termsandcondition(termsForm)">
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Select Video KYC Type </label>
-            <select class="form-control" ngModel name="vkycType" id="vkycType">
-              <option value="" disabled selected>---Select Video KYC Type--</option>
+            <select class="form-control" ngModel name="vkycType" id="vkycType" required>
+              <option value="" disabled selected>
+                ---Select Video KYC Type--
+              </option>
               <option value="Assisted">Assisted</option>
               <option value="Non Assisted">Non Assisted</option>
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Terms & Conditions in English</label>
-            <ckeditor [editor]="Editor" name="englishEditor" [(ngModel)]="Editor">
+            <ckeditor
+              [editor]="Editor"
+              name="content_english"
+              [(ngModel)]="Editor"
+              required
+            >
             </ckeditor>
           </div>
           <div class="col-md-12 px-5 my-3">
             <label type="label"> Terms & Conditions in Hindi</label>
-            <ckeditor [editor]="CKEditor" name="hindiEditor" [(ngModel)]="CKEditor">
+            <ckeditor
+              [editor]="CKEditor"
+              name="content_hindi"
+              required
+              [(ngModel)]="CKEditor"
+            >
             </ckeditor>
           </div>
           <div class="col-md-12 my-3">
@@ -136,40 +170,162 @@
   </div>
 </div>
 <div class="container">
-  <div class="card mt-3">
-    <div class="row p-4 text-center">
-      <div class="col-md-12 buttons">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">S.No.</th>
-              <th scope="col">Content</th>
-              <th scope="col">VKYC Type</th>
-              <th scope="col">Instructions</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-          </tbody>
-        </table>
+  <div
+    class=" {{
+      view == views[0] ? 'd-block' : 'd-none'
+    }} col-md-12 Prerequisites"
+  >
+    <div class="card mt-3">
+      <div class="row p-4 text-center">
+        <div class="col-md-12 buttons">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Content</th>
+                <th scope="col">VKYC Type</th>
+                <th scope="col">Instructions</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of Prerequisites; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.contentType }}</td>
+                <td>{{ item.vkycType }}</td>
+                <td><p [innerHTML]="item.content_english"></p></td>
+                <td>
+                  <i
+                    class="fas fa-edit fa-md"
+                    (click)="editContent(item._id)"
+                  ></i>
+                  &nbsp;
+                  <i
+                    class="fa-regular fa-square fa-md"
+                    *ngIf="item.is_active == false" (click)="activeContent(item._id)"
+                  ></i>
+                  <i
+                    class="fa-regular fa-square-check fa-md"
+                    *ngIf="item.is_active == true"  (click)="deactivateContent(item._id)"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator
+          [length]="precount"
+          [pageSize]="page"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+  <div
+    class=" {{
+      view == views[1] ? 'd-Iblock' : 'd-none'
+    }} col-md-12 Do's & Don'ts"
+  >
+    <div class="card mt-3">
+      <div class="row p-4 text-center">
+        <div class="col-md-12 buttons">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Content</th>
+                <th scope="col">VKYC Type</th>
+                <th scope="col">Instructions</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of DosandDonts; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.contentType }}</td>
+                <td>{{ item.vkycType }}</td>
+                <td><p [innerHTML]="item.content_english"></p></td>
+                <td>
+                  <i
+                    class="fas fa-edit fa-md"
+                    (click)="editContent(item._id)"
+                  ></i>
+                  &nbsp;
+                  <i
+                    class="fa-regular fa-square fa-md"
+                    *ngIf="item.is_active == false"
+                  ></i>
+                  <i
+                    class="fa-regular fa-square-check fa-md"
+                    *ngIf="item.is_active == true"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator
+          [length]="doscount"
+          [pageSize]="page"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+  <div
+    class=" {{
+      view == views[2] ? 'd-block' : 'd-none'
+    }} col-md-12 Terms & Condition"
+  >
+    <div class="card mt-3">
+      <div class="row p-4 text-center">
+        <div class="col-md-12 buttons">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Content</th>
+                <th scope="col">VKYC Type</th>
+                <th scope="col">Instructions</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of termsandCondition; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.contentType }}</td>
+                <td>{{ item.vkycType }}</td>
+                <td><p [innerHTML]="item.content_english"></p></td>
+                <td>
+                  <i
+                    class="fas fa-edit fa-md"
+                    (click)="editContent(item._id)"
+                  ></i>
+                  &nbsp;
+                  <i
+                    class="fa-regular fa-square fa-md"
+                    *ngIf="item.is_active == false"
+                  ></i>
+                  <i
+                    class="fa-regular fa-square-check fa-md"
+                    *ngIf="item.is_active == true"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator
+          [length]="termscount"
+          [pageSize]="page"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page"
+        >
+        </mat-paginator>
       </div>
     </div>
   </div>

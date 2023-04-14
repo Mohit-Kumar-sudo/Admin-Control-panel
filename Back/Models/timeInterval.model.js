@@ -2,13 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    module:{
+    contentType:{
         type:String
     },
-    content_english:{
-        type:String
-    },
-    content_hindi:{
+    allotedTime:{
         type:String
     },
     is_active: {
@@ -21,6 +18,6 @@ const TableSchema = new Schema({
     updated_by: String,
 })
 
-const Table = mongoose.model("terms&conditions", TableSchema)
+const Table = mongoose.model("timeInterval", TableSchema)
 
 module.exports = Table

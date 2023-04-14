@@ -12,10 +12,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-app.use('/dos&donts', require('./Routes/dos&donts.route'))
-app.use('/prerequisits', require('./Routes/prerequisits.route'))
+app.use('/content', require('./Routes/content.route.js'))
 app.use('/questions', require('./Routes/questions.route'))
-app.use('/terms&conditions', require('./Routes/terms&conditions.route'))
+app.use('/timeInterval', require('./Routes/timeInterval.route.js'))
 
 app.get('/',  async (req,res,next) =>{
     res.send("Welcome to the Admin Control Panel...")

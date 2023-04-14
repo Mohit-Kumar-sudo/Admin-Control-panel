@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="card mt-3">
+    <div class="row mb-2">
+      <form #updateForm="ngForm" (ngSubmit)="Submit(updateForm)">
+        <div class="col-md-12 px-5 my-3">
+          <label type="label"> Select Video KYC Type </label>
+          <select class="form-control" [(ngModel)]="data.vkycType" name="vkycType" id="vkycType" required>
+            <option value="" disabled selected>
+              ---Select Video KYC Type--
+            </option>
+            <option value="Assisted">Assisted</option>
+            <option value="Non Assisted">Non Assisted</option>
+          </select>
+        </div>
+        <div class="col-md-12 px-5 my-3">
+          <label type="label"> {{contentType}} in English</label>
+          <ckeditor
+            [editor]="Editor"
+            name="content_english"
+            [(ngModel)]="data.content_english"
+          >
+          </ckeditor>
+        </div>
+        <div class="col-md-12 px-5 my-3">
+          <label type="label"> {{contentType}} in Hindi</label>
+          <ckeditor
+            [editor]="CKEditor"
+            name="content_hindi"
+            [(ngModel)]="data.content_hindi"
+          >
+          </ckeditor>
+        </div>
+        <div class="col-md-12 my-3">
+          <div class="btn" role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-submit mt-4">Submit</button>
+            <button type="reset" class="btn btn-reset mt-4">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

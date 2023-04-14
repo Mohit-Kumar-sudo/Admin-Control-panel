@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Controller = require('../Controllers/terms&condition.controller')
+const Controller = require('../Controllers/timeInterval.controller')
 
 router.post('/', Controller.create)
 router.get('/:id', Controller.get)

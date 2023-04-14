@@ -1,6 +1,7 @@
 const createError = require('http-errors')
-const Model = require('../Models/terms&condition.model')
+const Model = require('../Models/content.model')
 const mongoose = require('mongoose')
+const ModelName = 'Content'
 
 module.exports = {
 
@@ -12,9 +13,14 @@ module.exports = {
             data.created_at = Date.now()
             const newData = new Model(data)
             const result = await newData.save()
-            res.json(newData)
-            return
+            if (result) {
+                res.send({ success: true, msg: 'Data inserted successfully.' })
+            } else {
+                res.send({ success: false, msg: 'Failed to insert data.' })
+            }
+
         } catch (error) {
+            if (error.isJoi === true) error.status = 422
             next(error)
         }
     },
@@ -28,17 +34,21 @@ module.exports = {
             if (!result) {
                 throw createError.NotFound(`No ${ModelName} Found`)
             }
-            res.send({
-                success: true, data: result,
-            })
-            return
+            if (result) {
+                res.send({ success: true, msg: 'Detail Fetched', data: result })
+            } else {
+                res.send({ success: false, msg: 'Failed to Fetch Detail' })
+            }
+
         } catch (error) {
+            if (error.isJoi === true)
+                return next(createError.BadRequest('Bad Request'))
             next(error)
         }
     },
     list: async (req, res, next) => {
         try {
-            const { name, is_active, page, limit, sort } = req.query
+            const { name, is_active, page, limit, sort, contentType } = req.query
             const _page = page ? parseInt(page) : 1
             const _limit = limit ? parseInt(limit) : 20
             const _skip = (_page - 1) * _limit
@@ -47,7 +57,9 @@ module.exports = {
             if (name) {
                 query.name = new RegExp(name, 'i')
             }
-            query.is_active = true;
+            if(contentType){
+                query.contentType = contentType
+            }
             const result = await Model.aggregate([
                 {
                     $match: query
@@ -59,9 +71,14 @@ module.exports = {
                     $limit: _limit
                 }
             ])
-            res.json(result)
-            return
+            if (result) {
+                res.send({ success: true, msg: 'Data Fetched', data: result, count: result.length })
+            } else {
+                res.send({ success: false, msg: 'Failed to Fetch Data' })
+            }
         } catch (error) {
+            if (error.isJoi === true)
+                return next(createError.BadRequest('Bad Request'))
             next(error)
         }
     },
@@ -78,9 +95,14 @@ module.exports = {
             }
             data.updated_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
-            res.json(result)
-            return
+            if (result) {
+                res.send({ success: true, msg: 'Data Updated Successfully' })
+            } else {
+                res.send({ success: false, msg: 'Failed to Update Data' })
+            }
         } catch (error) {
+            if (error.isJoi === true)
+                return next(createError.BadRequest('Bad Request'))
             next(error)
         }
     },
@@ -92,9 +114,14 @@ module.exports = {
             }
             const deleted_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: false, deleted_at } })
-            res.json(result)
-            return
+            if (result) {
+                res.send({ success: true, msg: 'Data Deleted Successfully' })
+            } else {
+                res.send({ success: false, msg: 'Failed to Delete Data' })
+            }
         } catch (error) {
+            if (error.isJoi === true)
+                return next(createError.BadRequest('Bad Request'))
             next(error)
         }
     },
@@ -104,19 +131,17 @@ module.exports = {
             if (!id) {
                 throw createError.BadRequest('Invalid Parameters')
             }
-            const dataToBeDeleted = await Model.findOne({ _id: mongoose.Types.ObjectId(id) }, { name: 1 }).lean()
-            if (!dataToBeDeleted) {
-                throw createError.NotFound(`${ModelName} Not Found`)
-            }
-            const dataExists = await Model.findOne({ name: dataToBeDeleted.name, is_active: false }).lean()
-            if (dataExists) {
-                throw createError.Conflict(`${ModelName} already exists`)
-            }
+            console.log(id)
             const restored_at = Date.now()
-            const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: false, restored_at } })
-            res.json(result)
-            return
+            const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: true, restored_at } })
+            if (result) {
+                res.send({ success: true, msg: 'Data Restored Successfully' })
+            } else {
+                res.send({ success: false, msg: 'Failed to Restore Data' })
+            }
         } catch (error) {
+            if (error.isJoi === true)
+                return next(createError.BadRequest('Bad Request'))
             next(error)
         }
     },
