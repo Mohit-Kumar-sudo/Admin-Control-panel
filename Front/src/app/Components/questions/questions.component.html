@@ -14,16 +14,17 @@
             ngModel
             name="deedCategory"
             id="deedCategory"
+            (selectionchange)="getDeedType($event)"
           >
             <option value="" disabled>---Select Deed Category--</option>
-            <option value="Deed Category">Deed Category</option>
+            <option *ngFor="let item of deedCategory" [value]="item" >{{item}}</option>
           </select>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Deed Type">Deed Type</label>
-          <select class="form-control" ngModel name="deedType" id="deedType">
+          <select class="form-control" ngModel (selectionchange)="getInstrument($event)" name="deedType" id="deedType">
             <option value="" disabled>---Select Deed Type--</option>
-            <option value="Deed Type">Deed Type</option>
+            <option [value]="item" *ngFor="let item of deedType">{{item}}</option>
           </select>
         </div>
         <div class="col-md-6 col-sm-6 my-2">

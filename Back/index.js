@@ -15,6 +15,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/content', require('./Routes/content.route.js'))
 app.use('/questions', require('./Routes/questions.route'))
 app.use('/timeInterval', require('./Routes/timeInterval.route.js'))
+app.use('/deed', require('./Routes/data.route.js'))
 
 app.get('/',  async (req,res,next) =>{
     res.send("Welcome to the Admin Control Panel...")

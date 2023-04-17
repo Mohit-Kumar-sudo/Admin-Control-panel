@@ -129,16 +129,9 @@ module.exports = {
             if (!id) {
                 throw createError.BadRequest('Invalid Parameters')
             }
-            const dataToBeDeleted = await Model.findOne({ _id: mongoose.Types.ObjectId(id) }, { name: 1 }).lean()
-            if (!dataToBeDeleted) {
-                throw createError.NotFound(`${ModelName} Not Found`)
-            }
-            const dataExists = await Model.findOne({ name: dataToBeDeleted.name, is_active: false }).lean()
-            if (dataExists) {
-                throw createError.Conflict(`${ModelName} already exists`)
-            }
+            console.log(id)
             const restored_at = Date.now()
-            const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: false, restored_at } })
+            const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: true, restored_at } })
             if (result) {
                 res.send({ success: true, msg: 'Data Restored Successfully' })
             } else {

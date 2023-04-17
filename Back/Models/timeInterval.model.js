@@ -2,11 +2,14 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    contentType:{
+    content:{
         type:String
     },
-    allotedTime:{
-        type:String
+    minutes:{
+        type:Number
+    },
+    seconds:{
+        type:Number
     },
     is_active: {
         type: Boolean,

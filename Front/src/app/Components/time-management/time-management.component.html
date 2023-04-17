@@ -1,61 +1,79 @@
 <div class="container">
-  <div class="card mt-3">
+  <div class="card mt-3" *ngIf="!edit">
     <form #timeForm="ngForm" (ngSubmit)="submit(timeForm)">
       <div class="row p-4 pb-0">
         <div class="col-md-8">
           <label for="time configuration"
             >Select Video KYC Time Configuration</label
           >
-          <select class="form-control" ngModel name="deedType" id="deedType">
+          <select class="form-control" ngModel name="content" id="content">
             <option value="" disabled>
               --Select Video KYC Time Management--
             </option>
-            <option value="">
-              Configure time of XX seconds to the party for answer on the
-              displayed questions in Non Assisted (Self Recording Video).
+            <option value="Question Display Time in Non-Assisted">
+             Question Display Time in Non-Assisted
             </option>
-            <option value="">
-              Configure time of XX minutes to complete Non Assisted (Self
-              Recoding) Video KYC process.
+            <option value="Time to Complete Non-Assisted">
+              Time to Complete Non-Assisted
+            </option>
+            <option value="SR Time to Join Another Video Call">
+              SR Time to Join Another Video Call
             </option>
           </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="form-group">
-            <label for="select time">Select Time</label>
-            <select class="form-control" ngModel name="timeDuration" id="timeDuration">
-              <option value="" selected>--Select Time--</option>
-              <option value="1:00 Min">1:00 Min</option>
-              <option value="2:00 Min">2:00 Min</option>
-              <option value="3:00 Min">3:00 Min</option>
-              <option value="4:00 Min">4:00 Min</option>
-              <option value="5:00 Min">5:00 Min</option>
-              <option value="6:00 Min">6:00 Min</option>
-              <option value="7:00 Min">7:00 Min</option>
-              <option value="8:00 Min">8:00 Min</option>
-              <option value="9:00 Min">9:00 Min</option>
-              <option value="10:00 Min">10:00 Min</option>
-              <option value="11:00 Min">11:00 Min</option>
-              <option value="12:00 Min">12:00 Min</option>
-              <option value="13:00 Min">13:00 Min</option>
-              <option value="14:00 Min">14:00 Min</option>
-              <option value="15:00 Min">15:00 Min</option>
-              <option value="16:00 Min">16:00 Min</option>
-              <option value="17:00 Min">17:00 Min</option>
-              <option value="18:00 Min">18:00 Min</option>
-              <option value="19:00 Min">19:00 Min</option>
-              <option value="20:00 Min">20:00 Min</option>
-              <option value="21:00 Min">21:00 Min</option>
-              <option value="22:00 Min">22:00 Min</option>
-              <option value="23:00 Min">23:00 Min</option>
-              <option value="24:00 Min">24:00 Min</option>
-              <option value="25:00 Min">25:00 Min</option>
-              <option value="26:00 Min">26:00 Min</option>
-              <option value="27:00 Min">27:00 Min</option>
-              <option value="28:00 Min">28:00 Min</option>
-              <option value="29:00 Min">29:00 Min</option>
-              <option value="30:00 Min">30:00 Min</option>
-            </select>
+            <label for="select time">Minutes</label>
+            <input type="number" ngModel name="minutes"  placeholder="00" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="select time">Seconds</label>
+            <input type="number" ngModel name="seconds" placeholder="00" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-12 my-3">
+          <div class="btn" role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-submit mt-2">Submit</button>
+            <button type="reset" class="btn btn-reset mt-2">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="card mt-3" *ngIf="edit">
+    <form #updatetimeForm="ngForm" (ngSubmit)="updateSubmit(updatetimeForm)">
+      <div class="row p-4 pb-0" *ngIf="data">
+        <div class="col-md-8">
+          <label for="time configuration"
+            >Select Video KYC Time Configuration</label
+          >
+          <select class="form-control" [(ngModel)]="data.content" name="content" id="content">
+            <option value="" disabled>
+              --Select Video KYC Time Management--
+            </option>
+            <option value="Question Display Time in Non-Assisted">
+             Question Display Time in Non-Assisted
+            </option>
+            <option value="Time to Complete Non-Assisted">
+              Time to Complete Non-Assisted
+            </option>
+            <option value="SR Time to Join Another Video Call">
+              SR Time to Join Another Video Call
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="select time">Minutes</label>
+            <input type="number" [(ngModel)]="data.minutes" name="minutes"  placeholder="00" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="select time">Seconds</label>
+            <input type="number" [(ngModel)]="data.seconds" name="seconds" placeholder="00" class="form-control">
           </div>
         </div>
         <div class="col-md-12 my-3">
@@ -78,24 +96,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td scope="row" class="text-center">1.</td>
-          <td>Configure time of XX seconds to the party for answer on the displayed questions in Non Assisted (Self Recording Video).</td>
-          <td>10:00 Min</td>
+        <tr *ngFor="let item of timeList; let i = index">
+          <td scope="row" class="text-center">{{i+1}}.</td>
+          <td>{{item.content}}</td>
+          <td>{{item.minutes}} Min : {{item.seconds}} Sec</td>
           <td>
-            <i class="fas fa-edit"></i>
+            <i class="fas fa-edit" (click)="editTime(item._id)"></i>
             &nbsp;&nbsp;
-            <i class="fas fa-check-square"></i>
-          </td>
-        </tr>
-        <tr>
-          <td scope="row" class="text-center">2.</td>
-          <td>Configure time of XX minutes to complete Non Assisted (Self Recoding) Video KYC process.</td>
-          <td>10:00 Min</td>
-          <td>
-            <i class="fas fa-edit"></i>
-            &nbsp;&nbsp;
-            <i class="fas fa-check-square"></i>
+            <i
+            class="fa-regular fa-square fa-md"
+            *ngIf="item.is_active == false" (click)="activeContent(item._id)"
+          ></i>
+          <i
+            class="fa-regular fa-square-check fa-md"
+            *ngIf="item.is_active == true"  (click)="deactivateContent(item._id)"
+          ></i>
           </td>
         </tr>
       </tbody>
@@ -105,6 +120,7 @@
     [pageSize]="page"
     [pageSizeOptions]="[5, 10, 25, 100]"
     aria-label="Select page"
+    [showFirstLastButtons]="true">
   >
   </mat-paginator>
   </div>

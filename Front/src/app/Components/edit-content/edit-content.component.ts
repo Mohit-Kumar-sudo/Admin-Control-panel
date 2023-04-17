@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { AlertService } from "src/app/services/alert.service";
 import { ApiService } from "src/app/services/api.service";
 
 @Component({
@@ -16,7 +17,7 @@ export class EditContentComponent {
   public Editor: any = ClassicEditor;
   public CKEditor: any = ClassicEditor;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(private api: ApiService, private route: ActivatedRoute, private as : AlertService, private router : Router) {}
 
   ngOnInit() {
     this.route.params.subscribe((param: any) => {
@@ -40,8 +41,11 @@ export class EditContentComponent {
   Submit(frm: any) {
     this.api.put('content', this.id, frm.value).subscribe((res:any) => {
       if(res){
-        alert(  + '')
+        this.as.successToast('Content Updated Successfully')
+        this.router.navigate([`Content/${frm.value.contentType}`]);
       }
+    }, error => {
+      this.as.errorToast(error.message)
     })
   }
 }
