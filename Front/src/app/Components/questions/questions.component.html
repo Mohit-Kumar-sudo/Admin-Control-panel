@@ -11,13 +11,13 @@
           <label for="Deed Category">Deed Category</label>
           <select
             class="form-control"
-            ngModel
+            [(ngModel)]="deedType"
             name="deedCategory"
             id="deedCategory"
-            (selectionchange)="getDeedType($event)"
+            (selectionchange)="getDeedType(deedType)"
           >
             <option value="" disabled>---Select Deed Category--</option>
-            <option *ngFor="let item of deedCategory" [value]="item" >{{item}}</option>
+            <option *ngFor="let item of deedCategory" [value]="item.deedCategoryId" >{{item.deedCategoryNameEn}}</option>
           </select>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
