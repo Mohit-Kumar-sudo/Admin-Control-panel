@@ -11,6 +11,9 @@ export class QuestionsComponent {
   deedCategory: any [] = [];
   deedType: any [] = [] ;
   instrument: any;
+  instrumentId: any;
+  deedCategoryId:any;
+  deedTypeId:any;
 
   constructor(private api: ApiService, private as: AlertService) {}
 
@@ -25,7 +28,6 @@ export class QuestionsComponent {
         (res: any) => {
           if (res.success) {
             this.deedCategory = res.data;
-            console.log(this.deedCategory)
           }
         },
         (error) => {
@@ -34,9 +36,8 @@ export class QuestionsComponent {
       );
   }
 
-  getDeedType(id: any) {
-    console.log(id)
-    this.api.get("deed", id).subscribe(
+  getDeedType() {
+    this.api.getById("deed", this.deedCategoryId).subscribe(
       (res: any) => {
         if (res.success) {
           this.deedType = res.data;
@@ -48,11 +49,12 @@ export class QuestionsComponent {
     );
   }
 
-  getInstrument(id: any) {
-    this.api.get("deed/Instrument", id).subscribe(
+  getInstrument() {
+    this.api.getById("deed/Instrument", this.deedTypeId ).subscribe(
       (res: any) => {
         if (res.success) {
           this.instrument = res.data;
+          console.log(res.data)
         }
       },
       (error) => {

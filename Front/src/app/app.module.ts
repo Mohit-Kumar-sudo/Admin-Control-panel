@@ -7,8 +7,19 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HttpBackend } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+
+
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(_httpBackend: HttpBackend) {
+  return new MultiTranslateHttpLoader(_httpBackend, [
+    '/assets/translate/',
+  ]);
+}
 
 @NgModule({
   declarations: [
@@ -23,7 +34,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     NgbModule,
     CKEditorModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpBackend],
+      },
+    }),
   ],
   providers: [
 

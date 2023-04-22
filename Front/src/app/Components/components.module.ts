@@ -9,6 +9,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FormsModule } from '@angular/forms';
 import { EditContentComponent } from './edit-content/edit-content.component';
 import { MatPaginatorModule} from '@angular/material/paginator'
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MatPaginatorModule} from '@angular/material/paginator'
     ComponentsRoutingModule,
     CKEditorModule,
     FormsModule,
+    TranslateModule,
     MatPaginatorModule
   ]
 })

@@ -1,39 +1,12 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 declare interface RouteInfo {
   path: string;
   title: string;
-  // permission: string;
 }
 
-const routes: Routes = [
-  {
-    path:'/Dashboard',
-    title:"Dashboard",
-  },
-  {
-    path:'/Question',
-    title:"Question",
-  },
-  {
-    path:'Content/prerequisits',
-    title:"Prerequisits",
-  },
-  {
-    path:'Content/dos&donts',
-    title:"Do's & Dont's",
-  },
-  {
-    path:'Content/terms&condition',
-    title:"Terms & Conditions",
-  },
-  {
-    path:'/Time-management',
-    title:"Time-management",
-  }
-
-]
 
 @Component({
   selector: 'app-navbar',
@@ -41,12 +14,26 @@ const routes: Routes = [
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  navItems: any = [];
+  switchLang:string = 'en';
+  browserLang;
 
-  constructor(){
-    this.navItems = routes
+  constructor(
+    public translate : TranslateService
+  ){
+    translate.addLangs(['en','hi'])
+    translate.setDefaultLang('en')
+    translate.use('en')
+    this.browserLang = translate.getDefaultLang();
+    this.languageChanged()
   }
 
+  selectLanguage(lang:any){
+    this.switchLang = lang
+    this.translate.use(lang)
+  }
 
+  languageChanged(){
+    this.translate.use(this.browserLang.match(/en|hi/)? this.browserLang : 'en')
+  }
 
 }

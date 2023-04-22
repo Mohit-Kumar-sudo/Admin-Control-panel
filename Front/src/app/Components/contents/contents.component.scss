@@ -46,7 +46,8 @@ label{
   background-color: #02ACAF;
   color: white;
   font-weight: bold;
-  width: 80px;
+  min-width: 80px;
+  max-width: 120px;
   margin-left: 40px;
 }
 
@@ -55,7 +56,8 @@ label{
   color: white;
   margin-left: 50px;
   font-weight: bold;
-  width: 80px;
+  min-width: 80px;
+  max-width: 120px;
 }
 
 thead{

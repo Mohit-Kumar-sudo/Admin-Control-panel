@@ -9,7 +9,7 @@
           }}"
           (click)="view = views[0]"
         >
-          Prerequisites
+          {{'content.button1' | translate}}
         </button>
         <button
           type="button"
@@ -18,7 +18,7 @@
           }}"
           (click)="view = views[1]"
         >
-          Do's & Don'ts
+           {{'content.button2' | translate}}
         </button>
         <button
           type="button"
@@ -27,7 +27,7 @@
           }}"
           (click)="view = views[2]"
         >
-          Terms & Conditions
+           {{'content.button3' | translate}}
         </button>
       </div>
     </div>
@@ -39,17 +39,17 @@
       <div class="row mb-2">
         <form #preform="ngForm" (ngSubmit)="Prerequisits(preform)">
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Select Video KYC Type </label>
+            <label type="label">{{'content.label1'| translate}}</label>
             <select class="form-control" ngModel name="vkycType" id="vkycType" required>
               <option value="" disabled selected>
-                ---Select Video KYC Type--
+                --{{'content.label1'| translate}}--
               </option>
-              <option value="Assisted">Assisted</option>
-              <option value="Non Assisted">Non Assisted</option>
+              <option value="Assisted">{{'content.option1'| translate}}</option>
+              <option value="Non Assisted">{{'content.option2'| translate}}</option>
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Prerequisites in English</label>
+            <label type="label"> {{'content.label2'| translate}}</label>
             <ckeditor
               [editor]="Editor"
               name="content_english"
@@ -58,7 +58,7 @@
             </ckeditor>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Prerequisites in Hindi</label>
+            <label type="label"> {{'content.label3'| translate}}</label>
             <ckeditor
               [editor]="CKEditor"
               name="content_hindi"
@@ -68,8 +68,8 @@
           </div>
           <div class="col-md-12 my-3">
             <div class="btn" role="group" aria-label="Basic example">
-              <button type="submit" class="btn btn-submit mt-4">Submit</button>
-              <button type="reset" class="btn btn-reset mt-4">Reset</button>
+              <button type="submit" class="btn btn-submit mt-4">{{'content.Submit'| translate}}</button>
+              <button type="reset" class="btn btn-reset mt-4">{{'content.Reset'| translate}}</button>
             </div>
           </div>
         </form>
@@ -83,17 +83,17 @@
       <div class="row mb-2">
         <form #dosForm="ngForm" (ngSubmit)="dosanddonts(dosForm)">
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Select Video KYC Type </label>
+            <label type="label"> {{'content.label1'| translate}}</label>
             <select class="form-control" ngModel name="vkycType" id="vkycType" required>
               <option value="" disabled selected>
-                ---Select Video KYC Type--
+                --{{'content.label1'| translate}}--
               </option>
-              <option value="Assisted">Assisted</option>
-              <option value="Non Assisted">Non Assisted</option>
+              <option value="Assisted">{{'content.option1'| translate}}</option>
+              <option value="Non Assisted">{{'content.option2' | translate}}</option>
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Do's & Don'ts in English</label>
+            <label type="label">{{'content.label4' | translate}}</label>
             <ckeditor
               [editor]="Editor"
               name="content_english"
@@ -103,7 +103,7 @@
             </ckeditor>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Do's & Don'ts in Hindi</label>
+            <label type="label"> {{'content.label5' | translate}}</label>
             <ckeditor
               [editor]="CKEditor"
               name="content_hindi"
@@ -114,8 +114,8 @@
           </div>
           <div class="col-md-12 my-3">
             <div class="btn" role="group" aria-label="Basic example">
-              <button type="submit" class="btn btn-submit mt-4">Submit</button>
-              <button type="reset" class="btn btn-reset mt-4">Reset</button>
+              <button type="submit" class="btn btn-submit mt-4">{{'content.Submit'| translate}}</button>
+              <button type="reset" class="btn btn-reset mt-4">{{'content.Reset'| translate}}</button>
             </div>
           </div>
         </form>
@@ -129,17 +129,17 @@
       <div class="row mb-2">
         <form #termsForm="ngForm" (ngSubmit)="termsandcondition(termsForm)">
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Select Video KYC Type </label>
+            <label type="label"> {{'content.label1'| translate}} </label>
             <select class="form-control" ngModel name="vkycType" id="vkycType" required>
               <option value="" disabled selected>
-                ---Select Video KYC Type--
+                --{{'content.label1'| translate}}--
               </option>
-              <option value="Assisted">Assisted</option>
-              <option value="Non Assisted">Non Assisted</option>
+              <option value="Assisted">{{'content.option1'| translate}}</option>
+              <option value="Non Assisted">{{'content.option2'| translate}}</option>
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Terms & Conditions in English</label>
+            <label type="label"> {{'content.label6'| translate}}</label>
             <ckeditor
               [editor]="Editor"
               name="content_english"
@@ -149,7 +149,7 @@
             </ckeditor>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> Terms & Conditions in Hindi</label>
+            <label type="label"> {{'content.label7'| translate}}</label>
             <ckeditor
               [editor]="CKEditor"
               name="content_hindi"
@@ -160,8 +160,8 @@
           </div>
           <div class="col-md-12 my-3">
             <div class="btn" role="group" aria-label="Basic example">
-              <button type="submit" class="btn btn-submit mt-4">Submit</button>
-              <button type="reset" class="btn btn-reset mt-4">Reset</button>
+              <button type="submit" class="btn btn-submit mt-4">{{'content.Submit'| translate}}</button>
+              <button type="reset" class="btn btn-reset mt-4">{{'content.Reset' | translate}}</button>
             </div>
           </div>
         </form>
@@ -181,12 +181,12 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">S.No.</th>
-                <th scope="col">Content</th>
-                <th scope="col">VKYC Type</th>
-                <th scope="col">Instructions English</th>
-                <th scope="col">Instructions Hindi</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{'content.sno' | translate}}</th>
+                <th scope="col">{{'content.content' | translate}}</th>
+                <th scope="col">{{'content.VKYCType' | translate}}</th>
+                <th scope="col">{{'content.InstructionsEnglish' | translate}}</th>
+                <th scope="col">{{'content.InstructionsHindi' | translate}}</th>
+                <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
             <tbody>
@@ -236,12 +236,12 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">S.No.</th>
-                <th scope="col">Content</th>
-                <th scope="col">VKYC Type</th>
-                <th scope="col">Instructions English</th>
-                <th scope="col">Instructions Hindi</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{'content.sno' | translate}}</th>
+                <th scope="col">{{'content.content' | translate}}</th>
+                <th scope="col">{{'content.VKYCType' | translate}}</th>
+                <th scope="col">{{'content.InstructionsEnglish' | translate}}</th>
+                <th scope="col">{{'content.InstructionsHindi' | translate}}</th>
+                <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
             <tbody>
@@ -291,12 +291,12 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">S.No.</th>
-                <th scope="col">Content</th>
-                <th scope="col">VKYC Type</th>
-                <th scope="col">Instructions English</th>
-                <th scope="col">Instructions Hindi</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{'content.sno' | translate}}</th>
+                <th scope="col">{{'content.content' | translate}}</th>
+                <th scope="col">{{'content.VKYCType' | translate}}</th>
+                <th scope="col">{{'content.InstructionsEnglish' | translate}}</th>
+                <th scope="col">{{'content.InstructionsHindi' | translate}}</th>
+                <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
             <tbody>
