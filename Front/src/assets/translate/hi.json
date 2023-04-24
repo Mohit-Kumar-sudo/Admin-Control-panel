@@ -38,6 +38,7 @@
 
   "question":{
     "filter":"फ़िल्टर",
+    "back":"पीछे",
     "label1":"विलेख श्रेणी",
     "option1":"विलेख श्रेणी का चयन करे",
     "label2":"विलेख प्रकार",
@@ -78,8 +79,7 @@
     "sno":"र.सं.",
     "content":"विषय",
     "VKYCType":"वीकेवाईसी प्रकार",
-    "InstructionsEnglish" : "निर्देश अंग्रेजी",
-    "InstructionsHindi" : "निर्देश हिंदी",
+    "InstructionsEnglish" : "निर्देश हिंदी",
     "Actions":"Actions"
   },
 

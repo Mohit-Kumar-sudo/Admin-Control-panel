@@ -67,7 +67,7 @@
             </ckeditor>
           </div>
           <div class="col-md-12 my-3">
-            <div class="btn" role="group" aria-label="Basic example">
+            <div role="group" aria-label="Basic example">
               <button type="submit" class="btn btn-submit mt-4">{{'content.Submit'| translate}}</button>
               <button type="reset" class="btn btn-reset mt-4">{{'content.Reset'| translate}}</button>
             </div>
@@ -113,7 +113,7 @@
             </ckeditor>
           </div>
           <div class="col-md-12 my-3">
-            <div class="btn" role="group" aria-label="Basic example">
+            <div role="group" aria-label="Basic example">
               <button type="submit" class="btn btn-submit mt-4">{{'content.Submit'| translate}}</button>
               <button type="reset" class="btn btn-reset mt-4">{{'content.Reset'| translate}}</button>
             </div>
@@ -159,7 +159,7 @@
             </ckeditor>
           </div>
           <div class="col-md-12 my-3">
-            <div class="btn" role="group" aria-label="Basic example">
+            <div role="group" aria-label="Basic example">
               <button type="submit" class="btn btn-submit mt-4">{{'content.Submit'| translate}}</button>
               <button type="reset" class="btn btn-reset mt-4">{{'content.Reset' | translate}}</button>
             </div>
@@ -185,17 +185,15 @@
                 <th scope="col">{{'content.content' | translate}}</th>
                 <th scope="col">{{'content.VKYCType' | translate}}</th>
                 <th scope="col">{{'content.InstructionsEnglish' | translate}}</th>
-                <th scope="col">{{'content.InstructionsHindi' | translate}}</th>
                 <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of Prerequisites; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ item.contentType }}</td>
-                <td>{{ item.vkycType }}</td>
-                <td><p [innerHTML]="item.content_english"></p></td>
-                <td><p [innerHTML]="item.content_hindi"></p></td>
+                <td>{{ translation.currentLang == 'en' ? item.contentTypeEn : item.contentTypeHi }}</td>
+                <td>{{ translation.currentLang == 'en' ? item.vkycTypeEn : item.vkycTypeHi}}</td>
+                <td><p [innerHTML]="translation.currentLang == 'en' ? item.content_english : item.content_hindi"></p></td>
                 <td>
                   <i
                     class="fas fa-edit fa-md"
@@ -240,17 +238,15 @@
                 <th scope="col">{{'content.content' | translate}}</th>
                 <th scope="col">{{'content.VKYCType' | translate}}</th>
                 <th scope="col">{{'content.InstructionsEnglish' | translate}}</th>
-                <th scope="col">{{'content.InstructionsHindi' | translate}}</th>
                 <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of DosandDonts; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ item.contentType }}</td>
-                <td>{{ item.vkycType }}</td>
-                <td><p [innerHTML]="item.content_english"></p></td>
-                <td><p [innerHTML]="item.content_hindi"></p></td>
+                <td>{{ translation.currentLang == 'en' ? item.contentTypeEn : item.contentTypeHi }}</td>
+                <td>{{ translation.currentLang == 'en' ? item.vkycTypeEn : item.vkycTypeHi}}</td>
+                <td><p [innerHTML]="translation.currentLang == 'en' ? item.content_english : item.content_hindi"></p></td>
                 <td>
                   <i
                     class="fas fa-edit fa-md"
@@ -295,17 +291,15 @@
                 <th scope="col">{{'content.content' | translate}}</th>
                 <th scope="col">{{'content.VKYCType' | translate}}</th>
                 <th scope="col">{{'content.InstructionsEnglish' | translate}}</th>
-                <th scope="col">{{'content.InstructionsHindi' | translate}}</th>
                 <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of termsandCondition; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ item.contentType }}</td>
-                <td>{{ item.vkycType }}</td>
-                <td><p [innerHTML]="item.content_english"></p></td>
-                <td><p [innerHTML]="item.content_hindi"></p></td>
+                <td>{{ translation.currentLang == 'en' ? item.contentTypeEn : item.contentTypeHi }}</td>
+                <td>{{ translation.currentLang == 'en' ? item.vkycTypeEn : item.vkycTypeHi}}</td>
+                <td><p [innerHTML]="translation.currentLang == 'en' ? item.content_english : item.content_hindi"></p></td>
                 <td>
                   <i
                     class="fas fa-edit fa-md"

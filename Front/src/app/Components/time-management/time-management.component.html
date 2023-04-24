@@ -8,7 +8,7 @@
           >
           <select class="form-control" ngModel name="content" id="content">
             <option value="" disabled>
-              ----
+              --{{'time.label1'| translate}}--
             </option>
             <option *ngFor="let item of 'time.options' | translate" [value]="item">
             {{item}}

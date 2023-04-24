@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { AlertService } from "src/app/services/alert.service";
 import { ApiService } from "src/app/services/api.service";
+import { TranslationService } from "src/app/services/translation.service";
 
 @Component({
   selector: "app-contents",
@@ -27,7 +29,9 @@ export class ContentsComponent {
   constructor(
     private api: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private as : AlertService,
+    public translation : TranslationService
   ) {
     this.route.params.subscribe((param: any) => {
       this.content = param.content;
@@ -47,20 +51,29 @@ export class ContentsComponent {
   }
 
   Prerequisits(frm: any) {
+    if(frm.value.vKycType == 'Assisted'){
+      frm.value.vkycTypeEn = 'Assisted',
+      frm.value.vkycTypeHi = 'सहायक'
+    } else {
+      frm.value.vkycTypeEn = 'Non Assisted',
+      frm.value.vkycTypeHi = 'गैर सहायता'
+    }
     const data = {
-      contentType: "Prerequisites",
+      contentTypeEn: "Prerequisites",
+      contentTypeHi: "आवश्यक शर्तें",
       ...frm.value,
     };
     this.api.post("content", data).subscribe(
       (res: any) => {
         if (res.success) {
-          alert("Data Submitted Successfully");
+          this.as.successToast("Data Submitted Successfully");
+          this.getPrerequisits();
         } else {
-          alert("Something went wrong please try again");
+          this.as.warningToast("Something went wrong please try again");
         }
       },
       (error) => {
-        alert(error.message);
+        this.as.errorToast(error.message);
       }
     );
   }
@@ -73,13 +86,14 @@ export class ContentsComponent {
     this.api.post("content", data).subscribe(
       (res: any) => {
         if (res.success) {
-          alert("Data Submitted Successfully");
+          this.as.successToast("Data Submitted Successfully");
+          this.getDosandDonts();
         } else {
-          alert("Something went wrong please try again");
+          this.as.warningToast("Something went wrong please try again");
         }
       },
       (error) => {
-        alert(error.message);
+        this.as.errorToast(error.message);
       }
     );
   }
@@ -92,13 +106,14 @@ export class ContentsComponent {
     this.api.post("content", data).subscribe(
       (res: any) => {
         if (res.success) {
-          alert("Data Submitted Successfully");
+          this.as.successToast("Data Submitted Successfully");
+          this.getTermsandCondition();
         } else {
-          alert("Something went wrong please try again");
+          this.as.warningToast("Something went wrong please try again");
         }
       },
       (error) => {
-        alert(error.message);
+        this.as.errorToast(error.message);
       }
     );
   }
@@ -106,7 +121,7 @@ export class ContentsComponent {
   getPrerequisits() {
     this.api
       .get("content", {
-        contentType: "Prerequisites",
+        contentTypeEn: "Prerequisites",
         is_active: true,
         page: this.page,
         limit: this.limit,
@@ -117,11 +132,11 @@ export class ContentsComponent {
             this.Prerequisites = res.data;
             this.precount = res.count;
           } else {
-            alert("Something went wrong please try again");
+            this.as.warningToast("Something went wrong please try again");
           }
         },
         (error) => {
-          alert(error.message);
+          this.as.errorToast(error.message);
         }
       );
   }
@@ -129,7 +144,7 @@ export class ContentsComponent {
   getDosandDonts() {
     this.api
       .get("content", {
-        contentType: "Dos and Donts",
+        contentTypeEn: "Dos and Donts",
         is_active: true,
         page: this.page,
         limit: this.limit,
@@ -140,11 +155,11 @@ export class ContentsComponent {
             this.DosandDonts = res.data;
             this.doscount = res.count;
           } else {
-            alert("Something went wrong please try again");
+            this.as.warningToast("Something went wrong please try again");
           }
         },
         (error) => {
-          alert(error.message);
+          this.as.errorToast(error.message);
         }
       );
   }
@@ -152,7 +167,7 @@ export class ContentsComponent {
   getTermsandCondition() {
     this.api
       .get("content", {
-        contentType: "Terms and Condition",
+        contentTypeEn: "Terms and Condition",
         is_active: true,
         page: this.page,
         limit: this.limit,
@@ -163,11 +178,11 @@ export class ContentsComponent {
             this.termsandCondition = res.data;
             this.termscount = res.count;
           } else {
-            alert("Something went wrong please try again");
+            this.as.warningToast("Something went wrong please try again");
           }
         },
         (error) => {
-          alert(error.message);
+          this.as.errorToast(error.message);
         }
       );
   }
@@ -185,7 +200,7 @@ export class ContentsComponent {
         this.getTermsandCondition()
       }
     }, err => {
-      alert(err.message)
+      this.as.errorToast(err.message)
     })
   }
 
@@ -198,7 +213,7 @@ export class ContentsComponent {
         this.getTermsandCondition()
       }
     }, err => {
-      alert(err.message)
+      this.as.errorToast(err.message)
     })
   }
 

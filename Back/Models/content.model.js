@@ -2,10 +2,16 @@
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    contentType:{
+    contentTypeEn:{
         type:String
     },
-    vkycType:{
+    contentTypeHi:{
+        type:String
+    },
+    vkycTypeEn:{
+        type:String
+    },
+    vkycTypeHi:{
         type:String
     },
     content_english:{
