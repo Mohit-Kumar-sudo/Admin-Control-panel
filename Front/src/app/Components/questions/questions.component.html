@@ -41,12 +41,10 @@
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Party Role">{{'question.label4' | translate}}</label>
-          <select class="form-control" ngModel name="partRole" id="partRole">
+          <select class="form-control" [(ngModel)]="roleId" name="partRole" id="partRole">
             <option value="" disabled>---{{'question.option4'| translate}}--</option>
-            <option value="Buyer">Buyer</option>
-            <option value="Seller">Seller</option>
-            <option value="Concentor">Concentor</option>
-            <option value="Witness">Witness</option>
+            <option value="Buyer" *ngFor="let item of rolesData">{{translation.currentLang == 'en' ? item.partyTypeNameEn : item.partyTypeNameHi}}</option>
+
           </select>
         </div>
         <div class="col-md-6 col-sm-6 my-2">

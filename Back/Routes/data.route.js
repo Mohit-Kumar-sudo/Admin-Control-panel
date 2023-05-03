@@ -5,5 +5,6 @@ const Controller = require('../Controllers/data.controller')
 router.get('/', Controller.getDeedCategory)
 router.get('/:id', Controller.getAllDeedTypeByCategoryId) 
 router.get('/Instrument/:id', Controller.deedInstruments)
+router.get('/roles/:id', Controller.partyRoles)
 
 module.exports = router

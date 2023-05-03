@@ -16,6 +16,8 @@ export class QuestionsComponent {
   deedCategoryId: any;
   deedTypeId: any;
   filter:Boolean =  false;
+  roleId: any;
+  rolesData: any;
 
   constructor(
     private api: ApiService,
@@ -66,6 +68,17 @@ export class QuestionsComponent {
       }
     );
   }
+
+  getRoles(){
+    this.api.getById('deed/roles', this.roleId).subscribe((res:any) => {
+      if(res.success){
+        this.rolesData = res.data;
+      }
+    },(error) => {
+      this.as.errorToast(error.message)
+    })
+  }
+
 
   Filter(filter:any){
     console.log(filter)
