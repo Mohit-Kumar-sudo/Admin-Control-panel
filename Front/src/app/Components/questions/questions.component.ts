@@ -15,7 +15,19 @@ export class QuestionsComponent {
   instrumentId: any;
   deedCategoryId: any;
   deedTypeId: any;
-  filter:Boolean =  false;
+  filter: Boolean = false;
+  role:any = [
+    {
+      roleTypeEn: '',
+      roleTypeHi: '',
+      vKYCType: [
+        {
+          type: '',
+          questions: [],
+        },
+      ],
+    }
+  ]
 
   constructor(
     private api: ApiService,
@@ -67,9 +79,31 @@ export class QuestionsComponent {
     );
   }
 
-  Filter(filter:any){
-    console.log(filter)
-    this.filter = filter
+  Filter(filter: any) {
+    console.log(filter);
+    this.filter = filter;
   }
 
+  submit(frm: any) {
+    const data = {
+      content: [
+        {
+          instrumentEn: '',
+          instrumentHi: '',
+          role: [
+            {
+              roleTypeEn: '',
+              roleTypeHi: '',
+              vKYCType: [
+                {
+                  type: '',
+                  questions: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+  }
 }
