@@ -75,13 +75,15 @@ module.exports = {
     partyRoles: async (req, res, next) => {
         try {
             const { id } = req.params
+            console.log("id", id)
             if (!id) {
                 throw createError.BadRequest('Invalid Parameters')
             }
             axios.get(`http://20.204.184.35/sampadaService/common/duty/getAllPartyTypeByInstrumentId/${id}`, {
             })
                 .then(function (response) {
-                    const roles = response.data;
+                    const roles = response.data.responseData;
+                    console.log(roles)
                     if (roles) {
                         res.send({ success: true, msg: 'Detail Fetched', data: roles })
                     } else {

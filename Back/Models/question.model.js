@@ -2,22 +2,22 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    deedCategory:{
+    deedCategoryEn:{
         type:String
     },
-    deedType:{
+    deedCategoryHi:{
         type:String
     },
-    instrument:{
+    deedTypeEn:{
         type:String
     },
-    partRole:{
+    deedTypeHi:{
         type:String
     },
-    question_english:{
+    instrumentEn:{
         type:String
     },
-    question_hindi:{
+    instrumentHi:{
         type:String
     },
     is_active: {

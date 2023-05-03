@@ -18,6 +18,18 @@ export class QuestionsComponent {
   filter:Boolean =  false;
   roleId: any;
   rolesData: any;
+  role:any = [
+    {
+      roleTypeEn: '',
+      roleTypeHi: '',
+      vKYCType: [
+        {
+          type: '',
+          questions: [],
+        },
+      ],
+    }
+  ]
 
   constructor(
     private api: ApiService,
@@ -70,7 +82,7 @@ export class QuestionsComponent {
   }
 
   getRoles(){
-    this.api.getById('deed/roles', this.roleId).subscribe((res:any) => {
+    this.api.getById('deed/roles', this.instrumentId).subscribe((res:any) => {
       if(res.success){
         this.rolesData = res.data;
       }
@@ -79,10 +91,33 @@ export class QuestionsComponent {
     })
   }
 
-
-  Filter(filter:any){
-    console.log(filter)
-    this.filter = filter
+  Filter(filter: any) {
+    console.log(filter);
+    this.filter = filter;
   }
 
+  submit(frm: any) {
+    console.log(frm.value)
+    return
+    const data = {
+      content: [
+        {
+          instrumentEn: '',
+          instrumentHi: '',
+          role: [
+            {
+              roleTypeEn: '',
+              roleTypeHi: '',
+              vKYCType: [
+                {
+                  type: '',
+                  questions: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+  }
 }
