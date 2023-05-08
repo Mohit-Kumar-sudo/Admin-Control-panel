@@ -8,6 +8,8 @@ module.exports = {
     create: async (req, res, next) => {
         try {
             const data = req.body
+             data.instrument = data.instrument[0];
+             data.partyRole = data.partyRole[0];
             data.created_by = req.user ? req.user : 'unauth'
             data.updated_by = req.user ? req.user : 'unauth'
             data.created_at = Date.now()

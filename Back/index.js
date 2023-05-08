@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use('/content', require('./Routes/content.route.js'))
-app.use('/questions', require('./Routes/questions.route'))
+app.use('/question', require('./Routes/questions.route'))
 app.use('/timeInterval', require('./Routes/timeInterval.route.js'))
 app.use('/deed', require('./Routes/data.route.js'))
 

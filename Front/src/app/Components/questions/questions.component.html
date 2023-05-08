@@ -5,7 +5,7 @@
         <button class="btn btn-filter" (click)="Filter(true)">{{'question.filter' | translate}}</button>
       </div>
     </div>
-    <form>
+    <form #questionForm="ngForm" (ngSubmit)="submit(questionForm)">
       <div class="row p-4 pt-0">
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Deed Category">{{'question.label1' | translate}}</label>
@@ -33,8 +33,8 @@
             class="form-control"
             [(ngModel)]="instrumentId"
             (ngModelChange)="getRoles()"
-            name="Instrument"
-            id="Instrument"
+            name="instrument"
+            id="instrument"
           >
             <option value="" disabled>---{{'question.option3' | translate}}--</option>
             <option *ngFor="let item of instrument" [value]="item.id">{{translation.currentLang == 'en' ? item.instrumentNameEn : item.instrumentNameHi}}</option>
@@ -42,9 +42,9 @@
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Party Role">{{'question.label4' | translate}}</label>
-          <select class="form-control" [(ngModel)]="roleId" name="partRole" id="partRole">
+          <select class="form-control" ngModel name="partyRole" id="partyRole">
             <option value="" disabled>---{{'question.option4'| translate}}--</option>
-            <option [value]="item.id" *ngFor="let item of rolesData">{{translation.currentLang == 'en' ? item.partyTypeNameEn : item.partyTypeNameHi}}</option>
+            <option [value]="item.partyTypeId" *ngFor="let item of rolesData">{{translation.currentLang == 'en' ? item.partyTypeNameEn : item.partyTypeNameHi}}</option>
           </select>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
@@ -54,7 +54,7 @@
               class="form-control"
               id="exampleFormControlTextarea1"
               ngModel
-              name="English"
+              name="questionEn"
               placeholder="Enter Question in English"
               rows="3"
             ></textarea>
@@ -67,14 +67,14 @@
               class="form-control"
               id="exampleFormControlTextarea1"
               ngModel
-              name="Hindi"
+              name="questionHi"
               placeholder="Enter Question in Hindi"
               rows="3"
             ></textarea>
           </div>
         </div>
         <div class="col-md-12 my-3">
-          <div class="btn" role="group" aria-label="Basic example">
+          <div role="group" aria-label="Basic example">
             <button type="submit" class="btn btn-submit mt-2">{{'question.Submit'| translate}}</button>
             <button type="reset" class="btn btn-reset mt-2">{{'question.Reset'| translate}}</button>
           </div>
@@ -87,7 +87,7 @@
       <thead class="tableheader">
         <tr>
           <th scope="col" style="width: 25px">{{'question.sno'| translate}}</th>
-          <th scope="col">{{'question.InstrumentName'| translate}}</th>
+          <th scope="col" style="width: 350px">{{'question.InstrumentName'| translate}}</th>
           <th scope="col">{{'question.Role'| translate}}</th>
           <th scope="col">{{'question.VKYCType'| translate}}</th>
           <th scope="col">{{'question.Questions' | translate}}</th>
@@ -95,21 +95,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row" rowspan="2">1</th>
-          <td rowspan="2" style="width: 550px;">
-            Acknowledgement of a debt, written or signed by or on behalf of
-            debtor.
+        <tr *ngFor="let item of questionList; let i = index">
+          <th scope="row" rowspan="2">{{i+1}}</th>
+          <td>{{translation.currentLang == 'en' ? item.instrument.instrumentNameEn : item.instrument.instrumentNameHi}}</td>
+          <td>{{translation.currentLang == 'en' ? item.partyRole.partyTypeNameEn : item.partyRole.partyTypeNameHi}}</td>
+          <td>Assisted / Non-Assisted</td>
+          <td>{{translation.currentLang == 'en' ? item.questionEn : item.questionHi }}</td>
+          <td>
+            <i class="fas fa-edit" (click)="editQuestion(item._id)"></i>
+            &nbsp;&nbsp;
+            <i
+            class="fa-regular fa-square fa-md"
+            *ngIf="item.is_active == false" (click)="enableQuestion(item._id)"
+          ></i>
+          <i
+            class="fa-regular fa-square-check fa-md"
+            *ngIf="item.is_active == true"  (click)="disableQuestion(item._id)"
+          ></i>
           </td>
-          <td>Executant</td>
-          <td>Assisted</td>
-          <td>w</td>
-        </tr>
-        <tr>
-          <td>Claimant</td>
-          <td>Non-Assisted</td>
-          <td>dd</td>
-        </tr>
       </tbody>
     </table>
   </div>

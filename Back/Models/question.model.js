@@ -2,23 +2,17 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    deedCategoryEn:{
+    questionEn:{
         type:String
     },
-    deedCategoryHi:{
+    questionHi:{
         type:String
     },
-    deedTypeEn:{
-        type:String
+    instrument:{
+        type:Object
     },
-    deedTypeHi:{
-        type:String
-    },
-    instrumentEn:{
-        type:String
-    },
-    instrumentHi:{
-        type:String
+    partyRole:{
+        type:Object
     },
     is_active: {
         type: Boolean,

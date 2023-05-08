@@ -89,9 +89,10 @@
     "label1":"Select Video KYC Time Configuration",
     "option1":"Select Video KYC Time Management",
     "options":[
-      "Question Display Time in Non-Assisted",
-      "Time to Complete Non-Assisted",
-      "SR Time to Join Next Video Call"
+      "Capture Images",
+      "Liveness Detection",
+      "Question Presentation",
+      "Capture Document Images"
     ],
     "Minutes":"Minutes",
     "Seconds":"Seconds",

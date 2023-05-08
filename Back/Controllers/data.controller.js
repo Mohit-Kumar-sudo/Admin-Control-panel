@@ -83,7 +83,6 @@ module.exports = {
             })
                 .then(function (response) {
                     const roles = response.data.responseData;
-                    console.log(roles)
                     if (roles) {
                         res.send({ success: true, msg: 'Detail Fetched', data: roles })
                     } else {
