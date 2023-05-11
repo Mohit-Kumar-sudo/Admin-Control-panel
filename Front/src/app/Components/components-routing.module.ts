@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { TimeManagementComponent } from './time-management/time-management.component';
 import { EditContentComponent } from './edit-content/edit-content.component';
+import { DisplayComponent } from './display/display.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'Time-management',
     component:TimeManagementComponent
+  },
+  {
+    path:'Display',
+    component:DisplayComponent
   }
 ];
 

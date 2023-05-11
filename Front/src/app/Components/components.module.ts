@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { EditContentComponent } from './edit-content/edit-content.component';
 import { MatPaginatorModule} from '@angular/material/paginator'
 import { TranslateModule } from '@ngx-translate/core';
+import { DisplayComponent } from './display/display.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ContentsComponent,
     QuestionsComponent,
     TimeManagementComponent,
-    EditContentComponent
+    EditContentComponent,
+    DisplayComponent
   ],
   imports: [
     CommonModule,

@@ -21,6 +21,13 @@ app.get('/',  async (req,res,next) =>{
     res.send("Welcome to the Admin Control Panel...")
 });
 
+app.use("/",express.static(path.join(__dirname, "public", "admin-control-panel")));
+
+app.use('/', (req, res) => {
+    res.sendFile(path.join(__dirname,'./public/admin-control-panel/index.html'));
+  });
+  
+
 app.use(async (req,res,next)=>{  
     next(createError.NotFound('This route does not exist '));
 
