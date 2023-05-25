@@ -22,22 +22,27 @@ module.exports = {
 
             if (result) {
                 const resData = await Model.find({ is_active: true }, { content: 1, minutes: 1, seconds: 1 })
+                let newData = []
+                for (const object of resData) {
+                    const transformed = {[object.content]: `${object.minutes}:${object.seconds}`}
+                    newData.push(transformed)
+                }
                 try {
-
                     const config = {
                         headers: {
                             "x-parse-application-id": "MPSEDC_UAT",
                             "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
                             "content-type": "application/json"
-                        } 
+                        }
                     };
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', resData, config)
+                    console.log("newData", newData)
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', newData, config)
                         .then((resData) => {
                             console.log("resData", resData.data)
-                            if (resData.data) {
+                            if (!resData.data.status === "Failure") {
                                 res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
-                                res.send({ success: false, msg: 'Failed to Submit Data' })
+                                res.send({ success: false, msg: 'Failed to Submit Data in Video KYC' })
                             }
                         }, error => {
                             console.log(error)
@@ -122,18 +127,29 @@ module.exports = {
             }
             data.updated_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
+            let newData = []
             if (result) {
                 const resData = await Model.find({ is_active: true }, { content: 1, minutes: 1, seconds: 1 })
+                for (const object of resData) {
+                    const transformed = {[object.content]: `${object.minutes}:${object.seconds}`}
+                    newData.push(transformed)
+                }
+                console.log("newData", newData)
                 try {
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', {
-                        body: JSON.stringify(resData)
-                    })
-                        .then(function (response) {
-                            console.log("response", response.data)
-                            if (response.data) {
-                                res.send({ success: true, msg: 'Data submitted successfully' })
+                    const config = {
+                        headers: {
+                            "x-parse-application-id": "MPSEDC_UAT",
+                            "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+                            "content-type": "application/json"
+                        }
+                    };
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', newData, config)
+                        .then((resData) => {
+                            console.log("resData", resData.data)
+                            if (!resData.data.status === "Failure") {
+                                res.send({ success: true, msg: 'Data Updated successfully' })
                             } else {
-                                res.send({ success: false, msg: 'Failed to Submit Data' })
+                                res.send({ success: false, msg: 'Failed to Update Data in Video KYC' })
                             }
                         }, error => {
                             console.log(error)
@@ -141,13 +157,12 @@ module.exports = {
                 } catch (error) {
                     next(error)
                 }
-                res.send({ success: true, msg: 'Data Updated Successfully' })
+                res.send({ success: true, msg: 'Data Update successfully.' })
             } else {
-                res.send({ success: false, msg: 'Failed to Update Data' })
+                res.send({ success: false, msg: 'Failed to Update data.' })
             }
         } catch (error) {
-            if (error.isJoi === true)
-                return next(createError.BadRequest('Bad Request'))
+            if (error.isJoi === true) error.status = 422
             next(error)
         }
     },

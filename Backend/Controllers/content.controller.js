@@ -2,6 +2,7 @@ const createError = require('http-errors')
 const Model = require('../Models/content.model')
 const mongoose = require('mongoose')
 const ModelName = 'Content'
+const axios = require('axios');
 
 module.exports = {
 
@@ -24,14 +25,72 @@ module.exports = {
 
             if (result) {
                 const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
+                let newData = {}
+                let do_and_donts = {}
+                let terms_conditions = {}
+                let prerequisites = {}
+                for (const item of resData) {
+                    if (item.vkycTypeEn == "Assisted") {
+                        if (item.contentTypeEn === "Do's and Don'ts") {
+                            do_and_donts = {
+                               English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Terms and Condition") {
+                            terms_conditions = {
+                               English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Prerequisites") {
+                            prerequisites = {
+                               English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                    }
+                    newData = {
+                        "Assisted": { do_and_donts, terms_conditions, prerequisites }
+                    }
+                    if (item.vkycTypeEn == "Non_Assisted") {
+                        if (item.contentTypeEn === "Do's and Don'ts") {
+                            do_and_donts = {
+                               English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Terms and Condition") {
+                            terms_conditions = {
+                               English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Prerequisites") {
+                            prerequisites = {
+                               English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                    }
+                    newData = {
+                        ...newData,
+                        "Non_Assisted": { do_and_donts, terms_conditions, prerequisites }
+                    }
+                }
                 try {
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', {
-                        body: resData
-                    })
+                    const config = {
+                        headers: {
+                            "x-parse-application-id": "MPSEDC_UAT",
+                            "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+                            "content-type": "application/json"
+                        }
+                    };
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', newData, config)
                         .then(function (response) {
-                            const resultData = response;
-                            if (resultData) {
-                                res.send({ success: true, msg: 'Data submitted successfully', data: resultData })
+                            const resultData = response.data;
+                            if (resultData.data) {
+                                res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
                                 res.send({ success: false, msg: 'Failed to Submit Data' })
                             }
@@ -126,14 +185,71 @@ module.exports = {
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
             if (result) {
                 const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
+                let newData = {}
+                let do_and_donts = {}
+                let terms_conditions = {}
+                let prerequisites = {}
+                for (const item of resData) {
+                    if (item.vkycTypeEn == "Assisted") {
+                        if (item.contentTypeEn === "Do's and Don'ts") {
+                            do_and_donts = {
+                                English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Terms and Condition") {
+                            terms_conditions = {
+                                English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Prerequisites") {
+                            prerequisites = {
+                                English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                    }
+                    newData = {
+                        "Assisted": { do_and_donts, terms_conditions, prerequisites }
+                    }
+                    if (item.vkycTypeEn == "Non_Assisted") {
+                        if (item.contentTypeEn === "Do's and Don'ts") {
+                            do_and_donts = {
+                                English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Terms and Condition") {
+                            terms_conditions = {
+                                English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                        if (item.contentTypeEn === "Prerequisites") {
+                            prerequisites = {
+                                English: `${item.content_english}`,
+                                Hindi: `${item.content_hindi}`
+                            };
+                        }
+                    }
+                    newData = {
+                        ...newData,
+                        "Non_Assisted": { do_and_donts, terms_conditions, prerequisites }
+                    }
+                }
                 try {
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', {
-                        body: resData
-                    })
+                    const config = {
+                        headers: {
+                            "x-parse-application-id": "MPSEDC_UAT",
+                            "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
+                            "content-type": "application/json"
+                        }
+                    };
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', newData, config)
                         .then(function (response) {
-                            const resultData = response;
-                            if (resultData) {
-                                res.send({ success: true, msg: 'Data submitted successfully', data: resultData })
+                            if (response.data) {
+                                res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
                                 res.send({ success: false, msg: 'Failed to Submit Data' })
                             }
@@ -143,7 +259,7 @@ module.exports = {
                 } catch (error) {
                     next(error)
                 }
-                res.send({ success: true, msg: 'Data Updated Successfully' })
+                res.send({ success: true, msg: 'Data inserted successfully.' })
             } else {
                 res.send({ success: false, msg: 'Failed to Update Data' })
             }
@@ -194,3 +310,29 @@ module.exports = {
     },
 
 }
+
+// function removeBlanks(string) {
+//     let newData = '';
+//     newData = string.toString().split('<li>')
+//     newData = newData.toString().split('</li>')
+//     newData = newData.toString().split('<ul>')
+//     newData = newData.toString().split('</ul>')
+//     newData = newData.toString().split('<ol>')
+//     newData = newData.toString().split('</ol>')
+//     newData = newData.toString().split('<p>')
+//     newData = newData.toString().split('</p>')
+//     newData = newData.toString().split(',,')
+//     console.log("newData", newData)
+//     let newArr = [];
+//     newData.forEach(item => {
+//         if (item !== "") {
+//             newArr.push(item);
+//         }
+//     });
+//     var regex = /&nbsp;(<([^>/n]+)>)/ig;
+//     for (var i = 0; i < newArr.length; i++) {
+//         newArr[i].address = newArr[i].replace(regex, "");
+//     }
+//     console.log("newArr", newArr)
+//     return newArr;
+
