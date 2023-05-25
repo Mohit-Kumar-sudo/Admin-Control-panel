@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="card mt-3">
+    <div class="row p-4 pb-0">
+      <div class="col-md-12 text-end">
+        <button class="btn btn-filter" (click)="back()">{{'question.back' | translate}}</button>
+      </div>
+    </div>
+    <form #questionUpdateForm="ngForm" (ngSubmit)="Update(questionUpdateForm)">
+      <div class="row p-4 pt-0">
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Deed Category">{{'question.label1' | translate}}</label>
+          <select
+            class="form-control"
+            [(ngModel)]="deedCategoryId"
+            name="deedCategory"
+            id="deedCategory"
+            (change)="getDeedType()"
+          >
+            <option [value]="" selected disabled>---{{'question.option1' | translate}}--</option>
+            <option *ngFor="let item of deedCategory" [value]="item.id" >{{translation.currentLang == 'en' ? item.deedCategoryNameEn : item.deedCategoryNameHi}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Deed Type">{{'question.label2' | translate}}</label>
+          <select class="form-control" [(ngModel)]="deedTypeId" (change)="getInstrument()" name="deedType" id="deedType">
+            <option value="" disabled>---{{'question.option2' | translate}}--</option>
+            <option [value]="item.id" [selected]="editQuestionData.instrument.deedTypeId.id" *ngFor="let item of deedType">{{translation.currentLang == 'en' ? item.deedTypeNameEn : item.deedTypeNameHi}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Instrument">{{'question.label3' | translate}}</label>
+          <select
+            class="form-control"
+            [(ngModel)]="instrumentId"
+            (change)="getRoles()"
+            name="instrument"
+            id="instrument"
+          >
+            <option value="" disabled>---{{'question.option3' | translate}}--</option>
+            <option *ngFor="let item of instrument" [value]="item.id">{{translation.currentLang == 'en' ? item.instrumentNameEn : item.instrumentNameHi}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Party Role">{{'question.label4' | translate}}</label>
+          <select class="form-control" [(ngModel)]="roleId" name="partyRole" id="partyRole">
+            <option value="" disabled>---{{'question.option4'| translate}}--</option>
+            <option [value]="item.partyTypeId" *ngFor="let item of rolesData">{{translation.currentLang == 'en' ? item.partyTypeNameEn : item.partyTypeNameHi}}</option>
+          </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <div class="form-group">
+            <label for="Question in English">{{'question.questionEnglish'| translate}}</label>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              [(ngModel)]="editQuestionData.questionEn"
+              name="questionEn"
+              placeholder="Enter Question in English"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <div class="form-group">
+            <label for="Question in Hindi">{{'question.questionHindi' | translate}}</label>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              [(ngModel)]="editQuestionData.questionHi"
+              name="questionHi"
+              placeholder="Enter Question in Hindi"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+        <div class="col-md-12 my-3">
+          <div role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-submit mt-2">{{'question.Submit'| translate}}</button>
+            <button type="reset" (click)="resetForm()" class="btn btn-reset mt-2">{{'question.Reset'| translate}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
