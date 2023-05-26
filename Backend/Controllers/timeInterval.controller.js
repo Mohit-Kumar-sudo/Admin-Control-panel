@@ -24,9 +24,12 @@ module.exports = {
                 const resData = await Model.find({ is_active: true }, { content: 1, minutes: 1, seconds: 1 })
                 let newData = []
                 for (const object of resData) {
-                    const transformed = {[object.content]: `${object.minutes}:${object.seconds}`}
+                    const transformed = `${object.content} : "${object.minutes}:${object.seconds}`
                     newData.push(transformed)
                 }
+                let sampleData = newData.pop()
+                sampleData = {...sampleData}
+                console.log("sampleData", sampleData )
                 try {
                     const config = {
                         headers: {
