@@ -15,10 +15,10 @@ const TableSchema = new Schema({
         type:String
     },
     content_english:{
-        type:String
+        type:Array
     },
     content_hindi:{
-        type:String
+        type:Array
     },
     is_active: {
         type: Boolean,

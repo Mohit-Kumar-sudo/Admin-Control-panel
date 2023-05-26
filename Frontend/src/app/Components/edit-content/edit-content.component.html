@@ -14,21 +14,13 @@
         </div>
         <div class="col-md-12 px-5 my-3">
           <label type="label"> {{contentType}} in English</label>
-          <ckeditor
-            [editor]="Editor"
-            name="content_english"
-            [(ngModel)]="data.content_english"
-          >
-          </ckeditor>
+          <textarea class="form-control"  name="content_english"
+          required [(ngModel)]="data.content_english" id="content_english" placeholder="Enter Data in English" rows="3"></textarea>
         </div>
         <div class="col-md-12 px-5 my-3">
           <label type="label"> {{contentType}} in Hindi</label>
-          <ckeditor
-            [editor]="CKEditor"
-            name="content_hindi"
-            [(ngModel)]="data.content_hindi"
-          >
-          </ckeditor>
+          <textarea class="form-control"  name="content_hindi"
+          required [(ngModel)]="data.content_hindi" id="content_hindi" placeholder="Enter Data in Hindi" rows="3"></textarea>
         </div>
         <div class="col-md-12 my-3">
           <div role="group" aria-label="Basic example">

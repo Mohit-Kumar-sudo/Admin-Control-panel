@@ -49,22 +49,14 @@
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> {{'content.label2'| translate}}</label>
-            <ckeditor
-              [editor]="Editor"
-              name="content_english"
-              [(ngModel)]="Editor"
-            >
-            </ckeditor>
+            <label type="label">{{'content.label4' | translate}}</label>
+            <textarea class="form-control"  name="content_english"
+            required ngModel id="content_english" placeholder="Enter Data in English" rows="5"></textarea>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> {{'content.label3'| translate}}</label>
-            <ckeditor
-              [editor]="CKEditor"
-              name="content_hindi"
-              [(ngModel)]="CKEditor"
-            >
-            </ckeditor>
+            <label type="label"> {{'content.label5' | translate}}</label>
+            <textarea class="form-control"  name="content_hindi"
+            required ngModel id="content_hindi" placeholder="Enter Data in Hindi" rows="5"></textarea>
           </div>
           <div class="col-md-12 my-3">
             <div role="group" aria-label="Basic example">
@@ -94,23 +86,13 @@
           </div>
           <div class="col-md-12 px-5 my-3">
             <label type="label">{{'content.label4' | translate}}</label>
-            <ckeditor
-              [editor]="Editor"
-              name="content_english"
-              required
-              [(ngModel)]="Editor"
-            >
-            </ckeditor>
+            <textarea class="form-control"  name="content_english"
+            required ngModel id="content_english" placeholder="Enter Data in English" rows="5"></textarea>
           </div>
           <div class="col-md-12 px-5 my-3">
             <label type="label"> {{'content.label5' | translate}}</label>
-            <ckeditor
-              [editor]="CKEditor"
-              name="content_hindi"
-              required
-              [(ngModel)]="CKEditor"
-            >
-            </ckeditor>
+            <textarea class="form-control"  name="content_hindi"
+            required ngModel id="content_hindi" placeholder="Enter Data in Hindi" rows="5"></textarea>
           </div>
           <div class="col-md-12 my-3">
             <div role="group" aria-label="Basic example">
@@ -139,24 +121,14 @@
             </select>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> {{'content.label6'| translate}}</label>
-            <ckeditor
-              [editor]="Editor"
-              name="content_english"
-              [(ngModel)]="Editor"
-              required
-            >
-            </ckeditor>
+            <label type="label">{{'content.label4' | translate}}</label>
+            <textarea class="form-control"  name="content_english"
+            required ngModel id="content_english" placeholder="Enter Data in English" rows="5"></textarea>
           </div>
           <div class="col-md-12 px-5 my-3">
-            <label type="label"> {{'content.label7'| translate}}</label>
-            <ckeditor
-              [editor]="CKEditor"
-              name="content_hindi"
-              required
-              [(ngModel)]="CKEditor"
-            >
-            </ckeditor>
+            <label type="label"> {{'content.label5' | translate}}</label>
+            <textarea class="form-control"  name="content_hindi"
+            required ngModel id="content_hindi" placeholder="Enter Data in Hindi" rows="5"></textarea>
           </div>
           <div class="col-md-12 my-3">
             <div role="group" aria-label="Basic example">
@@ -176,7 +148,7 @@
     }} col-md-12 Prerequisites"
   >
     <div class="card mt-3">
-      <div class="row p-4 text-center">
+      <div class="row p-4">
         <div class="col-md-12 buttons">
           <table class="table table-bordered">
             <thead>
@@ -193,7 +165,7 @@
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ translation.currentLang == 'en' ? item.contentTypeEn : item.contentTypeHi }}</td>
                 <td>{{ translation.currentLang == 'en' ? item.vkycTypeEn : item.vkycTypeHi}}</td>
-                <td><p [innerHTML]="translation.currentLang == 'en' ? item.content_english : item.content_hindi"></p></td>
+                <td><p *ngFor="let cl of translation.currentLang == 'en' ? item.content_english : item.content_hindi" >{{cl}}</p></td>
                 <td>
                   <i
                     class="fas fa-edit fa-md"
@@ -229,7 +201,7 @@
     }} col-md-12 Do's & Don'ts"
   >
     <div class="card mt-3">
-      <div class="row p-4 text-center">
+      <div class="row p-4">
         <div class="col-md-12 buttons">
           <table class="table table-bordered">
             <thead>
@@ -241,12 +213,12 @@
                 <th scope="col">{{'content.Actions' | translate}}</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody clas>
               <tr *ngFor="let item of DosandDonts; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ translation.currentLang == 'en' ? item.contentTypeEn : item.contentTypeHi }}</td>
                 <td>{{ translation.currentLang == 'en' ? item.vkycTypeEn : item.vkycTypeHi}}</td>
-                <td><p [innerHTML]="translation.currentLang == 'en' ? item.content_english : item.content_hindi"></p></td>
+                <td><p *ngFor="let cl of translation.currentLang == 'en' ? item.content_english : item.content_hindi" >{{cl}}</p></td>
                 <td>
                   <i
                     class="fas fa-edit fa-md"
@@ -282,7 +254,7 @@
     }} col-md-12 Terms & Condition"
   >
     <div class="card mt-3">
-      <div class="row p-4 text-center">
+      <div class="row p-4">
         <div class="col-md-12 buttons">
           <table class="table table-bordered">
             <thead>
@@ -299,8 +271,8 @@
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ translation.currentLang == 'en' ? item.contentTypeEn : item.contentTypeHi }}</td>
                 <td>{{ translation.currentLang == 'en' ? item.vkycTypeEn : item.vkycTypeHi}}</td>
-                <td><p [innerHTML]="translation.currentLang == 'en' ? item.content_english : item.content_hindi"></p></td>
-                <td>
+                <td><p *ngFor="let cl of translation.currentLang == 'en' ? item.content_english : item.content_hindi" >{{cl}}</p></td>
+                 <td>
                   <i
                     class="fas fa-edit fa-md"
                     (click)="editContent(item._id)"

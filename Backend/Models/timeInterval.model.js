@@ -5,6 +5,9 @@ const TableSchema = new Schema({
     content:{
         type:String
     },
+    keyName:{
+        type:String
+    },
     minutes:{
         type:Number
     },

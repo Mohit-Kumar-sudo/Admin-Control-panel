@@ -12,24 +12,27 @@ module.exports = {
             data.created_by = req.user ? req.user : 'unauth'
             data.updated_by = req.user ? req.user : 'unauth'
             data.created_at = Date.now()
-            console.log("data", data)
-            const dataExists = await Model.findOne({ content: data.content, is_active: true }).lean()
-            if (dataExists) {
-                return res.send({ success: false, msg: "Time Already Alloted" })
-            }
-            const newData = new Model(data)
-            const result = await newData.save()
+            // const dataExists = await Model.findOne({ content: data.content, is_active: true }).lean()
+            // if (dataExists) {
+            //     return res.send({ success: false, msg: "Time Already Alloted" })
+            // }
+            // const newData = new Model(data)
+            // const result = await newData.save()
 
-            if (result) {
-                const resData = await Model.find({ is_active: true }, { content: 1, minutes: 1, seconds: 1 })
+            if (data) {
+                const resData = await Model.find({ is_active: true }, { keyName: 1, minutes: 1, seconds: 1 })
                 let newData = []
                 for (const object of resData) {
-                    const transformed = `${object.content} : "${object.minutes}:${object.seconds}`
+                    const transformed = object.keyName + ":" + '"' + object.minutes + ":" + object.seconds+'"'
                     newData.push(transformed)
                 }
-                let sampleData = newData.pop()
-                sampleData = {...sampleData}
-                console.log("sampleData", sampleData )
+                let result = newData.reduce((acc, ele) => {
+                    let [key, value] = ele.split(':');
+                    let [a, b] = value.replace(/^"|"$/g, '').split(':');
+                    acc[key] = a+':0'; 
+                    return acc
+                }, {});
+         
                 try {
                     const config = {
                         headers: {
@@ -38,11 +41,9 @@ module.exports = {
                             "content-type": "application/json"
                         }
                     };
-                    console.log("newData", newData)
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', newData, config)
-                        .then((resData) => {
-                            console.log("resData", resData.data)
-                            if (!resData.data.status === "Failure") {
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', result , config)
+                        .then((response) => {
+                            if (response.data.status == 'succces') {
                                 res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
                                 res.send({ success: false, msg: 'Failed to Submit Data in Video KYC' })
@@ -130,14 +131,20 @@ module.exports = {
             }
             data.updated_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
-            let newData = []
             if (result) {
-                const resData = await Model.find({ is_active: true }, { content: 1, minutes: 1, seconds: 1 })
+                const resData = await Model.find({ is_active: true }, { keyName: 1, minutes: 1, seconds: 1 })
+                let newData = []
                 for (const object of resData) {
-                    const transformed = {[object.content]: `${object.minutes}:${object.seconds}`}
+                    const transformed = object.keyName + ":" + '"' + object.minutes + ":" + object.seconds+'"'
                     newData.push(transformed)
                 }
-                console.log("newData", newData)
+                let result = newData.reduce((acc, ele) => {
+                    let [key, value] = ele.split(':');
+                    let [a, b] = value.replace(/^"|"$/g, '').split(':');
+                    acc[key] = a+':0'; 
+                    return acc
+                }, {});
+         
                 try {
                     const config = {
                         headers: {
@@ -146,13 +153,12 @@ module.exports = {
                             "content-type": "application/json"
                         }
                     };
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', newData, config)
-                        .then((resData) => {
-                            console.log("resData", resData.data)
-                            if (!resData.data.status === "Failure") {
-                                res.send({ success: true, msg: 'Data Updated successfully' })
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing',result , config)
+                        .then((response) => {
+                            if (response.data.status == 'succces') {
+                                res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
-                                res.send({ success: false, msg: 'Failed to Update Data in Video KYC' })
+                                res.send({ success: false, msg: 'Failed to Submit Data in Video KYC' })
                             }
                         }, error => {
                             console.log(error)

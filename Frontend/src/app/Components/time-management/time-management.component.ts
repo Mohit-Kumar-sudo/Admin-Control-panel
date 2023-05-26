@@ -15,6 +15,12 @@ export class TimeManagementComponent {
   edit: any = Boolean;
   data: any;
   id: any;
+  options:any = [
+    "Capture Images",
+    "Liveness Detection",
+    "Question Presentation",
+    "Capture Document Images"
+  ];
 
   constructor(private api: ApiService, private as: AlertService) {
     this.getList();
@@ -22,6 +28,16 @@ export class TimeManagementComponent {
   }
 
   submit(frm: any) {
+    console.log("frm.value", frm.value)
+    if(frm.value.content == "Capture Images"){
+      frm.value.keyName = "capture_images"
+    } else if(frm.value.content == "Liveness Detection"){
+      frm.value.keyName = "liveness_detection"
+    } else if(frm.value.content == "Question Presentation"){
+      frm.value.keyName = "question_presentation"
+    } else if(frm.value.content == "Capture Document Images"){
+      frm.value.keyName = "capture_document_images"
+    }
     this.api.post("timeInterval", { ...frm.value }).subscribe(
       (res: any) => {
         if (res.success) {

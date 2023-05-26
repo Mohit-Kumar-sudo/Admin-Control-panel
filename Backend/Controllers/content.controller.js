@@ -12,6 +12,8 @@ module.exports = {
             data.created_by = req.user ? req.user : 'unauth'
             data.updated_by = req.user ? req.user : 'unauth'
             data.created_at = Date.now()
+            data.content_english = data.content_english.split(".")
+            data.content_hindi = data.content_hindi.split("।")
             const dataExists = await Model.findOne({ contentTypeEn: data.contentTypeEn, vkycTypeEn: data.vkycTypeEn, is_active: true }).lean()
             console.log("dataExists", dataExists)
             if (dataExists) {
@@ -33,20 +35,20 @@ module.exports = {
                     if (item.vkycTypeEn == "Assisted") {
                         if (item.contentTypeEn === "Do's and Don'ts") {
                             do_and_donts = {
-                               English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Terms and Condition") {
                             terms_conditions = {
-                               English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Prerequisites") {
                             prerequisites = {
-                               English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi: item.content_hindi
                             };
                         }
                     }
@@ -56,20 +58,20 @@ module.exports = {
                     if (item.vkycTypeEn == "Non_Assisted") {
                         if (item.contentTypeEn === "Do's and Don'ts") {
                             do_and_donts = {
-                               English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi:  item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Terms and Condition") {
                             terms_conditions = {
-                               English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi:  item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Prerequisites") {
                             prerequisites = {
-                               English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi:  item.content_hindi
                             };
                         }
                     }
@@ -88,8 +90,7 @@ module.exports = {
                     };
                     axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', newData, config)
                         .then(function (response) {
-                            const resultData = response.data;
-                            if (resultData.data) {
+                            if (response.data.status == 'succces') {
                                 res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
                                 res.send({ success: false, msg: 'Failed to Submit Data' })
@@ -184,7 +185,7 @@ module.exports = {
             data.updated_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
             if (result) {
-                const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
+                   const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
                 let newData = {}
                 let do_and_donts = {}
                 let terms_conditions = {}
@@ -193,20 +194,20 @@ module.exports = {
                     if (item.vkycTypeEn == "Assisted") {
                         if (item.contentTypeEn === "Do's and Don'ts") {
                             do_and_donts = {
-                                English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Terms and Condition") {
                             terms_conditions = {
-                                English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Prerequisites") {
                             prerequisites = {
-                                English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi: item.content_hindi
                             };
                         }
                     }
@@ -216,20 +217,20 @@ module.exports = {
                     if (item.vkycTypeEn == "Non_Assisted") {
                         if (item.contentTypeEn === "Do's and Don'ts") {
                             do_and_donts = {
-                                English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi:  item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Terms and Condition") {
                             terms_conditions = {
-                                English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi:  item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Prerequisites") {
                             prerequisites = {
-                                English: `${item.content_english}`,
-                                Hindi: `${item.content_hindi}`
+                                English: item.content_english,
+                                Hindi:  item.content_hindi
                             };
                         }
                     }
@@ -248,7 +249,8 @@ module.exports = {
                     };
                     axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/content', newData, config)
                         .then(function (response) {
-                            if (response.data) {
+                            console.log('response', response.data)
+                            if (response.data.status == 'succces') {
                                 res.send({ success: true, msg: 'Data submitted successfully' })
                             } else {
                                 res.send({ success: false, msg: 'Failed to Submit Data' })
@@ -311,28 +313,12 @@ module.exports = {
 
 }
 
-// function removeBlanks(string) {
-//     let newData = '';
-//     newData = string.toString().split('<li>')
-//     newData = newData.toString().split('</li>')
-//     newData = newData.toString().split('<ul>')
-//     newData = newData.toString().split('</ul>')
-//     newData = newData.toString().split('<ol>')
-//     newData = newData.toString().split('</ol>')
-//     newData = newData.toString().split('<p>')
-//     newData = newData.toString().split('</p>')
-//     newData = newData.toString().split(',,')
-//     console.log("newData", newData)
-//     let newArr = [];
-//     newData.forEach(item => {
-//         if (item !== "") {
-//             newArr.push(item);
-//         }
-//     });
-//     var regex = /&nbsp;(<([^>/n]+)>)/ig;
-//     for (var i = 0; i < newArr.length; i++) {
-//         newArr[i].address = newArr[i].replace(regex, "");
-//     }
-//     console.log("newArr", newArr)
-//     return newArr;
+
+function indexStrings(strList) {
+    let strArray = [];
+    for (let i = 0; i < strList.length; i++) {
+        strArray[i] = (i + 1) + '. ' + strList[i];
+    }
+    return strArray;
+}
 

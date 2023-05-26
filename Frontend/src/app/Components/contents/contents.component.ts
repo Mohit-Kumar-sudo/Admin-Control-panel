@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { AlertService } from "src/app/services/alert.service";
 import { ApiService } from "src/app/services/api.service";
 import { TranslationService } from "src/app/services/translation.service";
@@ -21,8 +20,7 @@ export class ContentsComponent {
   termscount: any;
   content: any;
 
-  public Editor: any = ClassicEditor;
-  public CKEditor: any = ClassicEditor;
+
   public views = ["Prerequisites", "Do's & Don'ts", "Terms & Conditions"];
   public view: any;
 
@@ -67,6 +65,7 @@ export class ContentsComponent {
       (res: any) => {
         if (res.success) {
           this.as.successToast("Data Submitted Successfully");
+          frm.reset()
           this.getPrerequisits();
         } else {
           this.as.warningToast("Something went wrong please try again");
@@ -95,6 +94,7 @@ export class ContentsComponent {
       (res: any) => {
         if (res.success) {
           this.as.successToast("Data Submitted Successfully");
+          frm.reset()
           this.getDosandDonts();
         } else {
           this.as.warningToast("Something went wrong please try again");
@@ -123,6 +123,7 @@ export class ContentsComponent {
       (res: any) => {
         if (res.success) {
           this.as.successToast("Data Submitted Successfully");
+          frm.reset()
           this.getTermsandCondition();
         } else {
           this.as.warningToast("Something went wrong please try again");
