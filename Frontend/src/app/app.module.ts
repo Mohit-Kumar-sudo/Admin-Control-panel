@@ -17,7 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(_httpBackend: HttpBackend) {
   return new MultiTranslateHttpLoader(_httpBackend, [
-    '/assets/translate/',
+    '/admin/assets/translate/',
   ]);
 }
 
