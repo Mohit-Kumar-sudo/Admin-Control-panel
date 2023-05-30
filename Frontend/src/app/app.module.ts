@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { LayoutComponent } from './layout/layout.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -35,7 +34,6 @@ export function HttpLoaderFactory(_httpBackend: HttpBackend) {
     AppRoutingModule,
     NgbModule,
     MatPaginatorModule,
-    CKEditorModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

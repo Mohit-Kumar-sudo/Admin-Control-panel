@@ -98,10 +98,10 @@ module.exports = {
 
 
 
-// // All Deed Category: http://20.204.184.35/sampadaService/common/duty/allDeedCategory
+// All Deed Category: http://20.204.184.35/sampadaService/common/duty/allDeedCategory
 
-// // Deed Types by Category Id: http://20.204.184.35/sampadaService/common/duty/getAllDeedTypeByCategoryId/{deedCategoryId}
+// Deed Types by Category Id: http://20.204.184.35/sampadaService/common/duty/getAllDeedTypeByCategoryId/{deedCategoryId}
 
-// // Deed Instruments by Deed type Id: http://20.204.184.35/sampadaService/common/duty/deedInstruments/{deedTypeId}
+// Deed Instruments by Deed type Id: http://20.204.184.35/sampadaService/common/duty/deedInstruments/{deedTypeId}
 
-// // Party Type: http://20.204.184.35/sampadaService/common/duty/getAllPartyTypeByInstrumentId/{instrumentId}
+// Party Type: http://20.204.184.35/sampadaService/common/duty/getAllPartyTypeByInstrumentId/{instrumentId}

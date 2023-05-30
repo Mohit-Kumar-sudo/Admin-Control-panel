@@ -25,7 +25,7 @@ module.exports = {
             const newData = new Model(data)
             const result = await newData.save()
 
-            if (result) {
+            if (data) {
                 const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
                 let newData = {}
                 let do_and_donts = {}

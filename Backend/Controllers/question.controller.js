@@ -191,10 +191,22 @@ module.exports = {
 
     filterQuestion: async (req, res, next) => {
         try {
-            const { deedCategoryId, deedTypeId, instrumentId, roleId } = req.query
-            const result = await Model.find({ "instrument.deedTypeId.deedCategoryId.id": deedCategoryId, "instrument.deedTypeId.id": deedTypeId, "instrument.id": instrumentId, "partyRole.partyTypeId": roleId })
-            if (result) {
-                res.send({ success: true, msg: 'Data Fetched', data: result, count: result.length })
+            const instrumentId = req.params.instrumentId;
+            const partyTypeId = req.params.partyTypeId;
+            if (!instrumentId) {
+                throw createError.BadRequest('Please send Instrument Id')
+            }
+            if (!partyTypeId) {
+                throw createError.BadRequest('Please send Party Type Id')
+            }
+            const result = await Model.find({ is_active: true })
+            let newResult = result.filter(o => {
+                if (o.instrument.id == instrumentId && o.partyRole.partyTypeId == partyTypeId) {
+                    return o
+                }
+            })
+            if (newResult) {
+                res.send({ success: true, msg: 'Data Fetched', data: newResult, count: newResult.length })
             } else {
                 res.send({ success: false, msg: 'Failed to Fetch Data' })
             }

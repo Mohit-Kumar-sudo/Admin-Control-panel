@@ -39,9 +39,7 @@
             name="deedType"
             id="deedType"
           >
-            <option value="" disabled>
-              ---{{ "question.option2" | translate }}--
-            </option>
+            <option value="">---{{ "question.option2" | translate }}--</option>
             <option [value]="item.id" *ngFor="let item of deedType">
               {{
                 translation.currentLang == "en"
@@ -51,7 +49,7 @@
             </option>
           </select>
         </div>
-        <div class="col-md-6 col-sm-6 my-2">
+        <div class="col-md-12 col-sm-12 my-2">
           <label for="Instrument">{{ "question.label3" | translate }}</label>
           <select
             class="form-control"
@@ -60,9 +58,7 @@
             name="instrument"
             id="instrument"
           >
-            <option value="" disabled>
-              ---{{ "question.option3" | translate }}--
-            </option>
+            <option value="">---{{ "question.option3" | translate }}--</option>
             <option *ngFor="let item of instrument" [value]="item.id">
               {{
                 translation.currentLang == "en"
@@ -71,6 +67,16 @@
               }}
             </option>
           </select>
+        </div>
+        <div class="col-md-6 col-sm-6 my-2">
+          <label for="Instrument">{{ "question.label5" | translate }}</label>
+          <input
+            type="text"
+            class="form-control"
+            disabled
+            [(ngModel)]="isAssisted"
+            name="isAssisted"
+          />
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Party Role">{{ "question.label4" | translate }}</label>
@@ -119,7 +125,11 @@
         </div>
         <div class="col-md-12 my-3">
           <div role="group" aria-label="Basic example">
-            <button type="submit" class="btn btn-submit mt-2">
+            <button
+              type="submit"
+              [disabled]="!isAssisted"
+              class="btn btn-submit mt-2"
+            >
               {{ "question.Submit" | translate }}
             </button>
             <button
@@ -167,7 +177,7 @@
                 : item.partyRole.partyTypeNameHi
             }}
           </td>
-          <td>Assisted / Non-Assisted</td>
+          <td>{{ item.isAssisted == 0 ? "Non-Assisted" : "Assisted" }}</td>
           <td>
             {{
               translation.currentLang == "en"
@@ -242,9 +252,7 @@
             name="deedType"
             id="deedType"
           >
-            <option value="" disabled>
-              ---{{ "question.option2" | translate }}--
-            </option>
+            <option value="">---{{ "question.option2" | translate }}--</option>
             <option [value]="item.id" *ngFor="let item of deedType">
               {{
                 translation.currentLang == "en"
@@ -259,12 +267,11 @@
           <select
             class="form-control"
             [(ngModel)]="instrumentId"
-            name="Instrument"
-            id="Instrument"
+            (change)="getRoles()"
+            name="instrument"
+            id="instrument"
           >
-            <option value="" disabled>
-              ---{{ "question.option3" | translate }}--
-            </option>
+            <option value="">---{{ "question.option3" | translate }}--</option>
             <option *ngFor="let item of instrument" [value]="item.id">
               {{
                 translation.currentLang == "en"
@@ -276,19 +283,21 @@
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Party Role">{{ "question.label4" | translate }}</label>
-          <select class="form-control" ngModel name="partRole" id="partRole">
+          <select class="form-control" ngModel name="partyRole" id="partyRole">
             <option value="" disabled>
               ---{{ "question.option4" | translate }}--
             </option>
-            <option value="Buyer">Buyer</option>
-            <option value="Seller">Seller</option>
-            <option value="Concentor">Concentor</option>
-            <option value="Witness">Witness</option>
+            <option [value]="item.partyTypeId" *ngFor="let item of rolesData">
+              {{
+                translation.currentLang == "en"
+                  ? item.partyTypeNameEn
+                  : item.partyTypeNameHi
+              }}
+            </option>
           </select>
         </div>
-
         <div class="col-md-12 my-3">
-          <div class="btn" role="group" aria-label="Basic example">
+          <div role="group" aria-label="Basic example">
             <button type="submit" class="btn btn-submit mt-2">
               {{ "question.Submit" | translate }}
             </button>
@@ -337,7 +346,7 @@
                 : item.partyRole.partyTypeNameHi
             }}
           </td>
-          <td>Assisted / Non-Assisted</td>
+          <td>{{ item.isAssisted == 0 ? "Non-Assisted" : "Assisted" }}</td>
           <td>
             {{
               translation.currentLang == "en"
@@ -370,4 +379,5 @@
     aria-label="Select page"
   >
   </mat-paginator>
+
 </div>

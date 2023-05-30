@@ -16,6 +16,6 @@ router.put('/:id/restore', Controller.restore)
 
 router.get('/videoKyc/:instrumentId/:partyTypeId', Controller.getQuestions)
 
-router.get('/filter/:instrumentId/:partyTypeId', Controller.getQuestions)
+router.get('/filter/:instrumentId/:partyTypeId', Controller.filterQuestion)
 
 module.exports = router

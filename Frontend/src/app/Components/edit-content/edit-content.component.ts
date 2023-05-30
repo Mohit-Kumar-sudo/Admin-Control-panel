@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { AlertService } from "src/app/services/alert.service";
 import { ApiService } from "src/app/services/api.service";
 
@@ -13,9 +12,6 @@ export class EditContentComponent {
   id: any;
   data: any;
   contentType:any;
-
-  public Editor: any = ClassicEditor;
-  public CKEditor: any = ClassicEditor;
 
   constructor(private api: ApiService, private route: ActivatedRoute, private as : AlertService, private router : Router) {}
 

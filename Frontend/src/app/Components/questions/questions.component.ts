@@ -4,7 +4,6 @@ import { AlertService } from "src/app/services/alert.service";
 import { ApiService } from "src/app/services/api.service";
 import { TranslationService } from "src/app/services/translation.service";
 
-
 @Component({
   selector: "app-questions",
   templateUrl: "./questions.component.html",
@@ -25,13 +24,18 @@ export class QuestionsComponent {
   count: any;
   limit: any = 10;
   page: any = 1;
+  isAssisted: any;
+
+  public pageSize = 10;
+  public currentPage = 0;
+  public totalSize = 0;
 
   constructor(
     private api: ApiService,
     private as: AlertService,
     public translation: TranslationService,
-    private router : Router
-    ) {}
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getDeedCategory();
@@ -78,6 +82,21 @@ export class QuestionsComponent {
   }
 
   getRoles() {
+    this.instrument.filter((o: any) => {
+      if (o.id == this.instrumentId) {
+        this.isAssisted = o.isAssisted;
+      }
+    });
+    switch (this.isAssisted) {
+      case 0:
+        this.isAssisted = "Non-Assisted";
+        break;
+      case 1:
+        this.isAssisted = "Assisted";
+        break;
+      default:
+        this.as.infoToast("This Instrument is not Eligible for Video KYC");
+    }
     this.api.getById("deed/roles", this.instrumentId).subscribe(
       (res: any) => {
         if (res.success) {
@@ -93,6 +112,7 @@ export class QuestionsComponent {
   Filter(filter: any) {
     console.log(filter);
     this.filter = filter;
+    this.getList();
   }
 
   submit(frm: any) {
@@ -152,7 +172,7 @@ export class QuestionsComponent {
 
   editQuestion(id: any) {
     if (confirm("Do you want to Update")) {
-      this.router.navigate([`/Question/${id}`])
+      this.router.navigate([`/Question/${id}`]);
     }
   }
 
@@ -196,9 +216,9 @@ export class QuestionsComponent {
     this.getDeedCategory();
   }
 
-  filterData(frm:any){
-      this.api
-      .get(`question/filter/:${this.instrumentId}/:${this.roleId}`, {})
+  filterData(frm: any) {
+    this.api
+      .get(`question/filter/${this.instrumentId}/${frm.value.partyRole}`, {})
       .subscribe(
         (res: any) => {
           if (res.success) {
@@ -210,6 +230,18 @@ export class QuestionsComponent {
           this.as.errorToast("Something went wrong !Please try again");
         }
       );
+  }
+
+  public handlePage(e: any) {
+    this.currentPage = e.pageIndex;
+    this.pageSize = e.pageSize;
+    this.iterator();
+  }
+
+  private iterator() {
+    const end = (this.currentPage + 1) * this.pageSize;
+    const start = this.currentPage * this.pageSize;
+    const part = this.questionList.slice(start, end);
   }
 
 }

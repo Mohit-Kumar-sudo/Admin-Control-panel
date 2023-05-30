@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: '//'+ window.location.hostname+':2000'
+  url: '//'+ window.location.hostname+':7077'
   // url : "http://20.219.158.85:7077"
 };
 

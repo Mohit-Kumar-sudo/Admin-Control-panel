@@ -12,14 +12,14 @@ module.exports = {
             data.created_by = req.user ? req.user : 'unauth'
             data.updated_by = req.user ? req.user : 'unauth'
             data.created_at = Date.now()
-            // const dataExists = await Model.findOne({ content: data.content, is_active: true }).lean()
-            // if (dataExists) {
-            //     return res.send({ success: false, msg: "Time Already Alloted" })
-            // }
-            // const newData = new Model(data)
-            // const result = await newData.save()
+            const dataExists = await Model.findOne({ content: data.content, is_active: true }).lean()
+            if (dataExists) {
+                return res.send({ success: false, msg: "Time Already Alloted" })
+            }
+            const newData = new Model(data)
+            const result = await newData.save()
 
-            if (data) {
+            if (result) {
                 const resData = await Model.find({ is_active: true }, { keyName: 1, minutes: 1, seconds: 1 })
                 let newData = []
                 for (const object of resData) {
@@ -138,7 +138,7 @@ module.exports = {
                     const transformed = object.keyName + ":" + '"' + object.minutes + ":" + object.seconds+'"'
                     newData.push(transformed)
                 }
-                let result = newData.reduce((acc, ele) => {
+                let newResult = newData.reduce((acc, ele) => {
                     let [key, value] = ele.split(':');
                     let [a, b] = value.replace(/^"|"$/g, '').split(':');
                     acc[key] = a+':0'; 
@@ -153,7 +153,7 @@ module.exports = {
                             "content-type": "application/json"
                         }
                     };
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing',result , config)
+                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', newResult , config)
                         .then((response) => {
                             if (response.data.status == 'succces') {
                                 res.send({ success: true, msg: 'Data submitted successfully' })
