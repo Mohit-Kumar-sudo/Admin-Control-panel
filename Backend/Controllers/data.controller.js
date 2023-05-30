@@ -2,6 +2,8 @@ const createError = require('http-errors')
 const mongoose = require('mongoose')
 const ModelName = 'Content'
 const axios = require('axios');
+const multer  = require('multer')
+const upload = multer().single("file");
 
 module.exports = {
 
@@ -89,6 +91,27 @@ module.exports = {
                 }, error => {
                     next(error)
                 })
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    userAuthenticate: async (req, res, next) => {
+        try {
+            upload(req, res, function (err) {
+                if (err) {
+                    return res.status(501).json({ error: err })
+                }
+                const data = req.body
+                res.redirect('http://20.198.103.152/admin');
+                if (data) {
+                    if (data.userType == "department") {
+                        res.send({ success: true, message: "Good to go" })
+                    } else {
+                        res.send({ success: false, message: "This user is not Authorised" })
+                    }
+                }
+            })
         } catch (error) {
             next(error)
         }
