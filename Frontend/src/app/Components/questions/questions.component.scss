@@ -1,4 +1,4 @@
-.card{
+.card {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -7,37 +7,43 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.btn-filter{
-  background-color: #02ACAF;
-  color: white;
-  font-weight: bold;
-  width: 80px;
-  margin-left: 40px;
-}
-
-label{
+label {
   margin-bottom: 5px;
-  color: #02ACAF;
+  color: #02acaf;
   font-weight: bold;
 }
 
-.tableheader{
-  background-color: #02ACAF;
+h4 {
+  margin-bottom: -5px;
+  color: #02acaf;
+  font-weight: bold;
+}
+
+.tableheader {
+  background-color: #02acaf;
   color: white;
   font-weight: bold;
   width: 80px;
 }
 
-.btn-submit{
-  background-color: #02ACAF;
+.btn-submit {
+  background-color: #02acaf;
   color: white;
   font-weight: bold;
   min-width: 80px;
   max-width: 120px;
 }
 
-.btn-reset{
-  background-color: #5A6268;
+.btn-filter {
+  background-color: #02acaf;
+  color: white;
+  font-weight: bold;
+  min-width: 80px;
+  max-width: 120px;
+}
+
+.btn-reset {
+  background-color: #5a6268;
   color: white;
   margin-left: 50px;
   font-weight: bold;

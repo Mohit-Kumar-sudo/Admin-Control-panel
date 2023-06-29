@@ -38,10 +38,15 @@ export class TimeManagementComponent {
     } else if(frm.value.content == "Capture Document Images"){
       frm.value.keyName = "capture_document_images"
     }
+    if(!frm.value.minutes || !frm.value.seconds){
+      this.as.infoToast('Please Fill Minutes and Seconds')
+      return
+    }
     this.api.post("timeInterval", { ...frm.value }).subscribe(
       (res: any) => {
         if (res.success) {
           this.as.successToast(res.msg);
+          this.edit = false
           this.getList();
         } else {
           this.as.warningToast(res.msg);

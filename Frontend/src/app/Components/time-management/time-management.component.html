@@ -1,36 +1,61 @@
 <div class="container">
   <div class="card mt-3" *ngIf="!edit">
+    <div class="row px-4 pt-4">
+      <div class="col-md-12 text-center">
+        <h4>{{ "time.title" | translate }}</h4>
+      </div>
+      <hr />
+    </div>
     <form #timeForm="ngForm" (ngSubmit)="submit(timeForm)">
       <div class="row p-4 pb-0">
         <div class="col-md-8">
-          <label for="time configuration"
-            >{{'time.label1'| translate}}</label
-          >
+          <label for="time configuration">{{
+            "time.label1" | translate
+          }}</label>
           <select class="form-control" ngModel name="content" id="content">
             <option value="" disabled>
-              --{{'time.label1'| translate}}--
+              --{{ "time.label1" | translate }}--
             </option>
-            <option *ngFor="let item of 'time.options' | translate" [value]="item">
-            {{item}}
+            <option
+              *ngFor="let item of 'time.options' | translate"
+              [value]="item"
+            >
+              {{ item }}
             </option>
           </select>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="select time">{{'time.Minutes'| translate}}</label>
-            <input type="number" ngModel name="minutes"  placeholder="00" class="form-control">
+            <label for="select time">{{ "time.Minutes" | translate }}</label>
+            <input
+              type="number"
+              ngModel
+              name="minutes"
+              placeholder="00"
+              class="form-control"
+            />
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="select time">{{'time.Seconds'| translate}}</label>
-            <input type="number" ngModel name="seconds" placeholder="00" class="form-control">
+            <label for="select time">{{ "time.Seconds" | translate }}</label>
+            <input
+              type="number"
+              ngModel
+              name="seconds"
+              placeholder="00"
+              class="form-control"
+            />
           </div>
         </div>
         <div class="col-md-12 my-3">
           <div role="group" aria-label="Basic example">
-            <button type="submit" class="btn btn-submit mt-2">{{'time.Submit'| translate}}</button>
-            <button type="reset" class="btn btn-reset mt-2">{{'time.Reset'| translate}}</button>
+            <button type="submit" class="btn btn-submit mt-2">
+              {{ "time.Submit" | translate }}
+            </button>
+            <button type="reset" class="btn btn-reset mt-2">
+              {{ "time.Reset" | translate }}
+            </button>
           </div>
         </div>
       </div>
@@ -40,75 +65,113 @@
     <form #updatetimeForm="ngForm" (ngSubmit)="updateSubmit(updatetimeForm)">
       <div class="row p-4 pb-0" *ngIf="data">
         <div class="col-md-8">
-          <label for="time configuration"
-            >{{'time.label1'| translate}}</label
+          <label for="time configuration">{{
+            "time.label1" | translate
+          }}</label>
+          <select
+            class="form-control"
+            [(ngModel)]="data.content"
+            name="content"
+            id="content"
           >
-        <select class="form-control" [(ngModel)]="data.content" name="content" id="content">
             <option value="" disabled>
-              --{{'time.option1'| translate}}--
+              --{{ "time.option1" | translate }}--
             </option>
-            <option *ngFor="let item of 'time.options' | translate" [value]="item">
-            {{item}}
+            <option
+              *ngFor="let item of 'time.options' | translate"
+              [value]="item"
+            >
+              {{ item }}
             </option>
           </select>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="select time">{{'time.Minutes'| translate}}</label>
-            <input type="number" [(ngModel)]="data.minutes" name="minutes"  placeholder="00" class="form-control">
+            <label for="select time">{{ "time.Minutes" | translate }}</label>
+            <input
+              type="number"
+              [(ngModel)]="data.minutes"
+              name="minutes"
+              placeholder="00"
+              class="form-control"
+            />
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="select time">{{'time.Seconds'| translate}}</label>
-            <input type="number" [(ngModel)]="data.seconds" name="seconds" placeholder="00" class="form-control">
+            <label for="select time">{{ "time.Seconds" | translate }}</label>
+            <input
+              type="number"
+              [(ngModel)]="data.seconds"
+              name="seconds"
+              placeholder="00"
+              class="form-control"
+            />
           </div>
         </div>
         <div class="col-md-12 my-3">
           <div class="btn" role="group" aria-label="Basic example">
-            <button type="submit" class="btn btn-submit mt-2">{{'time.Update'| translate}}</button>
-            <button type="reset" class="btn btn-reset mt-2">{{'time.Reset'| translate}}</button>
+            <button type="submit" class="btn btn-submit mt-2">
+              {{ "time.Update" | translate }}
+            </button>
+            <button type="reset" class="btn btn-reset mt-2">
+              {{ "time.Reset" | translate }}
+            </button>
           </div>
         </div>
       </div>
     </form>
   </div>
-  <div class="card my-3">
-    <table class="table table-bordered">
+  <div class="card my-3 px-2">
+    <div class="row p-4">
+      <div class="col-md-12 text-center">
+        <h4>{{ "time.list" | translate }}</h4>
+      </div>
+      <hr />
+    </div>
+    <table class="table table-bordered border-dark">
       <thead>
         <tr>
-          <th scope="col" style="width:25px">{{'time.sno'| translate}}</th>
-          <th>{{'time.content'| translate}}</th>
-          <th>{{'time.time'| translate}}</th>
-          <th>{{'time.action' | translate}}</th>
+          <th scope="col" style="width: 25px">{{ "time.sno" | translate }}</th>
+          <th>{{ "time.content" | translate }}</th>
+          <th>{{ "time.time" | translate }}</th>
+          <th>{{ "time.action" | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of timeList; let i = index">
-          <td scope="row" class="text-center">{{i+1}}.</td>
-          <td>{{item.content}}</td>
-          <td>{{item.minutes}} {{'time.min'| translate}} : {{item.seconds}} {{'time.sec'| translate}}</td>
+          <td scope="row" class="text-center">{{ i + 1 }}.</td>
+          <td>{{ item.content }}</td>
           <td>
-            <i class="fas fa-edit" (click)="editTime(item._id)"></i>
+            {{ item.minutes }} {{ "time.min" | translate }} :
+            {{ item.seconds }} {{ "time.sec" | translate }}
+          </td>
+          <td>
+            <i
+              class="fas fa-edit"
+              (click)="editTime(item._id)"
+              ngbTooltip="Edit Time"
+              placement="top"
+            ></i>
+
             &nbsp;&nbsp;
             <i
-            class="fa-regular fa-square fa-md"
-            *ngIf="item.is_active == false" (click)="activeContent(item._id)"
-          ></i>
-          <i
-            class="fa-regular fa-square-check fa-md"
-            *ngIf="item.is_active == true"  (click)="deactivateContent(item._id)"
-          ></i>
+              class="fa-regular fa-square fa-md"
+              *ngIf="item.is_active == false"
+              (click)="activeContent(item._id)"
+              ngbTooltip="Enable Time"
+              placement="top"
+            ></i>
+            <i
+              class="fa-regular fa-square-check fa-md"
+              *ngIf="item.is_active == true"
+              (click)="deactivateContent(item._id)"
+              ngbTooltip="Disable Time"
+              placement="top"
+            ></i>
           </td>
         </tr>
       </tbody>
     </table>
-    <mat-paginator
-    [length]="count"
-    [pageSize]="page"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    aria-label="Select page"
-    [showFirstLastButtons]="true">
-  </mat-paginator>
   </div>
 </div>

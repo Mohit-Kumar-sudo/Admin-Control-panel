@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
-import { ApiService } from 'src/app/services/api.service';
-import { TranslationService } from 'src/app/services/translation.service';
+import { Component } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AlertService } from "src/app/services/alert.service";
+import { ApiService } from "src/app/services/api.service";
+import { TranslationService } from "src/app/services/translation.service";
 
 @Component({
-  selector: 'app-edit-questions',
-  templateUrl: './edit-questions.component.html',
-  styleUrls: ['./edit-questions.component.scss']
+  selector: "app-edit-questions",
+  templateUrl: "./edit-questions.component.html",
+  styleUrls: ["./edit-questions.component.scss"],
 })
 export class EditQuestionsComponent {
-
   deedCategory: any[] = [];
   deedType: any[] = [];
   instrument: any;
@@ -30,35 +29,35 @@ export class EditQuestionsComponent {
     private api: ApiService,
     private as: AlertService,
     public translation: TranslationService,
-    private routes : ActivatedRoute,
+    private routes: ActivatedRoute,
     private router: Router
-    ) {
-      this.routes.params.subscribe((param:any) => {
-        if(param.id){
-          this.api.getById("question", param.id).subscribe(
-            (res: any) => {
-              if (res.success) {
-                this.editQuestionData = res.data;
-                this.deedCategoryId = res.data.instrument.deedTypeId.deedCategoryId.id;
-                this.deedTypeId = res.data.instrument.deedTypeId.id;
-                this.instrumentId = res.data.instrument.id
-                this.roleId = res.data.partyRole.partyTypeId
-                this.getDeedCategory()
-                this.getDeedType()
-                this.getInstrument()
-                this.getRoles()
-              }
-            },
-            (error) => {
-              this.as.errorToast(error.error.message);
+  ) {
+    this.routes.params.subscribe((param: any) => {
+      if (param.id) {
+        this.api.getById("question", param.id).subscribe(
+          (res: any) => {
+            if (res.success) {
+              this.editQuestionData = res.data;
+              this.deedCategoryId =
+                res.data.instrument.deedTypeId.deedCategoryId.id;
+              this.deedTypeId = res.data.instrument.deedTypeId.id;
+              this.instrumentId = res.data.instrument.id;
+              this.roleId = res.data.partyRole.partyTypeId;
+              this.getDeedCategory();
+              this.getDeedType();
+              this.getInstrument();
+              this.getRoles();
             }
-          );
-        }
-      })
-    }
-
-  ngOnInit() {
+          },
+          (error) => {
+            this.as.errorToast(error.error.message);
+          }
+        );
+      }
+    });
   }
+
+  ngOnInit() {}
 
   getDeedCategory() {
     this.api.get("deed", { is_active: true }).subscribe(
@@ -112,23 +111,24 @@ export class EditQuestionsComponent {
     );
   }
 
-
   Update(frm: any) {
+    let instrument = this.instrument.filter((o: any) => {
+      return o.id == frm.value.instrument;
+    });
+    let partyRole = this.rolesData.filter((o: any) => {
+      return o.partyTypeId == frm.value.partyRole;
+    });
     const data = {
       questionEn: frm.value.questionEn,
       questionHi: frm.value.questionHi,
-      instrument: this.instrument.filter((o: any) => {
-        return o.id == frm.value.instrument;
-      }),
-      partyRole: this.rolesData.filter((o: any) => {
-        return o.partyTypeId == frm.value.partyRole;
-      }),
+      instrument: instrument[0],
+      partyRole: partyRole[0],
     };
     this.api.put("question", this.editQuestionData._id, data).subscribe(
       (res: any) => {
         if (res.success) {
           this.as.successToast("Question Updated Successfully");
-          this.router.navigateByUrl('Question')
+          this.router.navigateByUrl("Question");
         }
       },
       (error) => {
@@ -145,8 +145,7 @@ export class EditQuestionsComponent {
     this.getDeedCategory();
   }
 
-  back(){
-    this.router.navigateByUrl('Question')
+  back() {
+    this.router.navigateByUrl("Question");
   }
-
 }

@@ -1,5 +1,6 @@
 const createError = require('http-errors')
 const Model = require('../Models/content.model')
+const activityModel = require('../Models/activityLog.model')
 const mongoose = require('mongoose')
 const ModelName = 'Content'
 const axios = require('axios');
@@ -24,6 +25,15 @@ module.exports = {
             }
             const newData = new Model(data)
             const result = await newData.save()
+
+            if(newData){
+                const activityData = {
+                    contentId : newData._id,
+                    ...data
+                }
+                const activitynewData = new activityModel(activityData)
+                const activityResult = await activitynewData.save()
+            }            
 
             if (data) {
                 const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
@@ -155,9 +165,6 @@ module.exports = {
                 },
                 {
                     $sort: { is_active: -1 }
-                },
-                {
-                    $limit: _limit
                 }
             ])
             if (result) {
@@ -185,7 +192,10 @@ module.exports = {
             data.updated_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
             if (result) {
-                   const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
+                
+                // const activityData = await activityModel.find({contentId:mongoose.Types.ObjectId})
+                
+                const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
                 let newData = {}
                 let do_and_donts = {}
                 let terms_conditions = {}
@@ -278,7 +288,7 @@ module.exports = {
                 throw createError.BadRequest('Invalid Parameters')
             }
             const deleted_at = Date.now()
-            const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: false, deleted_at } })
+            const result = await Model.deleteOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: false, deleted_at } })
             if (result) {
                 res.send({ success: true, msg: 'Data Deleted Successfully' })
             } else {

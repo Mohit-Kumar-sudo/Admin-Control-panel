@@ -1,6 +1,5 @@
 .buttons {
   display: flex;
-  margin-top: 10px;
   justify-content:space-evenly;
 }
 
@@ -65,3 +64,11 @@ thead{
   color: white;
 }
 
+h4 {
+  color: #02acaf;
+  font-weight: bold;
+}
+
+.modal-content{
+  width: 100%;
+}

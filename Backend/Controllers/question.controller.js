@@ -69,11 +69,7 @@ module.exports = {
                     $skip: _skip
                 },
                 {
-
                     $sort: { "instrument.id": 1 }
-                },
-                {
-                    $limit: _limit
                 }
             ])
             if (result) {

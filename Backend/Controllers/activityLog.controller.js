@@ -1,67 +1,27 @@
 const createError = require('http-errors')
-const Model = require('../Models/timeInterval.model')
+const Model = require('../Models/activityLog.model')
 const mongoose = require('mongoose')
-const ModelName = 'Content'
-const axios = require('axios');
+const ModelName = 'activityLog'
+const moment = require("moment")
 
 module.exports = {
 
     create: async (req, res, next) => {
         try {
             const data = req.body
+            data.instrument = data.instrument[0];
+            data.partyRole = data.partyRole[0];
             data.created_by = req.user ? req.user : 'unauth'
             data.updated_by = req.user ? req.user : 'unauth'
             data.created_at = Date.now()
-            const dataExists = await Model.findOne({ content: data.content, is_active: true }).lean()
-            if (dataExists) {
-                return res.send({ success: false, msg: "Time Already Alloted" })
-            }
             const newData = new Model(data)
             const result = await newData.save()
-
             if (result) {
-                const resData = await Model.find({ is_active: true }, { keyName: 1, minutes: 1, seconds: 1 })
-                let newData = []
-                for (const object of resData) {
-                    const transformed = object.keyName + ":" + '"' + object.minutes + ":" + object.seconds+'"'
-                    newData.push(transformed)
-                }
-                let result = newData.reduce((acc, ele) => {
-                    console.log('ele',ele)
-                    let [key, value] = ele.split(':');
-                    console.log('key',key)
-                    console.log('value',value)
-                    let [a, b] = value.replace(/^"|"$/g, '');
-                    console.log('b',b)
-                    acc[key] = a +":"+0;  
-                    return acc
-                }, {});
-         
-                try {
-                    const config = {
-                        headers: {
-                            "x-parse-application-id": "MPSEDC_UAT",
-                            "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
-                            "content-type": "application/json"
-                        }
-                    };
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', result , config)
-                        .then((response) => {
-                            if (response.data.status == 'succces') {
-                                res.send({ success: true, msg: 'Data submitted successfully' })
-                            } else {
-                                res.send({ success: false, msg: 'Failed to Submit Data in Video KYC' })
-                            }
-                        }, error => {
-                            console.log(error)
-                        })
-                } catch (error) {
-                    next(error)
-                }
                 res.send({ success: true, msg: 'Data inserted successfully.' })
             } else {
                 res.send({ success: false, msg: 'Failed to insert data.' })
             }
+
         } catch (error) {
             if (error.isJoi === true) error.status = 422
             next(error)
@@ -82,6 +42,7 @@ module.exports = {
             } else {
                 res.send({ success: false, msg: 'Failed to Fetch Detail' })
             }
+
         } catch (error) {
             if (error.isJoi === true)
                 return next(createError.BadRequest('Bad Request'))
@@ -133,46 +94,13 @@ module.exports = {
             data.updated_at = Date.now()
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
             if (result) {
-                const resData = await Model.find({ is_active: true }, { keyName: 1, minutes: 1, seconds: 1 })
-                let newData = []
-                for (const object of resData) {
-                    const transformed = object.keyName + ":" + '"' + object.minutes + ":" + object.seconds+'"'
-                    newData.push(transformed)
-                }
-                let newResult = newData.reduce((acc, ele) => {
-                    let [key, value] = ele.split(':');
-                    let [a, b] = value.replace(/^"|"$/g, '').split(':');
-                    acc[key] = a+':0'; 
-                    return acc
-                }, {});
-         
-                try {
-                    const config = {
-                        headers: {
-                            "x-parse-application-id": "MPSEDC_UAT",
-                            "x-parse-rest-api-key": "5eefa031319958005f14c3cba94",
-                            "content-type": "application/json"
-                        }
-                    };
-                    axios.post('http://20.219.158.85:6066/api/vkyc/controlpanel/timing', newResult , config)
-                        .then((response) => {
-                            if (response.data.status == 'succces') {
-                                res.send({ success: true, msg: 'Data submitted successfully' })
-                            } else {
-                                res.send({ success: false, msg: 'Failed to Submit Data in Video KYC' })
-                            }
-                        }, error => {
-                            console.log(error)
-                        })
-                } catch (error) {
-                    next(error)
-                }
-                res.send({ success: true, msg: 'Data Update successfully.' })
+                res.send({ success: true, msg: 'Data Updated Successfully' })
             } else {
-                res.send({ success: false, msg: 'Failed to Update data.' })
+                res.send({ success: false, msg: 'Failed to Update Data' })
             }
         } catch (error) {
-            if (error.isJoi === true) error.status = 422
+            if (error.isJoi === true)
+                return next(createError.BadRequest('Bad Request'))
             next(error)
         }
     },
@@ -213,6 +141,6 @@ module.exports = {
                 return next(createError.BadRequest('Bad Request'))
             next(error)
         }
-    },
+    }
 
 }

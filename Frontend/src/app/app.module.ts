@@ -13,7 +13,6 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 
-
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(_httpBackend: HttpBackend) {
   return new MultiTranslateHttpLoader(_httpBackend, [
@@ -43,9 +42,7 @@ export function HttpLoaderFactory(_httpBackend: HttpBackend) {
       },
     }),
   ],
-  providers: [
-
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,12 +23,8 @@ export class QuestionsComponent {
   editQuestionData: any;
   count: any;
   limit: any = 10;
-  page: any = 1;
+  page = 1;
   isAssisted: any;
-
-  public pageSize = 10;
-  public currentPage = 0;
-  public totalSize = 0;
 
   constructor(
     private api: ApiService,
@@ -43,19 +39,22 @@ export class QuestionsComponent {
   }
 
   getDeedCategory() {
-    this.api.get("deed", { is_active: true }).subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.deedCategory = res.data;
+    this.api
+      .get("deed", {is_active: true })
+      .subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.deedCategory = res.data;
+          }
+        },
+        (error) => {
+          this.as.errorToast("Something went wrong ! Please try again");
         }
-      },
-      (error) => {
-        this.as.errorToast("Something went wrong ! Please try again");
-      }
-    );
+      );
   }
 
   getDeedType() {
+    this.deedType = [];
     this.api.getById("deed", this.deedCategoryId).subscribe(
       (res: any) => {
         if (res.success) {
@@ -69,10 +68,12 @@ export class QuestionsComponent {
   }
 
   getInstrument() {
+    this.instrument = [];
     this.api.getById("deed/Instrument", this.deedTypeId).subscribe(
       (res: any) => {
         if (res.success) {
           this.instrument = res.data;
+          console.log("this.instrument", this.instrument);
         }
       },
       (error) => {
@@ -82,9 +83,10 @@ export class QuestionsComponent {
   }
 
   getRoles() {
-    this.instrument.filter((o: any) => {
+    this.instrument.map((o: any) => {
       if (o.id == this.instrumentId) {
         this.isAssisted = o.isAssisted;
+        console.log("this.isAssisted", this.isAssisted);
       }
     });
     switch (this.isAssisted) {
@@ -209,10 +211,10 @@ export class QuestionsComponent {
   }
 
   resetForm() {
-    (this.deedCategory = []),
-      (this.deedType = []),
-      (this.instrument = []),
-      (this.rolesData = []);
+    this.deedCategory = [];
+    this.deedType = [];
+    this.instrument = [];
+    this.rolesData = [];
     this.getDeedCategory();
   }
 
@@ -231,17 +233,4 @@ export class QuestionsComponent {
         }
       );
   }
-
-  public handlePage(e: any) {
-    this.currentPage = e.pageIndex;
-    this.pageSize = e.pageSize;
-    this.iterator();
-  }
-
-  private iterator() {
-    const end = (this.currentPage + 1) * this.pageSize;
-    const start = this.currentPage * this.pageSize;
-    const part = this.questionList.slice(start, end);
-  }
-
 }

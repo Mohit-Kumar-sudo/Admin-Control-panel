@@ -1,12 +1,12 @@
-.bottom-navbar{
-  background-color:#02ACAF;
+.bottom-navbar {
+  background-color: #02acaf;
   height: 40px;
 }
 
-.topNavbar{
+.topNavbar {
   display: flex;
   justify-content: right;
-  background-color: #EEEFF6;
+  background-color: #eeeff6;
   border-radius: 5px 5px 5px 40px;
   margin-top: -7px;
   margin-left: 120px;
@@ -17,16 +17,23 @@
   border: none;
 }
 
-.btn-submit{
-background-color: #02ACAF;
-color: white;
+.btn-submit {
+  background-color: #02acaf;
+  color: white;
 }
 
-.fa-user{
+.fa-user {
   position: relative;
   top: -4px;
 }
 
-.nav-link{
+.nav-link {
   padding: 0px 10px 0px 10px;
+  color:white;
+  font-weight: bolder;
+}
+
+.active {
+  border: 1px solid white;
+  background-color: #02acaf;
 }

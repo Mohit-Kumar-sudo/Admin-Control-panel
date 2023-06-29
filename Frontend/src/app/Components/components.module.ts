@@ -11,6 +11,8 @@ import { MatPaginatorModule} from '@angular/material/paginator'
 import { TranslateModule } from '@ngx-translate/core';
 import { DisplayComponent } from './display/display.component';
 import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { EditQuestionsComponent } from './edit-questions/edit-questions.componen
     ComponentsRoutingModule,
     FormsModule,
     TranslateModule,
-    MatPaginatorModule
+    NgxPaginationModule,
+    MatPaginatorModule,
+    NgbTooltipModule
   ]
 })
 export class ComponentsModule { }

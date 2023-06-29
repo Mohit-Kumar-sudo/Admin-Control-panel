@@ -12,14 +12,15 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-
 app.use('/content', require('./Routes/content.route.js'))
 app.use('/question', require('./Routes/questions.route'))
 app.use('/timeInterval', require('./Routes/timeInterval.route.js'))
 app.use('/deed', require('./Routes/data.route.js'))
+app.use('/activity', require('./Routes/activityLog.route.js'))
+app.use('/admincontrol', require('./Routes/data.route.js'))
 
 app.get('/',  async (req,res,next) =>{
-    res.send("Welcome to the Admin Control Panel...")
+    res.send("Access Restricted...")
 });
 
 app.use("/",express.static(path.join(__dirname, "public", "admin-control-panel")));

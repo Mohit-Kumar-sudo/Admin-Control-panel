@@ -19,7 +19,7 @@ export class ContentsComponent {
   doscount: any;
   termscount: any;
   content: any;
-
+  displayStyle = "none";
 
   public views = ["Prerequisites", "Do's & Don'ts", "Terms & Conditions"];
   public view: any;
@@ -28,8 +28,8 @@ export class ContentsComponent {
     private api: ApiService,
     private router: Router,
     private route: ActivatedRoute,
-    private as : AlertService,
-    public translation : TranslationService
+    private as: AlertService,
+    public translation: TranslationService
   ) {
     this.route.params.subscribe((param: any) => {
       this.content = param.content;
@@ -48,13 +48,19 @@ export class ContentsComponent {
     this.getTermsandCondition();
   }
 
+  openPopup() {
+    this.displayStyle = "block";
+  }
+  closePopup() {
+    this.displayStyle = "none";
+  }
+
   Prerequisits(frm: any) {
-    if(frm.value.vkycType == 'Assisted'){
-      frm.value.vkycTypeEn = 'Assisted',
-      frm.value.vkycTypeHi = 'सहायक'
+    if (frm.value.vkycType == "Assisted") {
+      (frm.value.vkycTypeEn = "Assisted"), (frm.value.vkycTypeHi = "सहायक");
     } else {
-      frm.value.vkycTypeEn = 'Non Assisted',
-      frm.value.vkycTypeHi = 'गैर सहायता'
+      (frm.value.vkycTypeEn = "Non Assisted"),
+        (frm.value.vkycTypeHi = "गैर सहायता");
     }
     const data = {
       contentTypeEn: "Prerequisites",
@@ -65,7 +71,7 @@ export class ContentsComponent {
       (res: any) => {
         if (res.success) {
           this.as.successToast("Data Submitted Successfully");
-          frm.reset()
+          frm.reset();
           this.getPrerequisits();
         } else {
           this.as.warningToast("Something went wrong please try again");
@@ -78,23 +84,22 @@ export class ContentsComponent {
   }
 
   dosanddonts(frm: any) {
-    if(frm.value.vkycType == 'Assisted'){
-      frm.value.vkycTypeEn = 'Assisted',
-      frm.value.vkycTypeHi = 'सहायक'
+    if (frm.value.vkycType == "Assisted") {
+      (frm.value.vkycTypeEn = "Assisted"), (frm.value.vkycTypeHi = "सहायक");
     } else {
-      frm.value.vkycTypeEn = 'Non Assisted',
-      frm.value.vkycTypeHi = 'गैर सहायता'
+      (frm.value.vkycTypeEn = "Non Assisted"),
+        (frm.value.vkycTypeHi = "गैर सहायता");
     }
     const data = {
       contentTypeEn: "Do's and Don'ts",
-      contentTypeHi:"करना नहीं करना",
+      contentTypeHi: "करना नहीं करना",
       ...frm.value,
     };
     this.api.post("content", data).subscribe(
       (res: any) => {
         if (res.success) {
           this.as.successToast("Data Submitted Successfully");
-          frm.reset()
+          frm.reset();
           this.getDosandDonts();
         } else {
           this.as.warningToast("Something went wrong please try again");
@@ -107,23 +112,22 @@ export class ContentsComponent {
   }
 
   termsandcondition(frm: any) {
-    if(frm.value.vkycType == 'Assisted'){
-      frm.value.vkycTypeEn = 'Assisted',
-      frm.value.vkycTypeHi = 'सहायक'
+    if (frm.value.vkycType == "Assisted") {
+      (frm.value.vkycTypeEn = "Assisted"), (frm.value.vkycTypeHi = "सहायक");
     } else {
-      frm.value.vkycTypeEn = 'Non Assisted',
-      frm.value.vkycTypeHi = 'गैर सहायता'
+      (frm.value.vkycTypeEn = "Non Assisted"),
+        (frm.value.vkycTypeHi = "गैर सहायता");
     }
     const data = {
-      contentTypeEn:"Terms and Condition",
-      contentTypeHi:"नियम एवं शर्तें",
+      contentTypeEn: "Terms and Condition",
+      contentTypeHi: "नियम एवं शर्तें",
       ...frm.value,
     };
     this.api.post("content", data).subscribe(
       (res: any) => {
         if (res.success) {
           this.as.successToast("Data Submitted Successfully");
-          frm.reset()
+          frm.reset();
           this.getTermsandCondition();
         } else {
           this.as.warningToast("Something went wrong please try again");
@@ -205,33 +209,44 @@ export class ContentsComponent {
   }
 
   editContent(id: any) {
-    this.router.navigate([`EditContent/${id}`]);
+    if (confirm("Do you want to Edit")) {
+      this.router.navigate([`EditContent/${id}`]);
+    }
   }
 
-  activeContent(id:any){
-    this.api.put('content', `${id}/restore` , {is_active:false}).subscribe((res:any) => {
-      if(res){
-        alert('Content is Succesfully Enabled')
-        this.getPrerequisits()
-        this.getDosandDonts()
-        this.getTermsandCondition()
-      }
-    }, err => {
-      this.as.errorToast(err.message)
-    })
+  activeContent(id: any) {
+    if (confirm("Do you want to Enable Content")) {
+      this.api.put("content", `${id}/restore`, { is_active: false }).subscribe(
+        (res: any) => {
+          if (res) {
+            alert("Content is Succesfully Enabled");
+            this.getPrerequisits();
+            this.getDosandDonts();
+            this.getTermsandCondition();
+          }
+        },
+        (err) => {
+          this.as.errorToast(err.message);
+        }
+      );
+    }
   }
 
-  deactivateContent(id:any){
-    this.api.delete('content', id).subscribe((res:any) => {
-      if(res){
-        alert('Content is Succesfully Disabled')
-        this.getPrerequisits()
-        this.getDosandDonts()
-        this.getTermsandCondition()
-      }
-    }, err => {
-      this.as.errorToast(err.message)
-    })
+  deactivateContent(id: any) {
+    if (confirm("Do you want to Disable Content")) {
+      this.api.delete("content", id).subscribe(
+        (res: any) => {
+          if (res) {
+            alert("Content is Succesfully Disabled");
+            this.getPrerequisits();
+            this.getDosandDonts();
+            this.getTermsandCondition();
+          }
+        },
+        (err) => {
+          this.as.errorToast(err.message);
+        }
+      );
+    }
   }
-
 }

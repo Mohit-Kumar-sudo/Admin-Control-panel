@@ -39,6 +39,9 @@
   },
 
   "question":{
+    "title":"Create Question",
+    "edit":"Edit Question",
+    "search":"Search Question",
     "filter":"Filter",
     "back":"Back",
     "label1":"Deed Category",
@@ -49,24 +52,30 @@
     "option3":"Select Instrument",
     "label4":"Party Role",
     "option4":"Select Party Role",
-    "label5":"Eligibility",
+    "label5":"Video KYC Type",
     "questionEnglish":"Question in English",
     "questionHindi":"Question in Hindi",
     "Submit":"Submit",
     "Reset":"Reset",
+    "Search":"Search",
 
+    "questionList":"Question List",
+    "searchList":"Search List",
     "sno":"S.No.",
     "InstrumentName":"Instrument Name",
-    "Role":"Role",
+    "Role":"Party Role",
     "VKYCType":"VKYC Type",
     "Questions":"Questions",
     "Action":"Action"
   },
 
   "content":{
-    "button1":"Prerequisites",
-    "button2":"Do's & Don'ts",
-    "button3":"Terms & Conditions",
+    "title1":"Create Prerequisites",
+    "title2":"Create Do's & Don'ts",
+    "title3":"Create Terms & Conditions",
+    "list1":"Prerequisites List",
+    "list2":"Do's & Don'ts List",
+    "list3":"Terms & Conditions List",
     "label1":"Select Video KYC Type",
     "option1":"Assisted",
     "option2":"Non Assisted",
@@ -82,11 +91,14 @@
     "sno":"S.No.",
     "content":"Content",
     "VKYCType":"VKYC Type",
-    "InstructionsEnglish" : "Instructions English",
+    "InstructionsEnglish" : "Instructions",
+    "date":"Created Date",
     "Actions":"Actions"
   },
 
   "time":{
+    "title":"Create Time Configuration",
+    "list":"Time Configuration List",
     "label1":"Select Video KYC Time Configuration",
     "option1":"Select Video KYC Time Management",
     "options":[
@@ -110,14 +122,15 @@
     "sno":"S.No.",
     "content":"Content",
     "time":"Time",
-    "action":"action",
+    "action":"Action",
     "min":"Min",
     "sec":"Sec"
   },
 
   "footer":{
-    "text1":"Content Provided and Maintained by Department of Registration and Stamps",
-    "text2":"Design and Developed by MDP Infra. Pvt. Ltd."
+    "text1":"Copyright",
+    "text2":"2023 IGRS. All rights reserved.",
+    "text3":"Design and Developed by Center of Excellence(CoE), MPSeDC"
   }
 
 }

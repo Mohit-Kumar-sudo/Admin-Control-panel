@@ -1,11 +1,15 @@
 <div class="container" *ngIf="!filter">
   <div class="card mt-3">
     <div class="row p-4 pb-0">
-      <div class="col-md-12 text-end">
-        <button class="btn btn-filter" (click)="Filter(true)">
+      <div class="col-md-10">
+        <h4>{{ "question.title" | translate }}</h4>
+      </div>
+      <div class="col-md-2 text-end">
+        <button class="btn btn-filter mb-2" (click)="Filter(true)">
           {{ "question.filter" | translate }}
         </button>
       </div>
+      <hr />
     </div>
     <form #questionForm="ngForm" (ngSubmit)="submit(questionForm)">
       <div class="row p-4 pt-0">
@@ -18,10 +22,14 @@
             id="deedCategory"
             (change)="getDeedType()"
           >
-            <option [value]="" selected disabled>
-              ---{{ "question.option1" | translate }}--
+            <option class="dropdown-item" disabled selected value="undefined">
+              --{{ "question.option1" | translate }}--
             </option>
-            <option *ngFor="let item of deedCategory" [value]="item.id">
+            <option
+              *ngFor="let item of deedCategory; let i = index"
+              [value]="item.id"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.deedCategoryNameEn
@@ -39,8 +47,14 @@
             name="deedType"
             id="deedType"
           >
-            <option value="">---{{ "question.option2" | translate }}--</option>
-            <option [value]="item.id" *ngFor="let item of deedType">
+            <option class="dropdown-item" disabled selected value="undefined">
+              --{{ "question.option2" | translate }}--
+            </option>
+            <option
+              [value]="item.id"
+              *ngFor="let item of deedType; let i = index"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.deedTypeNameEn
@@ -58,8 +72,15 @@
             name="instrument"
             id="instrument"
           >
-            <option value="">---{{ "question.option3" | translate }}--</option>
-            <option *ngFor="let item of instrument" [value]="item.id">
+            <option disabled selected value="undefined">
+              --{{ "question.option3" | translate }}--
+            </option>
+            <option
+              *ngFor="let item of instrument; let i = index"
+              [value]="item.id"
+              [disabled]="item.isAssisted == null"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.instrumentNameEn
@@ -81,10 +102,14 @@
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Party Role">{{ "question.label4" | translate }}</label>
           <select class="form-control" ngModel name="partyRole" id="partyRole">
-            <option value="" disabled>
-              ---{{ "question.option4" | translate }}--
+            <option disabled selected value="">
+              --{{ "question.option4" | translate }}--
             </option>
-            <option [value]="item.partyTypeId" *ngFor="let item of rolesData">
+            <option
+              [value]="item.partyTypeId"
+              *ngFor="let item of rolesData; let i = index"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.partyTypeNameEn
@@ -145,80 +170,106 @@
     </form>
   </div>
   <div class="card my-3">
-    <table class="table table-bordered">
-      <thead class="tableheader">
-        <tr>
-          <th scope="col" style="width: 25px">
-            {{ "question.sno" | translate }}
-          </th>
-          <th scope="col" style="width: 350px">
-            {{ "question.InstrumentName" | translate }}
-          </th>
-          <th scope="col">{{ "question.Role" | translate }}</th>
-          <th scope="col">{{ "question.VKYCType" | translate }}</th>
-          <th scope="col">{{ "question.Questions" | translate }}</th>
-          <th scope="col">{{ "question.Action" | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of questionList; let i = index">
-          <th>{{ i + 1 }}</th>
-          <td>
-            {{
-              translation.currentLang == "en"
-                ? item.instrument.instrumentNameEn
-                : item.instrument.instrumentNameHi
-            }}
-          </td>
-          <td>
-            {{
-              translation.currentLang == "en"
-                ? item.partyRole.partyTypeNameEn
-                : item.partyRole.partyTypeNameHi
-            }}
-          </td>
-          <td>{{ item.isAssisted == 0 ? "Non-Assisted" : "Assisted" }}</td>
-          <td>
-            {{
-              translation.currentLang == "en"
-                ? item.questionEn
-                : item.questionHi
-            }}
-          </td>
-          <td>
-            <i class="fas fa-edit" (click)="editQuestion(item._id)"></i>
-            &nbsp;&nbsp;
-            <i
-              class="fa-regular fa-square fa-md"
-              *ngIf="item.is_active == false"
-              (click)="enableQuestion(item._id)"
-            ></i>
-            <i
-              class="fa-regular fa-square-check fa-md"
-              *ngIf="item.is_active == true"
-              (click)="disableQuestion(item._id)"
-            ></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row p-3">
+      <div class="col-md-12 my-3 text-center">
+        <h4>{{ "question.questionList" | translate }}</h4>
+        <hr>
+      </div>
+      <div class="col-md-12 buttons">
+        <table class="table table-bordered border-dark">
+          <thead class="tableheader">
+            <tr>
+              <th scope="col" style="width: 25px" valign="top">
+                {{ "question.sno" | translate }}
+              </th>
+              <th scope="col" style="width: 350px" valign="top">
+                {{ "question.InstrumentName" | translate }}
+              </th>
+              <th scope="col" valign="top">{{ "question.Role" | translate }}</th>
+              <th scope="col" valign="top">{{ "question.VKYCType" | translate }}</th>
+              <th scope="col" valign="top">{{ "question.Questions" | translate }}</th>
+              <th scope="col" valign="top">{{ "question.Action" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of questionList
+                  | paginate
+                    : { itemsPerPage: limit, currentPage: page };
+                let i = index
+              "
+            >
+            <th>{{(page*limit + i + 1)-limit}}.</th>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.instrument.instrumentNameEn
+                    : item.instrument.instrumentNameHi
+                }}
+              </td>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.partyRole.partyTypeNameEn
+                    : item.partyRole.partyTypeNameHi
+                }}
+              </td>
+              <td>{{ item.isAssisted == 0 ? "Non-Assisted" : "Assisted" }}</td>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.questionEn
+                    : item.questionHi
+                }}
+              </td>
+              <td>
+                <i
+                  class="fas fa-edit"
+                  (click)="editQuestion(item._id)"
+                  ngbTooltip="Edit Question"
+                  placement="top"
+                ></i>
+                &nbsp;&nbsp;
+                <i
+                  class="fa-regular fa-square fa-md"
+                  *ngIf="item.is_active == false"
+                  (click)="enableQuestion(item._id)"
+                  ngbTooltip="Enable Question"
+                  placement="top"
+                ></i>
+                <i
+                  class="fa-regular fa-square-check fa-md"
+                  *ngIf="item.is_active == true"
+                  (click)="disableQuestion(item._id)"
+                  ngbTooltip="Disable Question"
+                  placement="top"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <pagination-controls
+        (pageChange)="page = $event"
+      ></pagination-controls>
+    </div>
   </div>
-  <mat-paginator
-    [length]="count"
-    [pageSize]="page"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    aria-label="Select page"
-  >
-  </mat-paginator>
 </div>
 <div class="container" *ngIf="filter">
   <div class="card mt-3">
     <div class="row p-4 pb-0">
-      <div class="col-md-12 text-end">
-        <button class="btn btn-filter" (click)="Filter(false)">
+      <div class="col-md-10">
+        <h4>{{ "question.search" | translate }}</h4>
+      </div>
+      <div class="col-md-2 text-end">
+        <button class="btn btn-filter mb-2" (click)="Filter(false)">
           {{ "question.back" | translate }}
         </button>
       </div>
+      <hr />
     </div>
     <form #filterForm="ngForm" (ngSubmit)="filterData(filterForm)">
       <div class="row p-4 pt-0">
@@ -231,10 +282,14 @@
             id="deedCategory"
             (change)="getDeedType()"
           >
-            <option [value]="" selected disabled>
-              ---{{ "question.option1" | translate }}--
+            <option class="dropdown-item" disabled selected value="undefined">
+              --{{ "question.option1" | translate }}--
             </option>
-            <option *ngFor="let item of deedCategory" [value]="item.id">
+            <option
+              *ngFor="let item of deedCategory; let i = index"
+              [value]="item.id"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.deedCategoryNameEn
@@ -252,8 +307,14 @@
             name="deedType"
             id="deedType"
           >
-            <option value="">---{{ "question.option2" | translate }}--</option>
-            <option [value]="item.id" *ngFor="let item of deedType">
+            <option class="dropdown-item" disabled selected value="undefined">
+              --{{ "question.option2" | translate }}--
+            </option>
+            <option
+              [value]="item.id"
+              *ngFor="let item of deedType; let i = index"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.deedTypeNameEn
@@ -271,8 +332,15 @@
             name="instrument"
             id="instrument"
           >
-            <option value="">---{{ "question.option3" | translate }}--</option>
-            <option *ngFor="let item of instrument" [value]="item.id">
+            <option disabled selected value="undefined">
+              --{{ "question.option3" | translate }}--
+            </option>
+            <option
+              *ngFor="let item of instrument; let i = index"
+              [value]="item.id"
+              [disabled]="item.isAssisted == null"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.instrumentNameEn
@@ -284,10 +352,14 @@
         <div class="col-md-6 col-sm-6 my-2">
           <label for="Party Role">{{ "question.label4" | translate }}</label>
           <select class="form-control" ngModel name="partyRole" id="partyRole">
-            <option value="" disabled>
-              ---{{ "question.option4" | translate }}--
+            <option disabled selected value="">
+              --{{ "question.option4" | translate }}--
             </option>
-            <option [value]="item.partyTypeId" *ngFor="let item of rolesData">
+            <option
+              [value]="item.partyTypeId"
+              *ngFor="let item of rolesData; let i = index"
+            >
+              {{ i + 1 + "." }}
               {{
                 translation.currentLang == "en"
                   ? item.partyTypeNameEn
@@ -299,7 +371,7 @@
         <div class="col-md-12 my-3">
           <div role="group" aria-label="Basic example">
             <button type="submit" class="btn btn-submit mt-2">
-              {{ "question.Submit" | translate }}
+              {{ "question.Search" | translate }}
             </button>
             <button
               type="reset"
@@ -314,69 +386,82 @@
     </form>
   </div>
   <div class="card my-3">
-    <table class="table table-bordered">
-      <thead class="tableheader">
-        <tr>
-          <th scope="col" style="width: 25px">
-            {{ "question.sno" | translate }}
-          </th>
-          <th scope="col" style="width: 350px">
-            {{ "question.InstrumentName" | translate }}
-          </th>
-          <th scope="col">{{ "question.Role" | translate }}</th>
-          <th scope="col">{{ "question.VKYCType" | translate }}</th>
-          <th scope="col">{{ "question.Questions" | translate }}</th>
-          <th scope="col">{{ "question.Action" | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of questionList; let i = index">
-          <th>{{ i + 1 }}</th>
-          <td>
-            {{
-              translation.currentLang == "en"
-                ? item.instrument.instrumentNameEn
-                : item.instrument.instrumentNameHi
-            }}
-          </td>
-          <td>
-            {{
-              translation.currentLang == "en"
-                ? item.partyRole.partyTypeNameEn
-                : item.partyRole.partyTypeNameHi
-            }}
-          </td>
-          <td>{{ item.isAssisted == 0 ? "Non-Assisted" : "Assisted" }}</td>
-          <td>
-            {{
-              translation.currentLang == "en"
-                ? item.questionEn
-                : item.questionHi
-            }}
-          </td>
-          <td>
-            <i class="fas fa-edit" (click)="editQuestion(item._id)"></i>
-            &nbsp;&nbsp;
-            <i
-              class="fa-regular fa-square fa-md"
-              *ngIf="item.is_active == false"
-              (click)="enableQuestion(item._id)"
-            ></i>
-            <i
-              class="fa-regular fa-square-check fa-md"
-              *ngIf="item.is_active == true"
-              (click)="disableQuestion(item._id)"
-            ></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row p-4">
+      <div class="col-md-12 my-3 text-center">
+        <h4>{{ "question.searchList" | translate }}</h4>
+        <hr />
+      </div>
+      <div class="col-md-12">
+        <table class="table table-bordered border-dark">
+          <thead class="tableheader">
+            <tr>
+              <th scope="col" style="width: 25px" valign="top">
+                {{ "question.sno" | translate }}
+              </th>
+              <th scope="col" style="width: 350px" valign="top">
+                {{ "question.InstrumentName" | translate }}
+              </th>
+              <th scope="col" valign="top">{{ "question.Role" | translate }}</th>
+              <th scope="col" valign="top">{{ "question.VKYCType" | translate }}</th>
+              <th scope="col" valign="top">{{ "question.Questions" | translate }}</th>
+              <th scope="col" valign="top">{{ "question.Action" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of questionList
+                  | paginate
+                    : { itemsPerPage: limit, currentPage: page,  totalItems: count };
+                let i = index
+              "
+            >
+              <th>{{(page*limit + i + 1)-limit}}.</th>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.instrument.instrumentNameEn
+                    : item.instrument.instrumentNameHi
+                }}
+              </td>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.partyRole.partyTypeNameEn
+                    : item.partyRole.partyTypeNameHi
+                }}
+              </td>
+              <td>{{ item.isAssisted == 0 ? "Non-Assisted" : "Assisted" }}</td>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.questionEn
+                    : item.questionHi
+                }}
+              </td>
+              <td>
+                <i class="fas fa-edit" (click)="editQuestion(item._id)"></i>
+                &nbsp;&nbsp;
+                <i
+                  class="fa-regular fa-square fa-md"
+                  *ngIf="item.is_active == false"
+                  (click)="enableQuestion(item._id)"
+                ></i>
+                <i
+                  class="fa-regular fa-square-check fa-md"
+                  *ngIf="item.is_active == true"
+                  (click)="disableQuestion(item._id)"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <pagination-controls
+        (pageChange)="page = $event"
+      ></pagination-controls>
+    </div>
   </div>
-  <mat-paginator
-    [length]="count"
-    [pageSize]="page"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    aria-label="Select page"
-  >
-  </mat-paginator>
 </div>
