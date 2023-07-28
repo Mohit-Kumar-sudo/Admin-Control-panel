@@ -11,15 +11,15 @@
         "title":"Question"
       },
       {
-        "path":"Content/prerequisits",
+        "path":"/Prerequisits",
         "title":"Prerequisits"
       },
       {
-        "path":"Content/dos&donts",
+        "path":"/Dosndonts",
         "title":"Do's & Dont's"
       },
       {
-        "path":"Content/terms&condition",
+        "path":"/Termsncondition",
         "title":"Terms & Conditions"
       },
       {

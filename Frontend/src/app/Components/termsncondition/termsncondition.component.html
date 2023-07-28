@@ -1,0 +1,299 @@
+<div class="container">
+  <div class="card">
+    <div class="row mb-2">
+      <div class="col-md-12 px-5 my-3 text-center">
+        <h4>{{ "content.title3" | translate }}</h4>
+        <hr class="my-0" />
+      </div>
+      <form #termsForm="ngForm" (ngSubmit)="termsandcondition(termsForm)">
+        <div class="col-md-12 px-5 my-3">
+          <label type="label"> {{ "content.label1" | translate }} </label>
+          <select
+            class="form-control"
+            ngModel
+            name="vkycType"
+            id="vkycType"
+            required
+          >
+            <option value="" disabled selected>
+              --{{ "content.label1" | translate }}--
+            </option>
+            <option value="Assisted">
+              {{ "content.option1" | translate }}
+            </option>
+            <option value="Non Assisted">
+              {{ "content.option2" | translate }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-12 px-5 my-3">
+          <label type="label">{{ "content.label6" | translate }}</label>
+          <textarea
+            class="form-control"
+            name="content_english"
+            required
+            ngModel
+            id="content_english"
+            placeholder="Enter Data in English"
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="col-md-12 px-5 my-3">
+          <label type="label"> {{ "content.label7" | translate }}</label>
+          <textarea
+            class="form-control"
+            name="content_hindi"
+            required
+            ngModel
+            id="content_hindi"
+            placeholder="Enter Data in Hindi"
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="col-md-12 my-3">
+          <div role="group" aria-label="Basic example">
+            <button type="submit" class="btn btn-submit mt-4">
+              {{ "content.Submit" | translate }}
+            </button>
+            <button type="reset" class="btn btn-reset mt-4">
+              {{ "content.Reset" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="card mt-3">
+    <div class="row p-4">
+      <div class="col-md-12 my-3 text-center">
+        <h4>{{ "content.list3" | translate }}</h4>
+        <hr class="my-0" />
+      </div>
+      <div class="col-md-12 buttons">
+        <table class="table table-bordered border-dark">
+          <thead>
+            <tr>
+              <th scope="col">{{ "content.sno" | translate }}</th>
+              <th scope="col" style="width: 100px">
+                {{ "content.content" | translate }}
+              </th>
+              <th scope="col">{{ "content.VKYCType" | translate }}</th>
+              <th scope="col" style="width: 750px">
+                {{ "content.InstructionsEnglish" | translate }}
+              </th>
+              <th scope="col">
+                {{ "content.date" | translate }}
+              </th>
+              <th scope="col">{{ "content.Actions" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of termsandCondition
+                  | paginate : { itemsPerPage: limit, currentPage: page };
+                let i = index
+              "
+            >
+              <th scope="row">{{ page * limit + i + 1 - limit }}.</th>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.contentTypeEn
+                    : item.contentTypeHi
+                }}
+              </td>
+              <td>
+                {{
+                  translation.currentLang == "en"
+                    ? item.vkycTypeEn
+                    : item.vkycTypeHi
+                }}
+              </td>
+              <td>
+                <p
+                  *ngFor="
+                    let cl of translation.currentLang == 'en'
+                      ? item.content_english
+                      : item.content_hindi
+                  "
+                >
+                  {{ cl }}
+                </p>
+              </td>
+              <td>
+                {{ item.created_at | date }}
+              </td>
+              <td>
+                <i
+                  class="fas fa-edit fa-md"
+                  (click)="editContent(item._id)"
+                  ngbTooltip="Edit Terms & Condition"
+                  placement="top"
+                ></i>
+                &nbsp;
+                <i
+                  class="fa-regular fa-square fa-md"
+                  *ngIf="item.is_active == false"
+                  (click)="activeContent(item._id)"
+                  ngbTooltip="Enable Terms & Condition"
+                  placement="top"
+                ></i>
+                <i
+                  class="fa-regular fa-square-check fa-md"
+                  *ngIf="item.is_active == true"
+                  (click)="deactivateContent(item._id)"
+                  ngbTooltip="Disable Terms & Condition"
+                  placement="top"
+                ></i>
+                <br class="my-1" />
+                <i
+                  class="fa fa-history my-3"
+                  aria-hidden="true"
+                  ngbTooltip="check history"
+                  placement="top"
+                  (click)="
+                    openPopup(item.contentTypeEn, item.vkycTypeEn)
+                  "
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-12">
+        <div
+          class="modal"
+          tabindex="-1"
+          role="dialog"
+          [ngStyle]="{ display: displayStyle }"
+        >
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="row">
+                  <div class="col">
+                    <h4 class="modal-title">Terms & Condition History</h4>
+                  </div>
+                </div>
+                <div class="col d-flex justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="closePopup()"
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered border-dark">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ "content.sno" | translate }}</th>
+                      <th scope="col" style="width: 100px">
+                        {{ "content.content" | translate }}
+                      </th>
+                      <th scope="col">
+                        {{ "content.VKYCType" | translate }}
+                      </th>
+                      <th scope="col" style="width: 750px">
+                        {{ "content.InstructionsEnglish" | translate }}
+                      </th>
+                      <th scope="col">
+                        {{ "content.date" | translate }}
+                      </th>
+                      <th scope="col">{{ "content.Actions" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let item of inActive
+                          | paginate
+                            : { itemsPerPage: limit, currentPage: page };
+                        let i = index
+                      "
+                    >
+                      <th scope="row">{{ page * limit + i + 1 - limit }}.</th>
+                      <td>
+                        {{
+                          translation.currentLang == "en"
+                            ? item.contentTypeEn
+                            : item.contentTypeHi
+                        }}
+                      </td>
+                      <td>
+                        {{
+                          translation.currentLang == "en"
+                            ? item.vkycTypeEn
+                            : item.vkycTypeHi
+                        }}
+                      </td>
+                      <td>
+                        <p
+                          *ngFor="
+                            let cl of translation.currentLang == 'en'
+                              ? item.content_english
+                              : item.content_hindi
+                          "
+                        >
+                          {{ cl }}
+                        </p>
+                      </td>
+                      <td>
+                        {{ item.created_at | date }}
+                      </td>
+                      <td>
+                        <i
+                          class="fas fa-edit fa-md"
+                          (click)="editContent(item._id)"
+                          ngbTooltip="Edit Prerequisites"
+                          placement="top"
+                        ></i>
+                        &nbsp;
+                        <i
+                          class="fa-regular fa-square fa-md"
+                          *ngIf="item.is_active == false"
+                          (click)="activeContent(item._id)"
+                          ngbTooltip="Enable Prerequisites"
+                          placement="top"
+                        ></i>
+                        <i
+                          class="fa-regular fa-square-check fa-md"
+                          *ngIf="item.is_active == true"
+                          (click)="deactivateContent(item._id)"
+                          ngbTooltip="Disable Prerequisites"
+                          placement="top"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-center">
+                <pagination-controls
+                  (pageChange)="page = $event"
+                ></pagination-controls>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="closePopup()"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-center">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

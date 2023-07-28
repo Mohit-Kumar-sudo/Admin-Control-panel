@@ -9,6 +9,7 @@ import { TranslationService } from "src/app/services/translation.service";
   templateUrl: "./questions.component.html",
   styleUrls: ["./questions.component.scss"],
 })
+
 export class QuestionsComponent {
   deedCategory: any[] = [];
   deedType: any[] = [];

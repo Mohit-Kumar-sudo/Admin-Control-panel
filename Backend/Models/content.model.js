@@ -1,24 +1,24 @@
- const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TableSchema = new Schema({
-    contentTypeEn:{
-        type:String
+    contentTypeEn: {
+        type: String
     },
-    contentTypeHi:{
-        type:String
+    contentTypeHi: {
+        type: String
     },
-    vkycTypeEn:{
-        type:String
+    vkycTypeEn: {
+        type: String
     },
-    vkycTypeHi:{
-        type:String
+    vkycTypeHi: {
+        type: String
     },
-    content_english:{
-        type:Array
+    content_english: {
+        type: Array
     },
-    content_hindi:{
-        type:Array
+    content_hindi: {
+        type: Array
     },
     is_active: {
         type: Boolean,

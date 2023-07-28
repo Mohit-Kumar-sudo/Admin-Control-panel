@@ -14,138 +14,134 @@
     <form #questionForm="ngForm" (ngSubmit)="submit(questionForm)">
       <div class="row p-4 pt-0">
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Deed Category">{{ "question.label1" | translate }}</label>
-          <select
-            class="form-control"
-            [(ngModel)]="deedCategoryId"
-            name="deedCategory"
-            id="deedCategory"
-            (change)="getDeedType()"
-          >
-            <option class="dropdown-item" disabled selected value="undefined">
-              --{{ "question.option1" | translate }}--
-            </option>
-            <option
-              *ngFor="let item of deedCategory; let i = index"
-              [value]="item.id"
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.label1" | translate }}</mat-label>
+            <mat-select
+              [(ngModel)]="deedCategoryId"
+              name="deedCategory"
+              id="deedCategory"
+              (selectionChange)="getDeedType()"
             >
-              {{ i + 1 + "." }}
-              {{
-                translation.currentLang == "en"
-                  ? item.deedCategoryNameEn
-                  : item.deedCategoryNameHi
-              }}
-            </option>
-          </select>
+              <mat-option
+                *ngFor="let item of deedCategory; let i = index"
+                [value]="item.id"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.deedCategoryNameEn
+                    : item.deedCategoryNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Deed Type">{{ "question.label2" | translate }}</label>
-          <select
-            class="form-control"
-            [(ngModel)]="deedTypeId"
-            (change)="getInstrument()"
-            name="deedType"
-            id="deedType"
-          >
-            <option class="dropdown-item" disabled selected value="undefined">
-              --{{ "question.option2" | translate }}--
-            </option>
-            <option
-              [value]="item.id"
-              *ngFor="let item of deedType; let i = index"
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.option2" | translate }}</mat-label>
+            <mat-select
+              [(ngModel)]="deedTypeId"
+              (selectionChange)="getInstrument()"
+              name="deedType"
+              id="deedType"
             >
-              {{ i + 1 + "." }}
-              {{
-                translation.currentLang == "en"
-                  ? item.deedTypeNameEn
-                  : item.deedTypeNameHi
-              }}
-            </option>
-          </select>
+              <mat-option
+                [value]="item.id"
+                *ngFor="let item of deedType; let i = index"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.deedTypeNameEn
+                    : item.deedTypeNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-12 col-sm-12 my-2">
-          <label for="Instrument">{{ "question.label3" | translate }}</label>
-          <select
-            class="form-control"
-            [(ngModel)]="instrumentId"
-            (change)="getRoles()"
-            name="instrument"
-            id="instrument"
-          >
-            <option disabled selected value="undefined">
-              --{{ "question.option3" | translate }}--
-            </option>
-            <option
-              *ngFor="let item of instrument; let i = index"
-              [value]="item.id"
-              [disabled]="item.isAssisted == null"
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.label1" | translate }}</mat-label>
+            <mat-select
+              [(ngModel)]="instrumentId"
+              (selectionChange)="getRoles()"
+              name="instrument"
+              id="instrument"
+              style="width: 100%"
             >
-              {{ i + 1 + "." }}
-              {{
-                translation.currentLang == "en"
-                  ? item.instrumentNameEn
-                  : item.instrumentNameHi
-              }}
-            </option>
-          </select>
+              <mat-option
+                [disabled]="item.isAssisted == null"
+                *ngFor="let item of instrument; let i = index"
+                [value]="item.id"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.instrumentNameEn
+                    : item.instrumentNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Instrument">{{ "question.label5" | translate }}</label>
-          <input
-            type="text"
-            class="form-control"
-            disabled
-            [(ngModel)]="isAssisted"
-            name="isAssisted"
-          />
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.label5" | translate }}</mat-label>
+            <input
+              matInput
+              type="text"
+              disabled
+              [(ngModel)]="isAssisted"
+              name="isAssisted"
+            />
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Party Role">{{ "question.label4" | translate }}</label>
-          <select class="form-control" ngModel name="partyRole" id="partyRole">
-            <option disabled selected value="">
-              --{{ "question.option4" | translate }}--
-            </option>
-            <option
-              [value]="item.partyTypeId"
-              *ngFor="let item of rolesData; let i = index"
-            >
-              {{ i + 1 + "." }}
-              {{
-                translation.currentLang == "en"
-                  ? item.partyTypeNameEn
-                  : item.partyTypeNameHi
-              }}
-            </option>
-          </select>
+          <mat-form-field [style.width.%]="100">
+            <mat-label> --{{ "question.option4" | translate }}--</mat-label>
+            <mat-select ngModel name="partyRole" id="partyRole">
+              <mat-option
+                [value]="item.partyTypeId"
+                *ngFor="let item of rolesData; let i = index"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.partyTypeNameEn
+                    : item.partyTypeNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <div class="form-group">
-            <label for="Question in English">{{
-              "question.questionEnglish" | translate
-            }}</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              ngModel
-              name="questionEn"
-              placeholder="Enter Question in English"
-              rows="3"
-            ></textarea>
+            <mat-form-field [style.width.%]="100">
+              <mat-label>{{
+                "question.questionEnglish" | translate
+              }}</mat-label>
+              <textarea
+                matInput
+                ngModel
+                name="questionEn"
+                placeholder="Enter Question in English"
+                rows="3"
+              ></textarea>
+            </mat-form-field>
           </div>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <div class="form-group">
-            <label for="Question in Hindi">{{
-              "question.questionHindi" | translate
-            }}</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              ngModel
-              name="questionHi"
-              placeholder="Enter Question in Hindi"
-              rows="3"
-            ></textarea>
+            <mat-form-field [style.width.%]="100">
+              <mat-label>{{ "question.questionHindi" | translate }}</mat-label>
+              <textarea
+                matInput
+                ngModel
+                name="questionHi"
+                placeholder="Enter Question in Hindi"
+                rows="3"
+              ></textarea>
+            </mat-form-field>
           </div>
         </div>
         <div class="col-md-12 my-3">
@@ -173,7 +169,7 @@
     <div class="row p-3">
       <div class="col-md-12 my-3 text-center">
         <h4>{{ "question.questionList" | translate }}</h4>
-        <hr>
+        <hr />
       </div>
       <div class="col-md-12 buttons">
         <table class="table table-bordered border-dark">
@@ -185,22 +181,29 @@
               <th scope="col" style="width: 350px" valign="top">
                 {{ "question.InstrumentName" | translate }}
               </th>
-              <th scope="col" valign="top">{{ "question.Role" | translate }}</th>
-              <th scope="col" valign="top">{{ "question.VKYCType" | translate }}</th>
-              <th scope="col" valign="top">{{ "question.Questions" | translate }}</th>
-              <th scope="col" valign="top">{{ "question.Action" | translate }}</th>
+              <th scope="col" valign="top">
+                {{ "question.Role" | translate }}
+              </th>
+              <th scope="col" valign="top">
+                {{ "question.VKYCType" | translate }}
+              </th>
+              <th scope="col" valign="top">
+                {{ "question.Questions" | translate }}
+              </th>
+              <th scope="col" valign="top">
+                {{ "question.Action" | translate }}
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
                 let item of questionList
-                  | paginate
-                    : { itemsPerPage: limit, currentPage: page };
+                  | paginate : { itemsPerPage: limit, currentPage: page };
                 let i = index
               "
             >
-            <th>{{(page*limit + i + 1)-limit}}.</th>
+              <th>{{ page * limit + i + 1 - limit }}.</th>
               <td>
                 {{
                   translation.currentLang == "en"
@@ -252,9 +255,7 @@
       </div>
     </div>
     <div class="card-footer text-center">
-      <pagination-controls
-        (pageChange)="page = $event"
-      ></pagination-controls>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 </div>
@@ -401,10 +402,18 @@
               <th scope="col" style="width: 350px" valign="top">
                 {{ "question.InstrumentName" | translate }}
               </th>
-              <th scope="col" valign="top">{{ "question.Role" | translate }}</th>
-              <th scope="col" valign="top">{{ "question.VKYCType" | translate }}</th>
-              <th scope="col" valign="top">{{ "question.Questions" | translate }}</th>
-              <th scope="col" valign="top">{{ "question.Action" | translate }}</th>
+              <th scope="col" valign="top">
+                {{ "question.Role" | translate }}
+              </th>
+              <th scope="col" valign="top">
+                {{ "question.VKYCType" | translate }}
+              </th>
+              <th scope="col" valign="top">
+                {{ "question.Questions" | translate }}
+              </th>
+              <th scope="col" valign="top">
+                {{ "question.Action" | translate }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -412,11 +421,15 @@
               *ngFor="
                 let item of questionList
                   | paginate
-                    : { itemsPerPage: limit, currentPage: page,  totalItems: count };
+                    : {
+                        itemsPerPage: limit,
+                        currentPage: page,
+                        totalItems: count
+                      };
                 let i = index
               "
             >
-              <th>{{(page*limit + i + 1)-limit}}.</th>
+              <th>{{ page * limit + i + 1 - limit }}.</th>
               <td>
                 {{
                   translation.currentLang == "en"
@@ -459,9 +472,7 @@
       </div>
     </div>
     <div class="card-footer text-center">
-      <pagination-controls
-        (pageChange)="page = $event"
-      ></pagination-controls>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 </div>

@@ -46,11 +46,11 @@ export class EditContentComponent {
         if (res) {
           this.as.successToast("Content Updated Successfully");
           if (this.contentType === "Prerequisites") {
-            this.router.navigateByUrl("Content/prerequisits");
+            this.router.navigateByUrl("Prerequisits");
           } else if (this.contentType === "Do's and Don'ts") {
-            this.router.navigateByUrl("Content/dos&donts");
+            this.router.navigateByUrl("Dosndonts");
           } else if (this.contentType === "Terms and Condition") {
-            this.router.navigateByUrl("Content/terms&condition");
+            this.router.navigateByUrl("Termsncondition");
           }
         }
       },
@@ -62,11 +62,11 @@ export class EditContentComponent {
 
   back() {
     if (this.contentType === "Prerequisites") {
-      this.router.navigateByUrl("Content/prerequisits");
+      this.router.navigateByUrl("Prerequisits");
     } else if (this.contentType === "Do's and Don'ts") {
-      this.router.navigateByUrl("Content/dos&donts");
+      this.router.navigateByUrl("Dosndonts");
     } else if (this.contentType === "Terms and Condition") {
-      this.router.navigateByUrl("Content/terms&condition");
+      this.router.navigateByUrl("Termsncondition");
     }
   }
 }

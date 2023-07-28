@@ -26,16 +26,7 @@ module.exports = {
             const newData = new Model(data)
             const result = await newData.save()
 
-            if(newData){
-                const activityData = {
-                    contentId : newData._id,
-                    ...data
-                }
-                const activitynewData = new activityModel(activityData)
-                const activityResult = await activitynewData.save()
-            }            
-
-            if (data) {
+            if (result) {
                 const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
                 let newData = {}
                 let do_and_donts = {}
@@ -69,19 +60,19 @@ module.exports = {
                         if (item.contentTypeEn === "Do's and Don'ts") {
                             do_and_donts = {
                                 English: item.content_english,
-                                Hindi:  item.content_hindi
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Terms and Condition") {
                             terms_conditions = {
                                 English: item.content_english,
-                                Hindi:  item.content_hindi
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Prerequisites") {
                             prerequisites = {
                                 English: item.content_english,
-                                Hindi:  item.content_hindi
+                                Hindi: item.content_hindi
                             };
                         }
                     }
@@ -144,7 +135,7 @@ module.exports = {
     },
     list: async (req, res, next) => {
         try {
-            const { name, is_active, page, limit, sort, contentTypeEn } = req.query
+            const { name, is_active, page, limit, sort, contentTypeEn, vkycTypeEn } = req.query
             const _page = page ? parseInt(page) : 1
             const _limit = limit ? parseInt(limit) : 20
             const _skip = (_page - 1) * _limit
@@ -153,18 +144,23 @@ module.exports = {
             if (name) {
                 query.name = new RegExp(name, 'i')
             }
+            if (is_active) {
+                query.is_active = (is_active && is_active == 'true') ? true : false
+            }
+            if(vkycTypeEn){
+                query.vkycTypeEn = vkycTypeEn
+            }
             if (contentTypeEn) {
                 query.contentTypeEn = contentTypeEn
             }
+            console.log('is_active', is_active)
+            console.log('query', query)
             const result = await Model.aggregate([
                 {
                     $match: query
                 },
                 {
                     $skip: _skip
-                },
-                {
-                    $sort: { is_active: -1 }
                 }
             ])
             if (result) {
@@ -190,12 +186,28 @@ module.exports = {
                 throw createError.BadRequest('Invalid Parameters')
             }
             data.updated_at = Date.now()
-            const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
-            if (result) {
-                
-                // const activityData = await activityModel.find({contentId:mongoose.Types.ObjectId})
-                
-                const resData = await Model.find({ is_active: true }, { contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
+            data.content_english = data.content_english.split(".")
+            data.content_hindi = data.content_hindi.split("।")
+
+            const result = await Model.findOne({ _id: mongoose.Types.ObjectId(id) })
+            const newData = {
+                contentTypeEn: result.contentTypeEn,
+                contentTypeHi: result.contentTypeHi,
+                vkycTypeEn: result.vkycTypeEn,
+                vkycTypeHi: result.vkycTypeHi,
+                content_english: result.content_english,
+                content_hindi: result.content_hindi,
+                is_active: false,
+                updated_at: Date.now(),
+                created_at: Date.now()
+            }
+            const newUpdatedData = new Model(newData)
+            const newResult = await newUpdatedData.save()
+
+            const updateData = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: data })
+
+            if (newResult) {
+                const resData = await Model.find({ is_active: true },{ contentTypeEn: 1, contentTypeHi: 1, vkycTypeEn: 1, vkycTypeHi: 1, content_english: 1, content_hindi: 1 })
                 let newData = {}
                 let do_and_donts = {}
                 let terms_conditions = {}
@@ -228,19 +240,19 @@ module.exports = {
                         if (item.contentTypeEn === "Do's and Don'ts") {
                             do_and_donts = {
                                 English: item.content_english,
-                                Hindi:  item.content_hindi
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Terms and Condition") {
                             terms_conditions = {
                                 English: item.content_english,
-                                Hindi:  item.content_hindi
+                                Hindi: item.content_hindi
                             };
                         }
                         if (item.contentTypeEn === "Prerequisites") {
                             prerequisites = {
                                 English: item.content_english,
-                                Hindi:  item.content_hindi
+                                Hindi: item.content_hindi
                             };
                         }
                     }
@@ -308,6 +320,16 @@ module.exports = {
             }
             console.log(id)
             const restored_at = Date.now()
+            const oldData = await Model.findById({ _id: mongoose.Types.ObjectId(id) })
+            console.log("oldData", oldData)
+            if (oldData) {
+                const newQuery = await Model.findOne({ contentTypeEn: oldData.contentTypeEn, vkycTypeEn: oldData.vkycTypeEn, is_active: true })
+                if (newQuery) {
+                    console.log(newQuery)
+                    const result = await Model.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(newQuery._id) }, { $set: { is_active: false } })
+                    console.log("result", result)
+                }
+            }
             const result = await Model.updateOne({ _id: mongoose.Types.ObjectId(id) }, { $set: { is_active: true, restored_at } })
             if (result) {
                 res.send({ success: true, msg: 'Data Restored Successfully' })
@@ -323,12 +345,4 @@ module.exports = {
 
 }
 
-
-function indexStrings(strList) {
-    let strArray = [];
-    for (let i = 0; i < strList.length; i++) {
-        strArray[i] = (i + 1) + '. ' + strList[i];
-    }
-    return strArray;
-}
 

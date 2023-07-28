@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentsRoutingModule } from './components-routing.module';
-import { ContentsComponent } from './contents/contents.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { TimeManagementComponent } from './time-management/time-management.component';
@@ -13,22 +12,33 @@ import { DisplayComponent } from './display/display.component';
 import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PrerequisitsComponent } from './prerequisits/prerequisits.component';
+import { DosndontsComponent } from './dosndonts/dosndonts.component';
+import { TermsnconditionComponent } from './termsncondition/termsncondition.component';
+import {MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ContentsComponent,
     QuestionsComponent,
     TimeManagementComponent,
     EditContentComponent,
     DisplayComponent,
-    EditQuestionsComponent
+    EditQuestionsComponent,
+    PrerequisitsComponent,
+    DosndontsComponent,
+    TermsnconditionComponent
   ],
   imports: [
     CommonModule,
     ComponentsRoutingModule,
     FormsModule,
     TranslateModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
     NgxPaginationModule,
     MatPaginatorModule,
     NgbTooltipModule
