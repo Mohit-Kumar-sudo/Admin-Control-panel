@@ -9,7 +9,7 @@ module.exports = {
 
     getDeedCategory: async (req, res, next) => {
         try {
-            axios.get('http://20.204.184.35/sampadaService/common/duty/allDeedCategory', {
+            axios.get('https://ersuat2.mp.gov.in/sampadaService/common/duty/allDeedCategory', {
                 params: {}
             })
                 .then(function (response) {
@@ -33,7 +33,7 @@ module.exports = {
             if (!id) {
                 throw createError.BadRequest('Invalid Parameters')
             }
-            axios.get(`http://20.204.184.35/sampadaService/common/duty/getAllDeedTypeByCategoryId/${id}`, {
+            axios.get(`https://ersuat2.mp.gov.in/sampadaService/common/duty/getAllDeedTypeByCategoryId/${id}`, {
             })
                 .then(function (response) {
                     const deedCategory = response.data;
@@ -56,7 +56,7 @@ module.exports = {
             if (!id) {
                 throw createError.BadRequest('Invalid Parameters')
             }
-            axios.get(`http://20.204.184.35/sampadaService/common/duty/deedInstruments/${id}`, {
+            axios.get(`https://ersuat2.mp.gov.in/sampadaService/common/duty/deedInstruments/${id}`, {
             })
                 .then(function (response) {
                     const deedCategory = response.data;
@@ -79,7 +79,7 @@ module.exports = {
             if (!id) {
                 throw createError.BadRequest('Invalid Parameters')
             }
-            axios.get(`http://20.204.184.35/sampadaService/common/duty/getAllPartyTypeByInstrumentId/${id}`, {
+            axios.get(`https://ersuat2.mp.gov.in/sampadaService/common/duty/getAllPartyTypeByInstrumentId/${id}`, {
             })
                 .then(function (response) {
                     const roles = response.data.responseData;
@@ -121,12 +121,12 @@ module.exports = {
 
 
 
-// All Deed Category: http://20.204.184.35/sampadaService/common/duty/allDeedCategory
+// All Deed Category: https://ersuat2.mp.gov.in/sampadaService/common/duty/allDeedCategory
 
-// Deed Types by Category Id: http://20.204.184.35/sampadaService/common/duty/getAllDeedTypeByCategoryId/{deedCategoryId}
+// Deed Types by Category Id: https://ersuat2.mp.gov.in/sampadaService/common/duty/getAllDeedTypeByCategoryId/{deedCategoryId}
 
-// Deed Instruments by Deed type Id: http://20.204.184.35/sampadaService/common/duty/deedInstruments/{deedTypeId}
+// Deed Instruments by Deed type Id: https://ersuat2.mp.gov.in/sampadaService/common/duty/deedInstruments/{deedTypeId}
 
-// Party Type: http://20.204.184.35/sampadaService/common/duty/getAllPartyTypeByInstrumentId/{instrumentId}
+// Party Type: https://ersuat2.mp.gov.in/sampadaService/common/duty/getAllPartyTypeByInstrumentId/{instrumentId}
 
 // Token Verify http://20.204.184.35/sampadaGateway/department/get_department_user_profile

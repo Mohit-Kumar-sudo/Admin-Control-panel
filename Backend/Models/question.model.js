@@ -18,6 +18,14 @@ const TableSchema = new Schema({
         type:Object,
         required:true
     },
+    videoKYCTypeEn:{
+        type:String,
+        required:true
+    },
+    videoKYCTypeHi:{
+        type:String,
+        required:true
+    },
     is_active: {
         type: Boolean,
         default: true
