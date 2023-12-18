@@ -1,0 +1,153 @@
+<div class="container">
+    <div class="card mt-3" *ngIf="!edit">
+      <div class="row px-4 pt-4">
+        <div class="col-md-12 text-center">
+          <h4>{{ "match.title" | translate }}</h4>
+        </div>
+        <hr />
+      </div>
+      <form #timeForm="ngForm" (ngSubmit)="submit(timeForm)">
+        <div class="row p-4 pb-0">
+          <div class="col-md-8">
+            <label for="time configuration">{{
+              "match.label1" | translate
+            }}</label>
+            <select class="form-control" ngModel name="content" id="content">
+              <option value="" disabled>
+                --{{ "match.label1" | translate }}--
+              </option>
+              <option
+                *ngFor="let item of 'match.options' | translate"
+                [value]="item"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="select time">{{ "match.Percentage" | translate }}</label>
+              <input
+                type="number"
+                ngModel
+                name="percentage"
+                placeholder="00"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="col-md-12 my-3">
+            <div role="group" aria-label="Basic example">
+              <button type="submit" class="btn btn-submit mt-2">
+                {{ "match.Submit" | translate }}
+              </button>
+              <button type="reset" class="btn btn-reset mt-2">
+                {{ "match.Reset" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card mt-3" *ngIf="edit">
+      <form #updatetimeForm="ngForm" (ngSubmit)="updateSubmit(updatetimeForm)">
+        <div class="row p-4 pb-0" *ngIf="data">
+          <div class="col-md-8">
+            <label for="time configuration">{{
+              "match.label1" | translate
+            }}</label>
+            <select
+              class="form-control"
+              [(ngModel)]="data.content"
+              name="content"
+              id="content"
+            >
+              <option value="" disabled>
+                --{{ "match.option1" | translate }}--
+              </option>
+              <option
+                *ngFor="let item of 'match.options' | translate"
+                [value]="item"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <label for="select time">{{ "match.percentage" | translate }}</label>
+              <input
+                type="number"
+                [(ngModel)]="data.percentage"
+                name="percentage"
+                placeholder="00"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="col-md-12 my-3">
+            <div class="btn" role="group" aria-label="Basic example">
+              <button type="submit" class="btn btn-submit mt-2">
+                {{ "match.Update" | translate }}
+              </button>
+              <button type="reset" class="btn btn-reset mt-2">
+                {{ "match.Reset" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card my-3 px-2">
+      <div class="row p-4">
+        <div class="col-md-12 text-center">
+          <h4>{{ "match.list" | translate }}</h4>
+        </div>
+        <hr />
+      </div>
+      <table class="table table-bordered border-dark">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 25px">{{ "match.sno" | translate }}</th>
+            <th scope="col" style="width: 60%">{{ "match.content" | translate }}</th>
+            <th>{{ "match.Percentage" | translate }}</th>
+            <th>{{ "match.action" | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of timeList; let i = index">
+            <td scope="row" class="text-center">{{ i + 1 }}.</td>
+            <td>{{ item.content }}</td>
+            <td>
+              {{ item.percentage }}%
+            </td>
+            <td>
+              <i
+                class="fas fa-edit"
+                (click)="editPercent(item._id)"
+                ngbTooltip="Edit Percentage"
+                placement="top"
+              ></i>
+  
+              &nbsp;&nbsp;
+              <i
+                class="fa-regular fa-square fa-md"
+                *ngIf="item.is_active == false"
+                (click)="activeContent(item._id)"
+                ngbTooltip="Enable Time"
+                placement="top"
+              ></i>
+              <i
+                class="fa-regular fa-square-check fa-md"
+                *ngIf="item.is_active == true"
+                (click)="deactivateContent(item._id)"
+                ngbTooltip="Disable Time"
+                placement="top"
+              ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

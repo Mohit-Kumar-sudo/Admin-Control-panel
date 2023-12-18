@@ -15,7 +15,7 @@ import { MatSelectModule } from "@angular/material/select";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(_httpBackend: HttpBackend) {
-  return new MultiTranslateHttpLoader(_httpBackend, ["/admin/assets/translate/"]);
+  return new MultiTranslateHttpLoader(_httpBackend, ["assets/translate/"]);
 }
 @NgModule({
   declarations: [

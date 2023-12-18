@@ -9,6 +9,7 @@ import { EditQuestionsComponent } from './edit-questions/edit-questions.componen
 import { PrerequisitsComponent } from './prerequisits/prerequisits.component';
 import { DosndontsComponent } from './dosndonts/dosndonts.component';
 import { TermsnconditionComponent } from './termsncondition/termsncondition.component';
+import { FacialMatchComponent } from './facial-match/facial-match.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path:'Display',
     component:DisplayComponent
+  },
+  {
+    path:'Matching',
+    component:FacialMatchComponent
   }
 ];
 

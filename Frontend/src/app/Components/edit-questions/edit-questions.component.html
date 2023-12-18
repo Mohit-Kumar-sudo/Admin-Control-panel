@@ -5,82 +5,167 @@
         <h4>{{ "question.edit" | translate }}</h4>
       </div>
       <div class="col-md-2 text-end">
-        <button class="btn btn-filter mb-2" (click)="back()">{{'question.back' | translate}}</button>
+        <button class="btn btn-filter mb-2" (click)="back()">
+          {{ "question.back" | translate }}
+        </button>
       </div>
-      <hr>
+      <hr />
     </div>
     <form #questionUpdateForm="ngForm" (ngSubmit)="Update(questionUpdateForm)">
       <div class="row p-4 pt-0" *ngIf="editQuestionData">
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Deed Category">{{'question.label1' | translate}}</label>
-          <select
-            class="form-control"
-            [(ngModel)]="deedCategoryId"
-            name="deedCategory"
-            id="deedCategory"
-            (change)="getDeedType()"
-          >
-            <option [value]="" selected disabled>---{{'question.option1' | translate}}--</option>
-            <option *ngFor="let item of deedCategory" [value]="item.id" >{{translation.currentLang == 'en' ? item.deedCategoryNameEn : item.deedCategoryNameHi}}</option>
-          </select>
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.label1" | translate }}</mat-label>
+            <mat-select
+              [(ngModel)]="deedCategoryId"
+              name="deedCategory"
+              id="deedCategory"
+              (selectionChange)="getDeedType()"
+            >
+              <mat-option
+                *ngFor="let item of deedCategory; let i = index"
+                [value]="item.id"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.deedCategoryNameEn
+                    : item.deedCategoryNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Deed Type">{{'question.label2' | translate}}</label>
-          <select class="form-control" [(ngModel)]="deedTypeId" (change)="getInstrument()" name="deedType" id="deedType">
-            <option value="" disabled>---{{'question.option2' | translate}}--</option>
-            <option [value]="item.id" [selected]="editQuestionData.instrument.deedTypeId.id" *ngFor="let item of deedType">{{translation.currentLang == 'en' ? item.deedTypeNameEn : item.deedTypeNameHi}}</option>
-          </select>
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.option2" | translate }}</mat-label>
+            <mat-select
+              [(ngModel)]="deedTypeId"
+              (selectionChange)="getInstrument()"
+              name="deedType"
+              id="deedType"
+            >
+              <mat-option
+                [value]="item.id"
+                *ngFor="let item of deedType; let i = index"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.deedTypeNameEn
+                    : item.deedTypeNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12 col-sm-12 my-2">
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.option3" | translate }}</mat-label>
+            <mat-select
+              [(ngModel)]="instrumentId"
+              (selectionChange)="getRoles()"
+              name="instrument"
+              id="instrument"
+              style="width: 100%"
+            >
+              <mat-option
+                [disabled]="item.isAssisted == null"
+                *ngFor="let item of instrument; let i = index"
+                [value]="item.id"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.instrumentNameEn
+                    : item.instrumentNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Instrument">{{'question.label3' | translate}}</label>
-          <select
-            class="form-control"
-            [(ngModel)]="instrumentId"
-            (change)="getRoles()"
-            name="instrument"
-            id="instrument"
-          >
-            <option value="" disabled>---{{'question.option3' | translate}}--</option>
-            <option *ngFor="let item of instrument" [value]="item.id">{{translation.currentLang == 'en' ? item.instrumentNameEn : item.instrumentNameHi}}</option>
-          </select>
+          <mat-form-field [style.width.%]="100">
+            <mat-label>{{ "question.label5" | translate }}</mat-label>
+            <mat-select 
+            type="text"
+            [(ngModel)]="videoKYCType"
+            name="videoKYCType"
+            id="videoKYCType">
+              <mat-option
+              *ngFor="let item of isAssisted; let i = index"
+              [value]="item.videoKYCTypeEn"
+            >
+              {{ i + 1 + "." }}
+              {{
+                translation.currentLang == "en"
+                  ? item.videoKYCTypeEn
+                  : item.videoKYCTypeHi
+              }}
+            </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
-          <label for="Party Role">{{'question.label4' | translate}}</label>
-          <select class="form-control" [(ngModel)]="roleId" name="partyRole" id="partyRole">
-            <option value="" disabled>---{{'question.option4'| translate}}--</option>
-            <option [value]="item.partyTypeId" *ngFor="let item of rolesData">{{translation.currentLang == 'en' ? item.partyTypeNameEn : item.partyTypeNameHi}}</option>
-          </select>
+          <mat-form-field [style.width.%]="100">
+            <mat-label> --{{ "question.option4" | translate }}--</mat-label>
+            <mat-select [(ngModel)]="roleId" name="partyRole" id="partyRole">
+              <mat-option
+                [value]="item.partyTypeId"
+                *ngFor="let item of rolesData; let i = index"
+              >
+                {{ i + 1 + "." }}
+                {{
+                  translation.currentLang == "en"
+                    ? item.partyTypeNameEn
+                    : item.partyTypeNameHi
+                }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <div class="form-group">
-            <label for="Question in English">{{'question.questionEnglish'| translate}}</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              [(ngModel)]="editQuestionData.questionEn"
-              name="questionEn"
-              placeholder="Enter Question in English"
-              rows="3"
-            ></textarea>
+            <mat-form-field [style.width.%]="100">
+              <mat-label>{{
+                "question.questionEnglish" | translate
+              }}</mat-label>
+              <textarea
+                matInput
+                [(ngModel)]="editQuestionData.questionEn"
+                name="questionEn"
+                placeholder="Enter Question in English"
+                rows="3"
+              ></textarea>
+            </mat-form-field>
           </div>
         </div>
         <div class="col-md-6 col-sm-6 my-2">
           <div class="form-group">
-            <label for="Question in Hindi">{{'question.questionHindi' | translate}}</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              [(ngModel)]="editQuestionData.questionHi"
-              name="questionHi"
-              placeholder="Enter Question in Hindi"
-              rows="3"
-            ></textarea>
+            <mat-form-field [style.width.%]="100">
+              <mat-label>{{ "question.questionHindi" | translate }}</mat-label>
+              <textarea
+                matInput
+                [(ngModel)]="editQuestionData.questionHi"
+                name="questionHi"
+                placeholder="Enter Question in Hindi"
+                rows="3"
+              ></textarea>
+            </mat-form-field>
           </div>
         </div>
         <div class="col-md-12 my-3">
           <div role="group" aria-label="Basic example">
-            <button type="submit" class="btn btn-submit mt-2">{{'question.Submit'| translate}}</button>
-            <button type="reset" (click)="resetForm()" class="btn btn-reset mt-2">{{'question.Reset'| translate}}</button>
+            <button type="submit" class="btn btn-submit mt-2">
+              {{ "question.Submit" | translate }}
+            </button>
+            <button
+              type="reset"
+              (click)="resetForm()"
+              class="btn btn-reset mt-2"
+            >
+              {{ "question.Reset" | translate }}
+            </button>
           </div>
         </div>
       </div>

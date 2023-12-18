@@ -14,7 +14,7 @@ router.delete('/:id', Controller.delete)
 
 router.put('/:id/restore', Controller.restore)
 
-router.get('/videoKyc/:instrumentId/:partyTypeId/:vkycType', Controller.getQuestions)
+router.post('/videoKyc/:instrumentId/:partyTypeId/:vkycType', Controller.getQuestions)
 
 router.get('/filter/:instrumentId/:partyTypeId', Controller.filterQuestion)
 

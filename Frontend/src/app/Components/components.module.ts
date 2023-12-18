@@ -18,6 +18,7 @@ import { TermsnconditionComponent } from './termsncondition/termsncondition.comp
 import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FacialMatchComponent } from './facial-match/facial-match.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatInputModule } from '@angular/material/input';
     EditQuestionsComponent,
     PrerequisitsComponent,
     DosndontsComponent,
-    TermsnconditionComponent
+    TermsnconditionComponent,
+    FacialMatchComponent
   ],
   imports: [
     CommonModule,

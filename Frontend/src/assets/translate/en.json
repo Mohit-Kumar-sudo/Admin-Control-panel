@@ -25,6 +25,10 @@
       {
         "path":"/Time-management",
         "title":"Time Management"
+      },
+      {
+        "path":"/Matching",
+        "title":"Matching Matrix"
       }
     ]
   },
@@ -35,7 +39,8 @@
     "text2":"Prerequisits",
     "text3":"Do's & Don'ts",
     "text4":"Terms & Condition",
-    "text5":"Time Management"
+    "text5":"Time Management",
+    "text6":"Matching Matrix"
   },
 
   "question":{
@@ -125,6 +130,30 @@
     "action":"Action",
     "min":"Min",
     "sec":"Sec"
+  },
+
+  "match":{
+    "title":"Create Matching Percentage",
+    "list":"Matching Percentage List",
+    "label1":"Select Video KYC Matching",
+    "option1":"Select Video KYC Matching",
+    "options":[
+      "Name Matching Matrix Percentage",
+      "Face Matching Matrix Percentage"
+    ],
+    "values":[
+      "face_match",
+      "name_match"
+    ],
+    "Percentage":"Percentage",
+    "Submit":"Submit",
+    "Reset":"Reset",
+    "Update":"Update",
+
+    "sno":"S.No.",
+    "content":"Content",
+    "percentage":"Percentage",
+    "action":"Action"
   },
 
   "footer":{

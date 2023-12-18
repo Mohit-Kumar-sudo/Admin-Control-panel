@@ -1,15 +1,14 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { AlertService } from "src/app/services/alert.service";
-import { ApiService } from "src/app/services/api.service";
-import { TranslationService } from "src/app/services/translation.service";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
+import { ApiService } from 'src/app/services/api.service';
+import { TranslationService } from 'src/app/services/translation.service';
 
 @Component({
-  selector: "app-questions",
-  templateUrl: "./questions.component.html",
-  styleUrls: ["./questions.component.scss"],
+  selector: 'app-questions',
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.scss'],
 })
-
 export class QuestionsComponent {
   deedCategory: any[] = [];
   deedType: any[] = [];
@@ -25,7 +24,7 @@ export class QuestionsComponent {
   count: any;
   limit: any = 10;
   page = 1;
-  isAssisted: any;
+  isAssisted: any = [];
 
   constructor(
     private api: ApiService,
@@ -40,74 +39,82 @@ export class QuestionsComponent {
   }
 
   getDeedCategory() {
-    this.api
-      .get("deed", {is_active: true })
-      .subscribe(
-        (res: any) => {
-          if (res.success) {
-            this.deedCategory = res.data;
-          }
-        },
-        (error) => {
-          this.as.errorToast("Something went wrong ! Please try again");
+    this.api.get('deed', { is_active: true }).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.deedCategory = res.data;
         }
-      );
+      },
+      (error) => {
+        this.as.errorToast('Something went wrong ! Please try again');
+      }
+    );
   }
 
   getDeedType() {
     this.deedType = [];
-    this.api.getById("deed", this.deedCategoryId).subscribe(
+    this.isAssisted = [];
+    this.api.getById('deed', this.deedCategoryId).subscribe(
       (res: any) => {
         if (res.success) {
           this.deedType = res.data;
         }
       },
       (error) => {
-        this.as.errorToast("Something went wrong ! Please try again");
+        this.as.errorToast('Something went wrong ! Please try again');
       }
     );
   }
 
   getInstrument() {
     this.instrument = [];
-    this.api.getById("deed/Instrument", this.deedTypeId).subscribe(
+    this.isAssisted = [];
+    this.api.getById('deed/Instrument', this.deedTypeId).subscribe(
       (res: any) => {
         if (res.success) {
           this.instrument = res.data;
-          console.log("this.instrument", this.instrument);
+          console.log('this.instrument', this.instrument);
         }
       },
       (error) => {
-        this.as.errorToast("Something went wrong ! Please try again");
+        this.as.errorToast('Something went wrong ! Please try again');
       }
     );
   }
 
   getRoles() {
+    let assisted: any;
     this.instrument.map((o: any) => {
       if (o.id == this.instrumentId) {
-        this.isAssisted = o.isAssisted;
-        console.log("this.isAssisted", this.isAssisted);
+        assisted = o.isAssisted;
       }
     });
-    switch (this.isAssisted) {
+    switch (assisted) {
       case 0:
-        this.isAssisted = "Non-Assisted";
+        assisted = this.isAssisted.push(
+          { videoKYCTypeEn: 'Non-Assisted', videoKYCTypeHi: 'गैर सहायता' },
+          { videoKYCTypeEn: 'Assisted', videoKYCTypeHi: 'सहायता' }
+        );
         break;
       case 1:
-        this.isAssisted = "Assisted";
+        assisted = this.isAssisted.push(
+          { videoKYCTypeEn: 'Non-Assisted', videoKYCTypeHi: 'गैर सहायता' },
+          { videoKYCTypeEn: 'Assisted', videoKYCTypeHi: 'सहायता' }
+        );
         break;
       default:
-        this.as.infoToast("This Instrument is not Eligible for Video KYC");
+        this.as.infoToast('This Instrument is not Eligible for Video KYC');
     }
-    this.api.getById("deed/roles", this.instrumentId).subscribe(
+    console.log('Assist', this.isAssisted);
+
+    this.api.getById('deed/roles', this.instrumentId).subscribe(
       (res: any) => {
         if (res.success) {
           this.rolesData = res.data;
         }
       },
       (error) => {
-        this.as.errorToast("Something went wrong ! Please try again");
+        this.as.errorToast('Something went wrong ! Please try again');
       }
     );
   }
@@ -122,6 +129,8 @@ export class QuestionsComponent {
     const data = {
       questionEn: frm.value.questionEn,
       questionHi: frm.value.questionHi,
+      videoKYCTypeEn:'',
+      videoKYCTypeHi:'',
       instrument: this.instrument.filter((o: any) => {
         return o.id == frm.value.instrument;
       }),
@@ -129,24 +138,38 @@ export class QuestionsComponent {
         return o.partyTypeId == frm.value.partyRole;
       }),
     };
+    switch (frm.value.videoKYCType) {
+      case "Non-Assisted":
+        data.videoKYCTypeEn = "Non-Assisted";
+        data.videoKYCTypeHi = "गैर सहायता"
+        break;
+      case "Assisted":
+        data.videoKYCTypeEn = "Assisted";
+        data.videoKYCTypeHi = "सहायता"
+        break;
+      default:
+        break;
+    }
     if (
       !data.questionEn ||
       !data.questionHi ||
       !data.instrument ||
-      !data.partyRole
+      !data.partyRole || 
+      !data.videoKYCTypeEn
     ) {
-      this.as.warningToast("Please fill the form Properly");
+      this.as.warningToast('Please fill the form Properly');
     } else {
-      this.api.post("question", data).subscribe(
+      this.api.post('question', data).subscribe(
         (res: any) => {
           if (res.success) {
-            this.as.successToast("Question Submitted Successfully");
+            this.as.successToast('Question Submitted Successfully');
             this.getList();
             frm.reset();
             this.deedCategory = [];
             this.deedType = [];
             this.instrument = [];
             this.rolesData = [];
+            this.isAssisted = [];
             this.getDeedCategory();
           }
         },
@@ -159,7 +182,7 @@ export class QuestionsComponent {
 
   getList() {
     this.api
-      .get("question", { is_active: true, page: this.page, limit: this.limit })
+      .get('question', { is_active: true, page: this.page, limit: this.limit })
       .subscribe(
         (res: any) => {
           if (res.success) {
@@ -168,39 +191,39 @@ export class QuestionsComponent {
           }
         },
         (error) => {
-          this.as.errorToast("Something went wrong ! Please try again");
+          this.as.errorToast('Something went wrong ! Please try again');
         }
       );
   }
 
   editQuestion(id: any) {
-    if (confirm("Do you want to Update")) {
+    if (confirm('Do you want to Update')) {
       this.router.navigate([`/Question/${id}`]);
     }
   }
 
   enableQuestion(id: any) {
-    if (confirm("Do you want to Enable")) {
-      this.api.put("question", `${id}/restore`, { is_active: false }).subscribe(
+    if (confirm('Do you want to Enable')) {
+      this.api.put('question', `${id}/restore`, { is_active: false }).subscribe(
         (res: any) => {
           if (res.success) {
-            this.as.successToast("Question Active Successfully");
+            this.as.successToast('Question Active Successfully');
             this.getList();
           }
         },
         (error) => {
-          this.as.errorToast("Something went wrong ! Please try again");
+          this.as.errorToast('Something went wrong ! Please try again');
         }
       );
     }
   }
 
   disableQuestion(id: any) {
-    if (confirm("Do you want to Disable")) {
-      this.api.delete("question", id).subscribe(
+    if (confirm('Do you want to Disable')) {
+      this.api.delete('question', id).subscribe(
         (res: any) => {
           if (res) {
-            this.as.successToast("Question is Succesfully Disabled");
+            this.as.successToast('Question is Succesfully Disabled');
             this.getList();
           }
         },
@@ -217,6 +240,7 @@ export class QuestionsComponent {
     this.instrument = [];
     this.rolesData = [];
     this.getDeedCategory();
+    this.getList();
   }
 
   filterData(frm: any) {
@@ -230,7 +254,7 @@ export class QuestionsComponent {
           }
         },
         (error) => {
-          this.as.errorToast("Something went wrong !Please try again");
+          this.as.errorToast('Something went wrong !Please try again');
         }
       );
   }
